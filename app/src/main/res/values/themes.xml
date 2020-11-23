@@ -2,8 +2,8 @@
     <!-- Base application theme. -->
     <style name="Theme.Coin" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <!-- Primary brand color. -->
-        <item name="colorPrimary">@color/indigo_900</item>
-        <item name="colorPrimaryVariant">@color/indigo_900_darker</item>
+        <item name="colorPrimary">@color/blue_primary</item>
+        <item name="colorPrimaryVariant">@color/blue_primary_darker</item>
         <item name="colorOnPrimary">@color/white</item>
         <!-- Secondary brand color. -->
         <item name="colorSecondary">@color/amber_400</item>
