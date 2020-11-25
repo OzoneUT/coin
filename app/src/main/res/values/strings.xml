@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">Coin</string>
+    <string name="welcome_to_coin_content_description">Welcome to Coin.</string>
+    <string name="from_now_on_helper_text">From now on, you can count on us to help you track your finances.</string>
+    <string name="ready_to_get_started_helper_text">Ready to get started?</string>
+    <string name="start_button_label">Start</string>
 </resources>

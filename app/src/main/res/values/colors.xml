@@ -2,8 +2,9 @@
 <resources>
     <color name="blue_primary">#131E8E</color>
     <color name="blue_primary_darker">#0C1630</color>
-    <color name="amber_400">#ffca28</color>
+    <color name="amber_400">#FFCB5A</color>
     <color name="amber_400_darker">#c79a00</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="light_gray_text">#B3B3B3</color>
 </resources>
