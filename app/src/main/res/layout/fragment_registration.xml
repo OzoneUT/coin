@@ -87,10 +87,10 @@
                 android:layout_marginEnd="36dp"
                 android:layout_marginBottom="4dp"
                 android:hint="@string/password_field_hint"
-                app:startIconDrawable="@drawable/ic_baseline_lock_24"
                 app:startIconContentDescription="@string/password_field_hint"
                 app:errorEnabled="true"
                 style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox"
+                app:startIconDrawable="@drawable/ic_baseline_lock_24"
                 app:endIconMode="password_toggle">
 
                 <com.google.android.material.textfield.TextInputEditText
@@ -128,17 +128,16 @@
                 android:layout_gravity="center"
                 android:layout_marginStart="72dp"
                 android:layout_marginTop="8dp"
+                android:layout_marginBottom="84dp"
                 android:layout_marginEnd="72dp"
                 android:text="@string/register_button_label" />
 
-            <View
-                android:layout_width="match_parent"
+            <View android:layout_width="match_parent"
                 android:layout_height="1px"
                 android:background="@color/light_gray_text"
                 android:layout_marginStart="36dp"
                 android:layout_marginEnd="36dp"
-                android:layout_marginTop="84dp"
-                android:layout_marginBottom="8dp"/>
+                android:layout_marginBottom="8dp" />
 
             <LinearLayout
                 android:layout_width="match_parent"

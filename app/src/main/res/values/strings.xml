@@ -20,4 +20,8 @@
     <string name="input_validation_email">Please enter a valid e-mail address.</string>
     <string name="input_validation_password">Your password must be at least %1$d characters long.</string>
     <string name="input_validation_confirm_password">Your passwords don\'t match.</string>
+    <string name="welcome_back_default_login">Welcome back!</string>
+    <string name="please_login_helper">Please login to continue to your dashboard.</string>
+    <string name="keep_me_logged_in_login_helper">Keep me logged in</string>
+    <string name="no_account_helper_login">Don\'t have an account yet?</string>
 </resources>
