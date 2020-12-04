@@ -51,8 +51,8 @@ class RegistrationFragment(private val pagerListener: OnboardingFlowFragment.Pag
     private fun onRegisterTapHandler(view: View) {
         if (viewModel.validateRegistrationFields(view, binding)) {
             // disable form interaction and enable progress bar
-            setEnabledById(isEnabled = false, *viewModel.registrationInputValidations.keys.toIntArray(),
-                    R.id.register_button)
+            viewModel.registrationInputValidations.keys.toList().plus(R.id.register_button)
+                    .setEnabledById(false, view)
             binding.progressBar.visibility = View.VISIBLE
             // call viewModel logic to handle registration with a listener
             viewModel.mockNetworkCallForRegistration()
@@ -65,17 +65,10 @@ class RegistrationFragment(private val pagerListener: OnboardingFlowFragment.Pag
     * */
     private fun setupValidationListeners() {
         for (viewId in viewModel.registrationInputValidations.keys) {
-            val input = view?.findViewById<TextInputEditText>(viewId)
-            input?.setOnFocusChangeListener() { _: View, hasFocus: Boolean ->
+            val input = binding.root.findViewById<TextInputEditText>(viewId)
+            input.setOnFocusChangeListener { _: View, hasFocus: Boolean ->
                 viewModel.validateRegistrationFieldByInput(input, hasFocus, binding)
             }
         }
-    }
-
-    /*
-    * Utility function to set isEnabled to multiple views at once
-    * */
-    private fun setEnabledById(isEnabled: Boolean, vararg viewIds: Int) {
-        for (id in viewIds) view?.findViewById<View>(id)?.isEnabled = isEnabled
     }
 }
