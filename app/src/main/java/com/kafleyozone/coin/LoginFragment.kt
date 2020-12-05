@@ -1,7 +1,6 @@
 package com.kafleyozone.coin
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -24,12 +23,10 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
 
     override fun onCreateView(inflater: LayoutInflater,
                               container: ViewGroup?,
-                              savedInstanceState: Bundle?): View? {
+                              savedInstanceState: Bundle?): View {
 
         _binding = FragmentLoginBinding.inflate(inflater, container, false)
         val view = binding.root
-
-        setupValidationListeners()
 
         binding.loginButton.setOnClickListener {
             onLoginTapHandler(view)
@@ -37,7 +34,8 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
 
         binding.registerOnLoginButton.setOnClickListener {
             parentFragmentManager.commit {
-                replace(R.id.fragment_container_view, OnboardingFlowFragment(), OnboardingFlowFragment.TAG)
+                replace(R.id.fragment_container_view, OnboardingFlowFragment(),
+                        OnboardingFlowFragment.TAG)
             }
         }
 
@@ -61,19 +59,6 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
             binding.progressBar.visibility = View.VISIBLE
             // call viewModel logic to handle registration with a listener
             viewModel.mockNetworkCallForLogin()
-        }
-    }
-
-    /*
-    * Helper function to setup listeners on registration input fields to fire when focus is lost
-    * to validate the registration form on the fly
-    * */
-    private fun setupValidationListeners() {
-        for (viewId in viewModel.loginInputValidations.keys) {
-            val input = binding.root.findViewById<TextInputEditText>(viewId)
-            input.setOnFocusChangeListener { _: View, hasFocus: Boolean ->
-                viewModel.validateLoginFieldByInput(input, hasFocus)
-            }
         }
     }
 }

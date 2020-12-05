@@ -17,11 +17,25 @@
     <string name="already_have_an_account_helper_register_page">Already have an account?</string>
     <string name="login_button_label">Login</string>
     <string name="input_validation_name">Input should be non-empty and shorter than 256 characters.</string>
-    <string name="input_validation_email">Please enter a valid e-mail address.</string>
+    <string name="input_validation_email">Enter a valid e-mail address.</string>
     <string name="input_validation_password">Your password must be at least %1$d characters long.</string>
     <string name="input_validation_confirm_password">Your passwords don\'t match.</string>
     <string name="welcome_back_default_login">Welcome back!</string>
-    <string name="please_login_helper">Please login to continue to your dashboard.</string>
+    <string name="login_helper">Login to continue to your dashboard.</string>
     <string name="keep_me_logged_in_login_helper">Keep me logged in</string>
     <string name="no_account_helper_login">Don\'t have an account yet?</string>
+    <string name="welcome_to_coin_with_name">Welcome to Coin!</string>
+    <string name="setup_page_description">Now that you have a Coin account, we\'d like for you to tell us about the cash you have on-hand.</string>
+    <string name="setup_page_tip">Tip: Only include money from accounts to which you readily have access (i.e. savings and checking accounts, etc.)</string>
+    <string name="lightbulb_content_description">lightbulb</string>
+    <string name="finish_label">Finish</string>
+    <string name="add_an_account_label">Add an account</string>
+    <string name="bank_type_checking">Checking</string>
+    <string name="bank_type_savings">Savings</string>
+    <string name="bank_type_cash">Cash</string>
+    <string name="bank_institution_label">Institution</string>
+    <string name="bank_amount_label">Amount</string>
+    <string name="add_bank_dialog_amount_tip">Tip: You should specify an exact amount.</string>
+    <string name="input_validation_email_login">Enter the e-mail address associated with your Coin account.</string>
+    <string name="input_validation_password_login">Enter your password.</string>
 </resources>

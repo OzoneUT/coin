@@ -49,7 +49,7 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="32dp"
         android:layout_marginBottom="16dp"
-        android:text="@string/please_login_helper"
+        android:text="@string/login_helper"
         android:textAlignment="textStart"
         android:textColor="@color/light_gray_text"
         android:textSize="16sp"
@@ -87,7 +87,6 @@
         style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        app:errorEnabled="true"
         app:layout_constraintBottom_toTopOf="@+id/login_checkbox"
         app:layout_constraintEnd_toEndOf="@+id/login_email_field_layout"
         app:layout_constraintHorizontal_bias="0.5"
@@ -101,7 +100,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/password_field_hint"
-            android:inputType="textEmailAddress" />
+            android:inputType="textPassword" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <CheckBox

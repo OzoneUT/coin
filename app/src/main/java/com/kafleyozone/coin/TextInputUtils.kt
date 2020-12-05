@@ -17,24 +17,27 @@ fun TextInputEditText.isNameValid(): Boolean {
     }
 }
 
-fun TextInputEditText.isEmailValid(): Boolean {
+fun TextInputEditText.isEmailValid(showDetailedHint: Boolean = true): Boolean {
     return if (!text.isNullOrEmpty() &&
             text!!.trimmedLength() <= MAX_LENGTH &&
             text!!.matches(Patterns.EMAIL_ADDRESS.toRegex())) {
         error = null
         true
     } else {
-        error = context.getString(R.string.input_validation_email)
+        error =
+                if (showDetailedHint) context.getString(R.string.input_validation_email)
+                else context.getString(R.string.input_validation_email_login)
         false
     }
 }
 
-fun TextInputEditText.isPasswordValid(): Boolean {
+fun TextInputEditText.isPasswordValid(showDetailedHint: Boolean = true): Boolean {
     return if (!text.isNullOrEmpty() && text!!.length >= PASSWORD_MIN_LENGTH) {
         error = null
         true
     } else {
-        error = context.getString(R.string.input_validation_password, PASSWORD_MIN_LENGTH)
+        error = if (showDetailedHint) context.getString(R.string.input_validation_password, PASSWORD_MIN_LENGTH)
+                else context.getString(R.string.input_validation_password_login)
         false
     }
 }

@@ -19,6 +19,7 @@
         <item name="android:textAlignment">center</item>
         <item name="android:textColor">@color/light_gray_text</item>
         <item name="android:textSize">18sp</item>
+        <item name="android:textStyle">bold</item>
     </style>
 
     <style name="Theme.Coin.MaterialButton" parent="Widget.MaterialComponents.Button">
@@ -30,5 +31,22 @@
     <style name="Theme.Coin.PageDescription" parent="Widget.MaterialComponents.TextView">
         <item name="android:textSize">16sp</item>
         <item name="android:textColor">@color/light_gray_text</item>
+    </style>
+
+    <style name="Theme.Coin.TextButton" parent="Widget.MaterialComponents.Button.TextButton">
+        <item name="android:textColor">@color/amber_400</item>
+        <item name="drawableTint">@color/amber_400</item>
+    </style>
+
+    <style name="Widget.Coin.Chip.Choice" parent="Widget.MaterialComponents.Chip.Choice">
+        <item name="materialThemeOverlay">@style/ThemeOverlay.Coin.Chip.Choice</item>
+    </style>
+
+    <!-- Disabling elevation overlays because when chip's default background/surface
+     composite are combined with elevation overlays in a highly elevated dialog,
+     the resulting color becomes too light and causes contrast
+     issues. -->
+    <style name="ThemeOverlay.Coin.Chip.Choice" parent="">
+        <item name="elevationOverlayEnabled">false</item>
     </style>
 </resources>

@@ -1,20 +1,108 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
     android:background="@color/blue_primary_darker">
 
     <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/appCompatImageView3"
         android:layout_width="0dp"
         android:layout_height="0dp"
+        android:layout_marginStart="36dp"
+        android:layout_marginTop="20dp"
+        app:layout_constraintHeight_percent=".10"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/ic_coin_setup"
-        app:layout_constraintHeight_percent=".10"
-        app:layout_constraintWidth_percent=".65"
+        app:layout_constraintWidth_percent=".55"
+        app:srcCompat="@drawable/ic_coin_setup" />
+
+    <TextView
+        android:id="@+id/account_setup_welcome"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:text="@string/welcome_to_coin_with_name"
+        android:text="@string/welcome_to_coin_with_name"
+        app:layout_constraintStart_toStartOf="@+id/appCompatImageView3"
+        app:layout_constraintTop_toBottomOf="@+id/appCompatImageView3"
+        style="@style/Theme.Coin.Subheading"
+        android:textSize="20sp"
+        android:textColor="@color/white"/>
+
+    <TextView
+        android:id="@+id/textView5"
+        style="@style/Theme.Coin.PageDescription"
+        android:textSize="16sp"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="48dp"
+        android:text="@string/setup_page_description"
+        android:textAlignment="textStart"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/account_setup_welcome"
+        app:layout_constraintTop_toBottomOf="@+id/account_setup_welcome" />
+
+    <ImageView
+        android:id="@+id/imageView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:contentDescription="@string/lightbulb_content_description"
+        android:padding="8dp"
+        android:src="@drawable/ic_lightbulb_on"
+        app:layout_constraintStart_toStartOf="@+id/textView5"
+        app:layout_constraintTop_toBottomOf="@+id/textView5"
+        app:tint="@color/amber_400"/>
+
+    <TextView
+        android:id="@+id/textView7"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="@string/setup_page_tip"
+        style="@style/Theme.Coin.PageDescription"
+        android:textSize="14sp"
+        android:layout_marginStart="4dp"
+        app:layout_constraintBottom_toBottomOf="@+id/imageView2"
+        app:layout_constraintEnd_toEndOf="@+id/textView5"
+        app:layout_constraintStart_toEndOf="@+id/imageView2"
+        app:layout_constraintTop_toTopOf="@+id/imageView2" />
+
+    <Button
+        android:id="@+id/setup_finish_button"
+        style="@style/Theme.Coin.MaterialButton"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="@string/finish_label"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginHorizontal="72dp"/>
+
+    <Button
+        style="@style/Theme.Coin.TextButton"
+        android:drawableLeft="@drawable/ic_baseline_add_24"
+        android:id="@+id/setup_add_account_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
-        android:layout_marginStart="36dp"/>
+        android:text="@string/add_an_account_label"
+        app:layout_constraintStart_toStartOf="@+id/imageView2"
+        app:layout_constraintTop_toBottomOf="@+id/textView7"
+        tools:ignore="RtlHardcoded" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/account_setup_recycler_view"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="36dp"
+        android:layout_marginEnd="36dp"
+        android:layout_marginBottom="8dp"
+        app:layout_constraintBottom_toTopOf="@+id/setup_finish_button"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/setup_add_account_button"
+        tools:listitem="@layout/list_item_account_setup" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

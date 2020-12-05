@@ -34,13 +34,15 @@ class LoginFragmentViewModel : ViewModel() {
         return allLoginFieldsValid
     }
 
-    fun validateLoginFieldByInput(input: TextInputEditText, hasFocus: Boolean = false) {
+    private fun validateLoginFieldByInput(input: TextInputEditText, hasFocus: Boolean = false) {
         when(input.id) {
             R.id.login_email_field -> if (!hasFocus) {
-                _loginInputValidations[R.id.login_email_field] = input.isEmailValid()
+                _loginInputValidations[R.id.login_email_field] =
+                        input.isEmailValid(showDetailedHint = false)
             }
             R.id.login_password_field -> if (!hasFocus) {
-                _loginInputValidations[R.id.login_password_field] = input.isPasswordValid()
+                _loginInputValidations[R.id.login_password_field] =
+                        input.isPasswordValid(showDetailedHint = false)
             }
         }
     }
