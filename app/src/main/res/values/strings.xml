@@ -35,7 +35,7 @@
     <string name="bank_type_cash">Cash</string>
     <string name="bank_institution_label">Institution</string>
     <string name="bank_amount_label">Amount</string>
-    <string name="add_bank_dialog_amount_tip">Tip: You should specify an exact amount.</string>
+    <string name="add_bank_dialog_amount_tip">Specify an exact amount. For example: 562.36</string>
     <string name="input_validation_email_login">Enter the e-mail address associated with your Coin account.</string>
     <string name="input_validation_password_login">Enter your password.</string>
 </resources>

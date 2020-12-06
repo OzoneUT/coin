@@ -157,11 +157,9 @@
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/register_on_login_button"
-            style="@style/Widget.MaterialComponents.Button.TextButton"
+            style="@style/Theme.Coin.TextButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/register_button_label"
-            android:textColor="@color/amber_400"
-            app:rippleColor="@color/amber_400" />
+            android:text="@string/register_button_label" />
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

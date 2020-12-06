@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.kafleyozone.coin.databinding.FragmentAccountSetupBinding
@@ -12,6 +13,7 @@ import com.kafleyozone.coin.databinding.ListItemAccountSetupBinding
 
 class AccountSetupFragment(pagerListener: OnboardingFlowFragment.PagerListenerInterface) : Fragment() {
 
+    private val viewModel: AccountSetupFragmentViewModel by viewModels(ownerProducer = {this})
     private var _binding: FragmentAccountSetupBinding? = null
     private val binding get() = _binding!!
 
@@ -23,7 +25,7 @@ class AccountSetupFragment(pagerListener: OnboardingFlowFragment.PagerListenerIn
 
         binding.setupAddAccountButton.setOnClickListener {
             AddNewBankDialogFragment()
-                    .show(parentFragmentManager, AddNewBankDialogFragment.TAG)
+                    .show(childFragmentManager, AddNewBankDialogFragment.TAG)
         }
 
         return view
@@ -36,9 +38,9 @@ class AccountSetupFragment(pagerListener: OnboardingFlowFragment.PagerListenerIn
             : RecyclerView.ViewHolder(itemBinding.root) {
 
             fun bind() {
-                itemBinding.institutionNameTextView.text = "Ally"
+                itemBinding.institutionNameTextView.text = "Bank of America"
                 itemBinding.institutionTypeTextView.text = "Savings"
-                itemBinding.institutionAmountTextView.text = "$12,342.44"
+                itemBinding.institutionAmountTextView.text = "$312,342.44"
             }
         }
 

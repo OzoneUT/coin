@@ -15,14 +15,13 @@ class ExitOnboardingDialogFragment : DialogFragment() {
         return activity?.let {
             val builder = AlertDialog.Builder(it)
             builder.setTitle(getString(R.string.exit_onboarding_dialog_title))
-            builder.setMessage(getString(R.string.exit_onboarding_dialog_message))
-                .setPositiveButton(getString(R.string.exit_label)) { _: DialogInterface, _: Int ->
-                    it.finish()
-                }
-                .setNegativeButton(getString(R.string.cancel_label)) { _: DialogInterface, _: Int ->
+                    .setMessage(getString(R.string.exit_onboarding_dialog_message))
+                    .setPositiveButton(getString(R.string.exit_label)) { _: DialogInterface, _: Int ->
+                        it.finish()
+                    }.setNegativeButton(getString(R.string.cancel_label)) { _: DialogInterface, _: Int ->
                     // user cancelled the dialog
-                }
-            builder.create()
+                    }
+                    .create()
         } ?: throw IllegalStateException("Activity cannot be null")
     }
 }

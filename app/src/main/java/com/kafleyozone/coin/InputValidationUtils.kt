@@ -1,8 +1,11 @@
 package com.kafleyozone.coin
 
+import android.icu.text.NumberFormat
+import android.icu.util.Currency
 import android.util.Patterns
 import androidx.core.text.trimmedLength
 import com.google.android.material.textfield.TextInputEditText
+import java.util.*
 
 private const val MAX_LENGTH = 255
 private const val PASSWORD_MIN_LENGTH = 7
@@ -49,5 +52,25 @@ fun TextInputEditText.isConfirmPasswordValid(toMatch: String): Boolean {
     } else {
         error = context.getString(R.string.input_validation_confirm_password)
         false
+    }
+}
+
+fun TextInputEditText.isMonetaryAmountValid(): Boolean {
+    // Note: Should not have problems being parsed to a double because the field is number-only.
+    if (text.isNullOrEmpty()){
+        error = "Enter a non-zero amount."
+        return false
+    }
+    val value = text.toString().replace(",", "").toDouble()
+    if (value <= 0) {
+        error = "Enter a non-zero amount."
+        return false
+    }
+
+    val fractionDigits = 2
+    val format: NumberFormat = NumberFormat.getInstance(Locale.US)
+    format.apply {
+        maximumFractionDigits = fractionDigits
+        minimumFractionDigits = fractionDigits
     }
 }

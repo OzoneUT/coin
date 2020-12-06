@@ -6,7 +6,7 @@
     android:padding="24dp">
 
     <com.google.android.material.chip.ChipGroup
-        android:id="@+id/chipGroup"
+        android:id="@+id/add_bank_dialog_chip_group"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         app:checkedChip="@id/checking_chip"
@@ -40,7 +40,7 @@
 
     <com.google.android.material.textfield.TextInputLayout
         style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.Dense"
-        android:id="@+id/editTextTextPersonName"
+        android:id="@+id/institution_name_field_layout"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:hint="@string/bank_institution_label"
@@ -48,31 +48,36 @@
         android:inputType="textCapWords"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/chipGroup"
+        app:layout_constraintTop_toBottomOf="@+id/add_bank_dialog_chip_group"
         app:startIconDrawable="@drawable/ic_baseline_account_balance_24">
-    <com.google.android.material.textfield.TextInputEditText
-        android:layout_height="match_parent"
-        android:layout_width="match_parent"/>
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/institution_name_field"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
 
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
         style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.Dense"
         android:importantForAutofill="no"
-        android:id="@+id/editTextTextPersonName2"
+        android:id="@+id/setup_amount_field_layout"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="4dp"
         android:hint="@string/bank_amount_label"
-        android:inputType="numberDecimal"
+        app:errorEnabled="true"
         app:helperTextEnabled="true"
         app:helperText="@string/add_bank_dialog_amount_tip"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextTextPersonName"
+        app:layout_constraintTop_toBottomOf="@+id/institution_name_field_layout"
         app:startIconDrawable="@drawable/ic_baseline_monetization_on_24">
+
         <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/setup_amount_field"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent"
+            android:inputType="numberDecimal" />
     </com.google.android.material.textfield.TextInputLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

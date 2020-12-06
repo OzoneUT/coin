@@ -6,15 +6,29 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:background="@color/blue_primary_darker">
 
+    <ProgressBar
+        android:id="@+id/progressBar"
+        android:minHeight="4dp"
+        android:paddingBottom="8dp"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:indeterminate="true"
+        android:indeterminateTint="@color/amber_400"
+        android:visibility="invisible"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:visibility="visible" />
+
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/appCompatImageView3"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginStart="36dp"
-        android:layout_marginTop="20dp"
         app:layout_constraintHeight_percent=".10"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/progressBar"
         app:layout_constraintWidth_percent=".55"
         app:srcCompat="@drawable/ic_coin_setup" />
 
