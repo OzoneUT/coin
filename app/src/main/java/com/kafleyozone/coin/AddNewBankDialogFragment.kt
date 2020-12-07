@@ -37,9 +37,11 @@ class AddNewBankDialogFragment : DialogFragment() {
             if (dialogViewModel.chipResIdToBankType(checkedId) == AddNewBankDialogFragmentViewModel.VAL_CASH_TYPE) {
                 binding.institutionNameField.setText(BankInstitutionEntity.Type.Cash.name)
                 binding.institutionNameFieldLayout.isEnabled = false
+                binding.institutionNameFieldLayout.isErrorEnabled = false
             } else {
                 binding.institutionNameField.setText("")
                 binding.institutionNameFieldLayout.isEnabled = true
+                binding.institutionNameFieldLayout.error = null
             }
         }
 
