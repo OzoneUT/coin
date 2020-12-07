@@ -51,7 +51,7 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
     * Helper function to handle logic when the user taps the 'Login' button.
     * */
     private fun onLoginTapHandler(view: View) {
-        if (viewModel.validateLoginFields(view)) {
+        if (viewModel.validateLoginFields(view, binding)) {
             // disable form interaction and enable progress bar
             viewModel.loginInputValidations.keys.toList()
                     .plus(R.id.login_button).plus(R.id.login_checkbox)

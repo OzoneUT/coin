@@ -10,50 +10,51 @@ import java.util.*
 import kotlin.math.round
 
 private const val MAX_STRING_LENGTH = 255
-private const val MAX_MONETARY_AMOUNT = 999_999.99
+private const val MAX_MONETARY_AMOUNT = 999999.99
+private const val MAX_MONETARY_AMOUNT_DISPLAY = "$999,999.99"
 private const val PASSWORD_MIN_LENGTH = 7
 
-fun TextInputEditText.isNameValid(): Boolean {
+fun TextInputEditText.isNameValid(layoutView: TextInputLayout): Boolean {
     return if (!text.isNullOrEmpty() && text!!.trimmedLength() <= MAX_STRING_LENGTH) {
-        error = null
+        layoutView.error = null
         true
     } else {
-        error = context.getString(R.string.input_validation_name)
+        layoutView.error = context.getString(R.string.input_validation_name)
         false
     }
 }
 
-fun TextInputEditText.isEmailValid(showDetailedHint: Boolean = true): Boolean {
+fun TextInputEditText.isEmailValid(layoutView: TextInputLayout, showDetailedHint: Boolean = true): Boolean {
     return if (!text.isNullOrEmpty() &&
             text!!.trimmedLength() <= MAX_STRING_LENGTH &&
             text!!.matches(Patterns.EMAIL_ADDRESS.toRegex())) {
-        error = null
+        layoutView.error = null
         true
     } else {
-        error =
+        layoutView.error =
                 if (showDetailedHint) context.getString(R.string.input_validation_email)
                 else context.getString(R.string.input_validation_email_login)
         false
     }
 }
 
-fun TextInputEditText.isPasswordValid(showDetailedHint: Boolean = true): Boolean {
+fun TextInputEditText.isPasswordValid(layoutView: TextInputLayout, showDetailedHint: Boolean = true): Boolean {
     return if (!text.isNullOrEmpty() && text!!.length >= PASSWORD_MIN_LENGTH) {
-        error = null
+        layoutView.error = null
         true
     } else {
-        error = if (showDetailedHint) context.getString(R.string.input_validation_password, PASSWORD_MIN_LENGTH)
+        layoutView.error = if (showDetailedHint) context.getString(R.string.input_validation_password, PASSWORD_MIN_LENGTH)
                 else context.getString(R.string.input_validation_password_login)
         false
     }
 }
 
-fun TextInputEditText.isConfirmPasswordValid(toMatch: String): Boolean {
+fun TextInputEditText.isConfirmPasswordValid(layoutView: TextInputLayout, toMatch: String): Boolean {
     return if (!text.isNullOrEmpty() && text!!.toString() == toMatch) {
-        error = null
+        layoutView.error = null
         true
     } else {
-        error = context.getString(R.string.input_validation_confirm_password)
+        layoutView.error = context.getString(R.string.input_validation_confirm_password)
         false
     }
 }
@@ -70,7 +71,7 @@ fun TextInputEditText.isMonetaryAmountValid(layoutView: TextInputLayout): Boolea
         layoutView.error = "Enter a positive amount greater than zero."
         return false
     } else if (value >= MAX_MONETARY_AMOUNT) {
-        layoutView.error = "Max amount: $MAX_MONETARY_AMOUNT"
+        layoutView.error = "Max amount: $MAX_MONETARY_AMOUNT_DISPLAY"
         return false
     }
 

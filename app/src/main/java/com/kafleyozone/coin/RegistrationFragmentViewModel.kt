@@ -41,19 +41,25 @@ class RegistrationFragmentViewModel : ViewModel() {
                                          binding: FragmentRegistrationBinding) {
         when (input.id) {
             R.id.register_name_field -> if (!hasFocus) {
-                _registrationInputValidations[R.id.register_name_field] = input.isNameValid()
+                _registrationInputValidations[R.id.register_name_field] =
+                        input.isNameValid(binding.registerNameFieldLayout)
             }
             R.id.register_email_field -> if (!hasFocus) {
-                _registrationInputValidations[R.id.register_email_field] = input.isEmailValid()
+                _registrationInputValidations[R.id.register_email_field] =
+                        input.isEmailValid(binding.registerEmailFieldLayout)
             }
             R.id.register_password_field -> if (!hasFocus) {
-                _registrationInputValidations[R.id.register_password_field] = input.isPasswordValid()
+                _registrationInputValidations[R.id.register_password_field] =
+                        input.isPasswordValid(binding.registerPasswordFieldLayout)
                 _registrationInputValidations[R.id.register_confirm_password_field] =
-                        binding.registerConfirmPasswordField.isConfirmPasswordValid(input.text.toString())
+                        binding.registerConfirmPasswordField
+                                .isConfirmPasswordValid(binding.registerConfirmPasswordFieldLayout,
+                                        input.text.toString())
             }
             R.id.register_confirm_password_field -> if (!hasFocus) {
                 _registrationInputValidations[R.id.register_confirm_password_field] =
-                        input.isConfirmPasswordValid(binding.registerPasswordField.text.toString())
+                        input.isConfirmPasswordValid(binding.registerConfirmPasswordFieldLayout,
+                                binding.registerPasswordField.text.toString())
             }
         }
     }

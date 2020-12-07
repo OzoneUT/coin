@@ -30,7 +30,8 @@ class AddNewBankDialogFragmentViewModel : ViewModel() {
                                           binding: FragmentAddNewBankDialogBinding) {
         when (input.id) {
             R.id.institution_name_field -> if (!hasFocus) {
-                _newBankDialogInputValidations[R.id.institution_name_field] = input.isNameValid()
+                _newBankDialogInputValidations[R.id.institution_name_field] =
+                        input.isNameValid(binding.institutionNameFieldLayout)
             }
             R.id.setup_amount_field -> if (!hasFocus) {
                 newBankDialogInputValidations[R.id.setup_amount_field] =
@@ -64,6 +65,4 @@ class AddNewBankDialogFragmentViewModel : ViewModel() {
             else -> VAL_UNKNOWN
         }
     }
-
-
 }
