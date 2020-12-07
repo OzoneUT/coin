@@ -22,17 +22,27 @@ class AddNewBankDialogFragment : DialogFragment() {
 
     private var _binding: FragmentAddNewBankDialogBinding? = null
     private val binding get() = _binding!!
+    private var dialogView: AlertDialog? = null
 
-    private val viewModel: AccountSetupFragmentViewModel by viewModels(
+    private val sharedViewModel: AccountSetupFragmentViewModel by viewModels(
             ownerProducer = {requireParentFragment()})
+    private val dialogViewModel: AddNewBankDialogFragmentViewModel by viewModels()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View {
-//        binding.setupAmountField.setOnFocusChangeListener { view: View, hasFocus: Boolean ->
-//            if (!hasFocus) {
-//                (view as TextInputEditText).isMonetaryAmountValid(binding.setupAmountFieldLayout)
-//            }
-//        }
+
+        setupValidationListeners()
+
+        binding.addBankDialogChipGroup.setOnCheckedChangeListener { _, checkedId ->
+            if (dialogViewModel.chipResIdToBankType(checkedId) == AddNewBankDialogFragmentViewModel.VAL_CASH_TYPE) {
+                binding.institutionNameField.setText(BankInstitutionEntity.Type.Cash.name)
+                binding.institutionNameFieldLayout.isEnabled = false
+            } else {
+                binding.institutionNameField.setText("")
+                binding.institutionNameFieldLayout.isEnabled = true
+            }
+        }
+
         return binding.root
     }
 
@@ -41,22 +51,38 @@ class AddNewBankDialogFragment : DialogFragment() {
         return activity?.let {
             val builder = AlertDialog.Builder(it)
             builder.setTitle("Add an account")
-            builder.setPositiveButton("Confirm") { dialogInterface: DialogInterface, i: Int ->
-                val name = chipResIdToName(binding.addBankDialogChipGroup.checkedChipId)
-            }
+            builder.setPositiveButton("Confirm", null)
             builder.setNegativeButton("Cancel", null)
             builder.setView(binding.root)
-            builder.create()
+            dialogView = builder.create()
+            dialogView
         } ?: throw IllegalStateException("Activity cannot be null")
     }
 
-    private fun chipResIdToName(checkedChipId: Int): String =
-        when(checkedChipId) {
-            binding.checkingChip.id -> BankInstitutionEntity.Type.Checking.name
-            binding.savingsChip.id -> BankInstitutionEntity.Type.Savings.name
-            binding.cashChip.id -> BankInstitutionEntity.Type.Cash.name
-            else -> "unknown_type"
+    /*
+    * Helper function to setup listeners on newBankDialog input fields to fire when focus is lost
+    * to validate the form on the fly
+    * */
+    private fun setupValidationListeners() {
+        for (viewId in dialogViewModel.newBankDialogInputValidations.keys) {
+            val input = binding.root.findViewById<TextInputEditText>(viewId)
+            input.setOnFocusChangeListener { _: View, hasFocus: Boolean ->
+                dialogViewModel.validateNewBankDialogFieldByInput(input, hasFocus, binding)
+            }
         }
+    }
+
+    override fun onStart() {
+        super.onStart()
+        dialogView?.getButton(DialogInterface.BUTTON_POSITIVE)?.setOnClickListener {
+            if (dialogViewModel.validateNewBankDialogFields(requireView(), binding)) {
+                val name = binding.institutionNameField.text.toString()
+                val type = dialogViewModel.chipResIdToBankType(binding.addBankDialogChipGroup.checkedChipId)
+                val amount = binding.setupAmountField.text.toString()
+                dismiss()
+            }
+        }
+    }
 
     override fun onDestroyView() {
         super.onDestroyView()

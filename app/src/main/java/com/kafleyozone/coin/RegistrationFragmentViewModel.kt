@@ -16,7 +16,7 @@ class RegistrationFragmentViewModel : ViewModel() {
         get() = _registrationSuccessState
 
     // MEMBER FIELDS
-    private val _registrationInputValidations: MutableMap<Int, Boolean> = mutableMapOf(
+    private val _registrationInputValidations = mutableMapOf(
             R.id.register_name_field to false,
             R.id.register_email_field to false,
             R.id.register_password_field to false,

@@ -18,9 +18,7 @@ class ExitOnboardingDialogFragment : DialogFragment() {
                     .setMessage(getString(R.string.exit_onboarding_dialog_message))
                     .setPositiveButton(getString(R.string.exit_label)) { _: DialogInterface, _: Int ->
                         it.finish()
-                    }.setNegativeButton(getString(R.string.cancel_label)) { _: DialogInterface, _: Int ->
-                    // user cancelled the dialog
-                    }
+                    }.setNegativeButton(getString(R.string.cancel_label), null)
                     .create()
         } ?: throw IllegalStateException("Activity cannot be null")
     }
