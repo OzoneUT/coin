@@ -74,16 +74,7 @@ fun TextInputEditText.isMonetaryAmountValid(layoutView: TextInputLayout): Boolea
         layoutView.error = "Max amount: $MAX_MONETARY_AMOUNT_DISPLAY"
         return false
     }
-
-    // valid entry. need to format.
-    val fractionDigits = 2
-    val format = DecimalFormat.getInstance(Locale.US) as DecimalFormat
-    format.apply {
-        maximumFractionDigits = fractionDigits
-        minimumFractionDigits = fractionDigits
-    }
-    setText(format.format(value))
-
+    setText(convertStringToFormattedCurrency(value))
     layoutView.error = null
     return true
 }

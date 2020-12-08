@@ -133,7 +133,7 @@
                 android:layout_marginStart="72dp"
                 android:layout_marginTop="8dp"
                 android:layout_marginEnd="72dp"
-                android:layout_marginBottom="84dp"
+                android:layout_marginBottom="36dp"
                 android:text="@string/register_button_label" />
 
             <View
@@ -141,8 +141,8 @@
                 android:layout_height="1px"
                 android:layout_marginStart="36dp"
                 android:layout_marginEnd="36dp"
-                android:layout_marginBottom="8dp"
-                android:background="@color/light_gray_text" />
+                android:background="@color/light_gray_text"
+                android:layout_gravity="bottom"/>
 
             <LinearLayout
                 android:layout_width="match_parent"

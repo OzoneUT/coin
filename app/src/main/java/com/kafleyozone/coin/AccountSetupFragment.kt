@@ -7,20 +7,26 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
+import androidx.recyclerview.widget.ListAdapter
 import com.kafleyozone.coin.databinding.FragmentAccountSetupBinding
-import com.kafleyozone.coin.databinding.ListItemAccountSetupBinding
 
 class AccountSetupFragment(pagerListener: OnboardingFlowFragment.PagerListenerInterface) : Fragment() {
 
     private val viewModel: AccountSetupFragmentViewModel by viewModels(ownerProducer = {this})
     private var _binding: FragmentAccountSetupBinding? = null
     private val binding get() = _binding!!
+    private var listAdapter: ListAdapter<BankInstitutionEntity,
+            BankListAdapter.BankListItemViewHolder>? = null
+
+    companion object {
+        private const val TAG = "AccountSetupFragment"
+    }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         _binding = FragmentAccountSetupBinding.inflate(inflater, container, false)
         val view = binding.root
-        binding.accountSetupRecyclerView.adapter = BankListAdapter()
+        listAdapter = BankListAdapter()
+        binding.accountSetupRecyclerView.adapter = listAdapter
         binding.accountSetupRecyclerView.layoutManager = LinearLayoutManager(context)
 
         binding.setupAddAccountButton.setOnClickListener {
@@ -28,34 +34,11 @@ class AccountSetupFragment(pagerListener: OnboardingFlowFragment.PagerListenerIn
                     .show(childFragmentManager, AddNewBankDialogFragment.TAG)
         }
 
+        viewModel.setupBankList.observe(viewLifecycleOwner) {
+            printListDebug(TAG, it)
+            (listAdapter as BankListAdapter).submitList(it.toList())
+        }
+
         return view
-    }
-
-    // RecyclerView Classes
-    class BankListAdapter : RecyclerView.Adapter<BankListAdapter.BankListItemViewHolder>() {
-
-        class BankListItemViewHolder(private val itemBinding: ListItemAccountSetupBinding)
-            : RecyclerView.ViewHolder(itemBinding.root) {
-
-            fun bind() {
-                itemBinding.institutionNameTextView.text = "Bank of America"
-                itemBinding.institutionTypeTextView.text = "Savings"
-                itemBinding.institutionAmountTextView.text = "$312,342.44"
-            }
-        }
-
-        override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) : BankListItemViewHolder {
-            val binding = ListItemAccountSetupBinding.inflate(LayoutInflater.from(parent.context),
-                    parent, false)
-            return BankListItemViewHolder(binding)
-        }
-
-        override fun onBindViewHolder(holder: BankListItemViewHolder, position: Int) {
-            holder.bind()
-        }
-
-        override fun getItemCount(): Int {
-            return 5
-        }
     }
 }

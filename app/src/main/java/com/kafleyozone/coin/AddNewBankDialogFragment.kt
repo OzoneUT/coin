@@ -34,7 +34,8 @@ class AddNewBankDialogFragment : DialogFragment() {
         setupValidationListeners()
 
         binding.addBankDialogChipGroup.setOnCheckedChangeListener { _, checkedId ->
-            if (dialogViewModel.chipResIdToBankType(checkedId) == AddNewBankDialogFragmentViewModel.VAL_CASH_TYPE) {
+            if (dialogViewModel.chipResIdToBankType(checkedId) ==
+                    AddNewBankDialogFragmentViewModel.VAL_CASH_TYPE) {
                 binding.institutionNameField.setText(BankInstitutionEntity.Type.Cash.name)
                 binding.institutionNameFieldLayout.isEnabled = false
                 binding.institutionNameFieldLayout.isErrorEnabled = false
@@ -80,7 +81,10 @@ class AddNewBankDialogFragment : DialogFragment() {
             if (dialogViewModel.validateNewBankDialogFields(requireView(), binding)) {
                 val name = binding.institutionNameField.text.toString()
                 val type = dialogViewModel.chipResIdToBankType(binding.addBankDialogChipGroup.checkedChipId)
-                val amount = binding.setupAmountField.text.toString()
+                val amount = dialogViewModel.convertToDouble(binding.setupAmountField.text.toString())
+                if (amount != null) {
+                    sharedViewModel.addBankAccount(name, type, amount)
+                }
                 dismiss()
             }
         }

@@ -5,14 +5,12 @@ import android.view.View
 import androidx.lifecycle.ViewModel
 import com.google.android.material.textfield.TextInputEditText
 import com.kafleyozone.coin.databinding.FragmentAddNewBankDialogBinding
+import kotlin.NumberFormatException
 
 class AddNewBankDialogFragmentViewModel : ViewModel() {
 
     companion object {
         const val TAG = "AddNewBankDialogFragmentViewModel"
-        const val KEY_BANK_NAME = "name"
-        const val KEY_BANK_TYPE = "type"
-        const val KEY_AMOUNT = "amount"
         const val VAL_CASH_TYPE = "Cash/Wallet"
         const val VAL_UNKNOWN = "unknown_type"
     }
@@ -63,6 +61,16 @@ class AddNewBankDialogFragmentViewModel : ViewModel() {
                 VAL_CASH_TYPE
             }
             else -> VAL_UNKNOWN
+        }
+    }
+
+    fun convertToDouble(amountStr: String): Double? {
+        return try {
+            amountStr.replace(",", "").toDouble()
+        } catch (e: NumberFormatException) {
+            Log.e(TAG, "$amountStr couldn't be parsed to a double.")
+            e.printStackTrace()
+            null
         }
     }
 }

@@ -10,6 +10,10 @@ class AccountSetupFragmentViewModel : ViewModel() {
     val setupBankList: LiveData<MutableList<BankInstitutionEntity>>
         get() = _setupBankList
 
+    init {
+        _setupBankList.value = mutableListOf()
+    }
+
     fun addBankAccount(name: String, description: String, amount: Double) {
         val mutableList = _setupBankList.value
         mutableList?.add(0, BankInstitutionEntity(name, description, amount))
