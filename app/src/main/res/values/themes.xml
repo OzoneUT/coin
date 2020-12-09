@@ -1,16 +1,53 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
-    <style name="Theme.Coin" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+    <style name="Theme.Coin" parent="Theme.MaterialComponents.Light.NoActionBar">
         <!-- Primary brand color. -->
-        <item name="colorPrimary">@color/indigo_900</item>
-        <item name="colorPrimaryVariant">@color/indigo_900_darker</item>
+        <item name="colorPrimary">@color/blue_primary</item>
+        <item name="colorPrimaryVariant">@color/blue_primary_darker</item>
         <item name="colorOnPrimary">@color/white</item>
         <!-- Secondary brand color. -->
         <item name="colorSecondary">@color/amber_400</item>
         <item name="colorSecondaryVariant">@color/amber_400_darker</item>
         <item name="colorOnSecondary">@color/black</item>
         <!-- Status bar color. -->
-        <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
+        <item name="android:statusBarColor" tools:targetApi="l">@color/blue_primary_darkest</item>
         <!-- Customize your theme here. -->
+    </style>
+
+    <style name="Theme.Coin.Subheading" parent="Widget.MaterialComponents.TextView">
+        <item name="android:lineSpacingExtra">4sp</item>
+        <item name="android:textAlignment">center</item>
+        <item name="android:textColor">@color/light_gray_text</item>
+        <item name="android:textSize">18sp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="Theme.Coin.MaterialButton" parent="Widget.MaterialComponents.Button">
+        <item name="backgroundTint">@color/amber_400</item>
+        <item name="android:drawableTint">@color/blue_primary_darker</item>
+        <item name="android:textColor">@color/blue_primary_darker</item>
+    </style>
+
+    <style name="Theme.Coin.PageDescription" parent="Widget.MaterialComponents.TextView">
+        <item name="android:textSize">16sp</item>
+        <item name="android:textColor">@color/light_gray_text</item>
+    </style>
+
+    <style name="Theme.Coin.TextButton" parent="Widget.MaterialComponents.Button.TextButton">
+        <item name="rippleColor">@color/amber_400</item>
+        <item name="android:textColor">@color/amber_400</item>
+        <item name="drawableTint">@color/amber_400</item>
+    </style>
+
+    <style name="Widget.Coin.Chip.Choice" parent="Widget.MaterialComponents.Chip.Choice">
+        <item name="materialThemeOverlay">@style/ThemeOverlay.Coin.Chip.Choice</item>
+    </style>
+
+    <!-- Disabling elevation overlays because when chip's default background/surface
+     composite are combined with elevation overlays in a highly elevated dialog,
+     the resulting color becomes too light and causes contrast
+     issues. -->
+    <style name="ThemeOverlay.Coin.Chip.Choice" parent="">
+        <item name="elevationOverlayEnabled">false</item>
     </style>
 </resources>
