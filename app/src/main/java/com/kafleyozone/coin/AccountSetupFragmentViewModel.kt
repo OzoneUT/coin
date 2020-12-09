@@ -19,4 +19,10 @@ class AccountSetupFragmentViewModel : ViewModel() {
         mutableList?.add(0, BankInstitutionEntity(name, description, amount))
         _setupBankList.value = mutableList
     }
+
+    fun removeBankEntityItemAt(position: Int) {
+        val mutableList = _setupBankList.value
+        mutableList?.removeAt(position)
+        _setupBankList.value = mutableList
+    }
 }
