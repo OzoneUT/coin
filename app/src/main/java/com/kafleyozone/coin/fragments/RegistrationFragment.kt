@@ -1,15 +1,18 @@
-package com.kafleyozone.coin
+package com.kafleyozone.coin.fragments
 
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ScrollView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.commit
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import com.google.android.material.textfield.TextInputEditText
+import com.kafleyozone.coin.R
+import com.kafleyozone.coin.viewmodels.RegistrationFragmentViewModel
 import com.kafleyozone.coin.databinding.FragmentRegistrationBinding
+import com.kafleyozone.coin.setEnabledById
 
 class RegistrationFragment(private val pagerListener: OnboardingFlowFragment.PagerListenerInterface)
     : Fragment() {
@@ -32,9 +35,9 @@ class RegistrationFragment(private val pagerListener: OnboardingFlowFragment.Pag
         }
 
         binding.loginOnRegisterButton.setOnClickListener {
-            parentFragmentManager.commit {
-                replace(R.id.fragment_container_view, LoginFragment(), LoginFragment.TAG)
-            }
+            val action = OnboardingFlowFragmentDirections
+                    .actionOnboardingFlowFragmentToLoginFragment()
+            findNavController().navigate(action)
         }
 
         viewModel.registrationSuccessState.observe(viewLifecycleOwner) {

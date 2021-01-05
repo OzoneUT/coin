@@ -1,10 +1,11 @@
-package com.kafleyozone.coin
+package com.kafleyozone.coin.viewmodels
 
 import android.view.View
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.google.android.material.textfield.TextInputEditText
+import com.kafleyozone.coin.*
 import com.kafleyozone.coin.databinding.FragmentRegistrationBinding
 import java.util.*
 import kotlin.concurrent.schedule

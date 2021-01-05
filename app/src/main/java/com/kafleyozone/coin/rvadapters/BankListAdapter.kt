@@ -1,4 +1,4 @@
-package com.kafleyozone.coin
+package com.kafleyozone.coin.rvadapters
 
 import android.util.Log
 import android.view.LayoutInflater
@@ -6,7 +6,9 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.kafleyozone.coin.convertStringToFormattedCurrency
 import com.kafleyozone.coin.databinding.ListItemAccountSetupBinding
+import com.kafleyozone.coin.models.BankInstitutionEntity
 
 class BankListAdapter : ListAdapter<BankInstitutionEntity,
         BankListAdapter.BankListItemViewHolder>(ItemDiffCallback()) {
@@ -41,12 +43,14 @@ class BankListAdapter : ListAdapter<BankInstitutionEntity,
     // ########## DiffUtil's ItemCallback Implementation ###########
     class ItemDiffCallback : DiffUtil.ItemCallback<BankInstitutionEntity>() {
         override fun areItemsTheSame(oldItem: BankInstitutionEntity,
-                                     newItem: BankInstitutionEntity): Boolean {
+                                     newItem: BankInstitutionEntity
+        ): Boolean {
             Log.i(TAG, "in areItemsTheSame()")
             return oldItem.id == newItem.id
         }
         override fun areContentsTheSame(oldItem: BankInstitutionEntity,
-                                        newItem: BankInstitutionEntity): Boolean {
+                                        newItem: BankInstitutionEntity
+        ): Boolean {
             Log.i(TAG, "in areContentsTheSame()")
             return oldItem == newItem
         }
