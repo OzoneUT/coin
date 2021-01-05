@@ -1,4 +1,4 @@
-package com.kafleyozone.coin
+package com.kafleyozone.coin.fragments
 
 import android.os.Bundle
 import android.view.LayoutInflater

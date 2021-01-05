@@ -1,4 +1,4 @@
-package com.kafleyozone.coin
+package com.kafleyozone.coin.fragments
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -7,9 +7,12 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.commit
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import com.google.android.material.snackbar.Snackbar
-import com.google.android.material.textfield.TextInputEditText
+import com.kafleyozone.coin.viewmodels.LoginFragmentViewModel
+import com.kafleyozone.coin.R
 import com.kafleyozone.coin.databinding.FragmentLoginBinding
+import com.kafleyozone.coin.setEnabledById
 
 class LoginFragment : Fragment(R.layout.fragment_login) {
 
@@ -33,10 +36,9 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
         }
 
         binding.registerOnLoginButton.setOnClickListener {
-            parentFragmentManager.commit {
-                replace(R.id.fragment_container_view, OnboardingFlowFragment(),
-                        OnboardingFlowFragment.TAG)
-            }
+            findNavController().popBackStack()
+            // TODO check if user has logged in from this device before and do not return to
+            //  onboarding if they have
         }
 
         viewModel.loginSuccessState.observe(viewLifecycleOwner) {

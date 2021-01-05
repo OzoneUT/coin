@@ -1,9 +1,8 @@
-package com.kafleyozone.coin
+package com.kafleyozone.coin.fragments
 
 import android.app.Dialog
 import android.content.DialogInterface
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,6 +10,9 @@ import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.viewModels
 import com.google.android.material.textfield.TextInputEditText
+import com.kafleyozone.coin.viewmodels.AccountSetupFragmentViewModel
+import com.kafleyozone.coin.viewmodels.AddNewBankDialogFragmentViewModel
+import com.kafleyozone.coin.models.BankInstitutionEntity
 import com.kafleyozone.coin.databinding.FragmentAddNewBankDialogBinding
 import java.lang.IllegalStateException
 
