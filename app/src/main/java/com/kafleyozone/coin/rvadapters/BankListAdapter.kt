@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.kafleyozone.coin.convertStringToFormattedCurrency
 import com.kafleyozone.coin.databinding.ListItemAccountSetupBinding
-import com.kafleyozone.coin.models.BankInstitutionEntity
+import com.kafleyozone.coin.data.models.BankInstitutionEntity
 
 class BankListAdapter : ListAdapter<BankInstitutionEntity,
         BankListAdapter.BankListItemViewHolder>(ItemDiffCallback()) {

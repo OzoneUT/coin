@@ -9,15 +9,23 @@ import com.kafleyozone.coin.R
 import com.kafleyozone.coin.databinding.FragmentLoginBinding
 import com.kafleyozone.coin.isEmailValid
 import com.kafleyozone.coin.isPasswordValid
-import java.util.*
-import kotlin.concurrent.schedule
+import okhttp3.Credentials
 
-class LoginFragmentViewModel : ViewModel() {
+class LoginFragmentViewModel() : ViewModel() {
+
+    companion object {
+        const val TAG = "LoginFragmentViewModel"
+    }
 
     // MEMBER FIELDS
     private val _loginSuccessState = MutableLiveData<Boolean>()
     val loginSuccessState: LiveData<Boolean>
         get() = _loginSuccessState
+
+    private val _loginIsLoading = MutableLiveData<Boolean>()
+    val loginIsLoading: LiveData<Boolean>
+        get() = _loginIsLoading
+
 
     private val _loginInputValidations: MutableMap<Int, Boolean> = mutableMapOf(
             R.id.login_email_field to false,
@@ -54,9 +62,12 @@ class LoginFragmentViewModel : ViewModel() {
 
 
     // REPOSITORY LOGIC
-    fun mockNetworkCallForLogin() {
-        Timer().schedule(2000) {
-            _loginSuccessState.postValue(true)
-        }
+    fun doLogin(email: String, password: String) {
+        _loginIsLoading.value = true
+        _loginSuccessState.value = false
+        Credentials.basic(email, password)
+        // call repo code
+        _loginIsLoading.value = false
+        _loginSuccessState.value = true
     }
 }

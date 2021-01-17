@@ -12,7 +12,7 @@ import androidx.fragment.app.viewModels
 import com.google.android.material.textfield.TextInputEditText
 import com.kafleyozone.coin.viewmodels.AccountSetupFragmentViewModel
 import com.kafleyozone.coin.viewmodels.AddNewBankDialogFragmentViewModel
-import com.kafleyozone.coin.models.BankInstitutionEntity
+import com.kafleyozone.coin.data.models.BankInstitutionEntity
 import com.kafleyozone.coin.databinding.FragmentAddNewBankDialogBinding
 import java.lang.IllegalStateException
 

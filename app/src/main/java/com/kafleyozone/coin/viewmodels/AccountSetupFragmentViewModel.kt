@@ -3,7 +3,7 @@ package com.kafleyozone.coin.viewmodels
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.kafleyozone.coin.models.BankInstitutionEntity
+import com.kafleyozone.coin.data.models.BankInstitutionEntity
 
 class AccountSetupFragmentViewModel : ViewModel() {
 

@@ -5,8 +5,10 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.addCallback
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
+import androidx.navigation.fragment.findNavController
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.google.android.material.tabs.TabLayoutMediator
 import com.kafleyozone.coin.databinding.FragmentOnboardingFlowBinding
@@ -40,6 +42,8 @@ class OnboardingFlowFragment : Fragment(){
             }
         }
 
+        onBackPressedSetup()
+
         binding.onboardingViewpager.adapter = OnboardingPagerAdapter(requireActivity(), pagerListener)
         //binding.onboardingViewpager.isUserInputEnabled = false TODO(enable eventually)
         TabLayoutMediator(binding.pageIndicator, binding.onboardingViewpager) { _, _->
@@ -47,6 +51,14 @@ class OnboardingFlowFragment : Fragment(){
         }.attach()
 
         return view
+    }
+
+    private fun onBackPressedSetup() {
+        val navController = findNavController()
+        requireActivity().onBackPressedDispatcher.addCallback(this, true) {
+            navController.navigate(OnboardingFlowFragmentDirections
+                .actionOnboardingFlowFragmentToExitOnboardingDialogFragment())
+        }
     }
 
     override fun onDestroyView() {

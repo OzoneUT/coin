@@ -5,7 +5,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.commit
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.snackbar.Snackbar
@@ -60,7 +59,8 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
                     .setEnabledById(false, view)
             binding.progressBar.visibility = View.VISIBLE
             // call viewModel logic to handle registration with a listener
-            viewModel.mockNetworkCallForLogin()
+            viewModel.doLogin(binding.loginEmailField.text.toString(),
+                binding.loginPasswordField.text.toString())
         }
     }
 }

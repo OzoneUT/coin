@@ -1,4 +1,4 @@
-package com.kafleyozone.coin.models
+package com.kafleyozone.coin.data.models
 
 import java.util.*
 

@@ -11,7 +11,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.kafleyozone.coin.viewmodels.AccountSetupFragmentViewModel
-import com.kafleyozone.coin.models.BankInstitutionEntity
+import com.kafleyozone.coin.data.models.BankInstitutionEntity
 import com.kafleyozone.coin.rvadapters.BankListAdapter
 import com.kafleyozone.coin.databinding.FragmentAccountSetupBinding
 import com.kafleyozone.coin.printListDebug

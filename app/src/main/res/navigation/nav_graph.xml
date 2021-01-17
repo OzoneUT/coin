@@ -16,6 +16,9 @@
             app:destination="@id/loginFragment"
             app:popUpTo="@id/onboardingFlowFragment"
             app:popUpToInclusive="false" />
+        <action
+            android:id="@+id/action_onboardingFlowFragment_to_exitOnboardingDialogFragment"
+            app:destination="@id/exitOnboardingDialogFragment" />
     </fragment>
     <fragment
         android:id="@+id/loginFragment"
@@ -33,5 +36,9 @@
         android:name="com.kafleyozone.coin.fragments.HomeFragment"
         android:label="HomeFragment"
         tools:layout="@layout/fragment_home"/>
+    <dialog
+        android:id="@+id/exitOnboardingDialogFragment"
+        android:name="com.kafleyozone.coin.fragments.ExitOnboardingDialogFragment"
+        android:label="ExitOnboardingDialogFragment" />
 
 </navigation>
