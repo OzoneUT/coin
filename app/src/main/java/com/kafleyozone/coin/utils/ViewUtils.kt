@@ -1,11 +1,11 @@
-package com.kafleyozone.coin
+package com.kafleyozone.coin.utils
 
 import android.icu.text.DecimalFormat
 import android.util.Log
 import android.view.View
 import java.util.*
 
-/*
+    /*
     * Utility function to set isEnabled to multiple views at once
     * */
 fun List<Int>.setEnabledById(isEnabled: Boolean, view: View?) {

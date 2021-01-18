@@ -1,31 +1,34 @@
 package com.kafleyozone.coin.viewmodels
 
 import android.view.View
+import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.google.android.material.textfield.TextInputEditText
 import com.kafleyozone.coin.R
+import com.kafleyozone.coin.data.UserRepository
+import com.kafleyozone.coin.data.models.LoginResponse
+import com.kafleyozone.coin.data.models.Resource
 import com.kafleyozone.coin.databinding.FragmentLoginBinding
-import com.kafleyozone.coin.isEmailValid
-import com.kafleyozone.coin.isPasswordValid
+import com.kafleyozone.coin.utils.isEmailValid
+import com.kafleyozone.coin.utils.isPasswordValid
+import kotlinx.coroutines.launch
 import okhttp3.Credentials
 
-class LoginFragmentViewModel() : ViewModel() {
+class LoginFragmentViewModel @ViewModelInject constructor(
+    private val userRepository: UserRepository
+) : ViewModel() {
 
     companion object {
         const val TAG = "LoginFragmentViewModel"
     }
 
     // MEMBER FIELDS
-    private val _loginSuccessState = MutableLiveData<Boolean>()
-    val loginSuccessState: LiveData<Boolean>
-        get() = _loginSuccessState
-
-    private val _loginIsLoading = MutableLiveData<Boolean>()
-    val loginIsLoading: LiveData<Boolean>
-        get() = _loginIsLoading
-
+    private val _loginRes = MutableLiveData<Resource<LoginResponse>>()
+    val loginRes : LiveData<Resource<LoginResponse>>
+        get() = _loginRes
 
     private val _loginInputValidations: MutableMap<Int, Boolean> = mutableMapOf(
             R.id.login_email_field to false,
@@ -63,11 +66,12 @@ class LoginFragmentViewModel() : ViewModel() {
 
     // REPOSITORY LOGIC
     fun doLogin(email: String, password: String) {
-        _loginIsLoading.value = true
-        _loginSuccessState.value = false
-        Credentials.basic(email, password)
-        // call repo code
-        _loginIsLoading.value = false
-        _loginSuccessState.value = true
+        viewModelScope.launch {
+            _loginRes.postValue(Resource.loading(null))
+            val basicValue = Credentials.basic(email, password)
+            userRepository.login(basicValue).let {
+                _loginRes.postValue(it)
+            }
+        }
     }
 }

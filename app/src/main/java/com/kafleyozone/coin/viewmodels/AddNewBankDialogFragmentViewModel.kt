@@ -7,8 +7,8 @@ import com.google.android.material.textfield.TextInputEditText
 import com.kafleyozone.coin.data.models.BankInstitutionEntity
 import com.kafleyozone.coin.R
 import com.kafleyozone.coin.databinding.FragmentAddNewBankDialogBinding
-import com.kafleyozone.coin.isMonetaryAmountValid
-import com.kafleyozone.coin.isNameValid
+import com.kafleyozone.coin.utils.isMonetaryAmountValid
+import com.kafleyozone.coin.utils.isNameValid
 import kotlin.NumberFormatException
 
 class AddNewBankDialogFragmentViewModel : ViewModel() {

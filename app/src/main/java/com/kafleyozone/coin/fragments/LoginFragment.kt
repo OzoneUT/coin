@@ -11,15 +11,18 @@ import com.google.android.material.snackbar.Snackbar
 import com.kafleyozone.coin.viewmodels.LoginFragmentViewModel
 import com.kafleyozone.coin.R
 import com.kafleyozone.coin.databinding.FragmentLoginBinding
-import com.kafleyozone.coin.setEnabledById
+import com.kafleyozone.coin.utils.Status
+import com.kafleyozone.coin.utils.setEnabledById
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class LoginFragment : Fragment(R.layout.fragment_login) {
 
     companion object {
         const val TAG = "LoginFragment"
     }
 
-    val viewModel: LoginFragmentViewModel by viewModels()
+    private val viewModel: LoginFragmentViewModel by viewModels()
     private var _binding: FragmentLoginBinding? = null
     private val binding get() = _binding!!
 
@@ -31,7 +34,10 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
         val view = binding.root
 
         binding.loginButton.setOnClickListener {
-            onLoginTapHandler(view)
+            if (viewModel.validateLoginFields(view, binding)) {
+                viewModel.doLogin(binding.loginEmailField.text.toString(),
+                    binding.loginPasswordField.text.toString())
+            }
         }
 
         binding.registerOnLoginButton.setOnClickListener {
@@ -40,27 +46,28 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
             //  onboarding if they have
         }
 
-        viewModel.loginSuccessState.observe(viewLifecycleOwner) {
-            binding.progressBar.visibility = View.INVISIBLE
-            Snackbar.make(view, "Login not implemented!", Snackbar.LENGTH_SHORT).show()
+        viewModel.loginRes.observe(viewLifecycleOwner) {
+           when(it.status) {
+               Status.SUCCESS -> {
+
+               }
+               Status.LOADING -> {
+                   viewModel.loginInputValidations.keys.toList()
+                       .plus(R.id.login_button).plus(R.id.login_checkbox)
+                       .setEnabledById(false, view)
+                   binding.progressBar.visibility = View.VISIBLE
+               }
+               Status.ERROR -> {
+                   viewModel.loginInputValidations.keys.toList()
+                       .plus(R.id.login_button).plus(R.id.login_checkbox)
+                       .setEnabledById(true, view)
+                   binding.progressBar.visibility = View.GONE
+                   Snackbar.make(view, "No internet connection.", Snackbar.LENGTH_SHORT)
+                       .show()
+               }
+           }
         }
 
         return view
-    }
-
-    /*
-    * Helper function to handle logic when the user taps the 'Login' button.
-    * */
-    private fun onLoginTapHandler(view: View) {
-        if (viewModel.validateLoginFields(view, binding)) {
-            // disable form interaction and enable progress bar
-            viewModel.loginInputValidations.keys.toList()
-                    .plus(R.id.login_button).plus(R.id.login_checkbox)
-                    .setEnabledById(false, view)
-            binding.progressBar.visibility = View.VISIBLE
-            // call viewModel logic to handle registration with a listener
-            viewModel.doLogin(binding.loginEmailField.text.toString(),
-                binding.loginPasswordField.text.toString())
-        }
     }
 }

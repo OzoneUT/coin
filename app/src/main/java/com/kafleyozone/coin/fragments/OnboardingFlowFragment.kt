@@ -12,6 +12,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.google.android.material.tabs.TabLayoutMediator
 import com.kafleyozone.coin.databinding.FragmentOnboardingFlowBinding
+import dagger.hilt.android.AndroidEntryPoint
 
 class OnboardingFlowFragment : Fragment(){
 

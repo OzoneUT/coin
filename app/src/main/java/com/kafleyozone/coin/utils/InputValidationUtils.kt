@@ -1,13 +1,10 @@
-package com.kafleyozone.coin
+package com.kafleyozone.coin.utils
 
-import android.icu.text.DecimalFormat
 import android.util.Patterns
 import androidx.core.text.trimmedLength
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
-import java.math.RoundingMode
-import java.util.*
-import kotlin.math.round
+import com.kafleyozone.coin.R
 
 private const val MAX_STRING_LENGTH = 255
 private const val MAX_MONETARY_AMOUNT = 999999.99

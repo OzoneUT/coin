@@ -14,7 +14,7 @@ import com.kafleyozone.coin.viewmodels.AccountSetupFragmentViewModel
 import com.kafleyozone.coin.data.models.BankInstitutionEntity
 import com.kafleyozone.coin.rvadapters.BankListAdapter
 import com.kafleyozone.coin.databinding.FragmentAccountSetupBinding
-import com.kafleyozone.coin.printListDebug
+import com.kafleyozone.coin.utils.printListDebug
 
 class AccountSetupFragment(pagerListener: OnboardingFlowFragment.PagerListenerInterface) : Fragment() {
 

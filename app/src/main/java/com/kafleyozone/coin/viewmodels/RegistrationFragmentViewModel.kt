@@ -7,6 +7,10 @@ import androidx.lifecycle.ViewModel
 import com.google.android.material.textfield.TextInputEditText
 import com.kafleyozone.coin.*
 import com.kafleyozone.coin.databinding.FragmentRegistrationBinding
+import com.kafleyozone.coin.utils.isConfirmPasswordValid
+import com.kafleyozone.coin.utils.isEmailValid
+import com.kafleyozone.coin.utils.isNameValid
+import com.kafleyozone.coin.utils.isPasswordValid
 import java.util.*
 import kotlin.concurrent.schedule
 

@@ -5,14 +5,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.commit
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.textfield.TextInputEditText
 import com.kafleyozone.coin.R
 import com.kafleyozone.coin.viewmodels.RegistrationFragmentViewModel
 import com.kafleyozone.coin.databinding.FragmentRegistrationBinding
-import com.kafleyozone.coin.setEnabledById
+import com.kafleyozone.coin.utils.setEnabledById
 
 class RegistrationFragment(private val pagerListener: OnboardingFlowFragment.PagerListenerInterface)
     : Fragment() {
