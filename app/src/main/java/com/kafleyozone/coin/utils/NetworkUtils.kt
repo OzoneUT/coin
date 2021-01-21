@@ -1,7 +1,7 @@
 package com.kafleyozone.coin.utils
 
 // Base url
-const val BASE_URL = "http://localhost:8080/"
+const val BASE_URL = "http://www.shinkansen.freeddns.org:8080/"
 
 // Retrofit endpoints
 const val EP_LOGIN = "auth/login"

@@ -1,5 +1,6 @@
 package com.kafleyozone.coin.viewmodels
 
+import android.util.Log
 import android.view.View
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.LiveData
@@ -67,11 +68,18 @@ class LoginFragmentViewModel @ViewModelInject constructor(
     // REPOSITORY LOGIC
     fun doLogin(email: String, password: String) {
         viewModelScope.launch {
-            _loginRes.postValue(Resource.loading(null))
-            val basicValue = Credentials.basic(email, password)
-            userRepository.login(basicValue).let {
-                _loginRes.postValue(it)
+            try {
+                _loginRes.postValue(Resource.loading(null))
+                val basicValue = Credentials.basic(email, password)
+                userRepository.login(basicValue).let {
+                    _loginRes.postValue(it)
+                }
+            } catch (e: Exception) {
+                _loginRes.postValue(Resource.error("Error logging in", null))
+                Log.e(TAG, "Login failed, stacktrace:")
+                e.printStackTrace()
             }
         }
     }
+
 }
