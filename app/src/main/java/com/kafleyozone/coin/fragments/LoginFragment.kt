@@ -1,18 +1,17 @@
 package com.kafleyozone.coin.fragments
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import androidx.fragment.app.viewModels
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.snackbar.Snackbar
 import com.kafleyozone.coin.viewmodels.LoginFragmentViewModel
 import com.kafleyozone.coin.R
-import com.kafleyozone.coin.data.models.LoginResponse
 import com.kafleyozone.coin.databinding.FragmentLoginBinding
 import com.kafleyozone.coin.utils.Status
 import com.kafleyozone.coin.utils.setEnabledById
@@ -56,8 +55,9 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
                            .plus(R.id.login_button).plus(R.id.login_checkbox)
                            .setEnabledById(true, view)
                    binding.progressBar.visibility = View.GONE
-                   view.findNavController()
-                           .navigate(LoginFragmentDirections.actionLoginFragmentToHomeFragment())
+                   val action = LoginFragmentDirections.actionLoginFragmentToHomeFragment()
+                       .setUserData(it.data?.user)
+                   view.findNavController().navigate(action)
                }
                Status.LOADING -> {
                    viewModel.loginInputValidations.keys.toList()

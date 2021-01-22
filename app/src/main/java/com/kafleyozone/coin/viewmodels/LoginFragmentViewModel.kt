@@ -12,6 +12,7 @@ import com.kafleyozone.coin.R
 import com.kafleyozone.coin.data.UserRepository
 import com.kafleyozone.coin.data.models.LoginResponse
 import com.kafleyozone.coin.data.models.Resource
+import com.kafleyozone.coin.data.models.User
 import com.kafleyozone.coin.databinding.FragmentLoginBinding
 import com.kafleyozone.coin.utils.isEmailValid
 import com.kafleyozone.coin.utils.isPasswordValid
@@ -63,7 +64,6 @@ class LoginFragmentViewModel @ViewModelInject constructor(
             }
         }
     }
-
 
     // REPOSITORY LOGIC
     fun doLogin(email: String, password: String) {
