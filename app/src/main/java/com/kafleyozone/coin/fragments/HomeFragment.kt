@@ -18,7 +18,6 @@ class HomeFragment: Fragment(R.layout.fragment_home) {
         const val TAG = "HomeFragment"
     }
 
-    // private val loginViewModel: LoginFragmentViewModel by activityViewModels()
     private val viewModel: HomeViewModel by viewModels()
     private val args: HomeFragmentArgs by navArgs()
     private var _binding: FragmentHomeBinding? = null
@@ -37,7 +36,7 @@ class HomeFragment: Fragment(R.layout.fragment_home) {
 
         viewModel.authorized.observe(viewLifecycleOwner) { authorized ->
             if (!authorized) {
-                requireActivity().finish()
+                findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToLoginFragment())
                 Toast.makeText(requireContext(),
                     "Unauthorized: You must be logged in to view your dashboard.",
                     Toast.LENGTH_SHORT).show()

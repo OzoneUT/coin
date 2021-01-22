@@ -12,7 +12,7 @@ import retrofit2.http.Header
 
 interface AuthenticationService {
     @GET(EP_LOGIN)
-    suspend fun login(@Header("Authorization") basicToken: String) : LoginResponse
+    suspend fun login(@Header("Authorization") basicToken: String) : Response<LoginResponse>
 
     @GET(EP_REFRESH)
     suspend fun refreshAuth() : LoginResponse

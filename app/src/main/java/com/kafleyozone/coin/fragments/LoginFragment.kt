@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.viewModels
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.snackbar.Snackbar
@@ -24,7 +25,7 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
         const val TAG = "LoginFragment"
     }
 
-    private val viewModel: LoginFragmentViewModel by activityViewModels()
+    private val viewModel: LoginFragmentViewModel by viewModels()
     private var _binding: FragmentLoginBinding? = null
     private val binding get() = _binding!!
 
@@ -51,27 +52,18 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
         viewModel.loginRes.observe(viewLifecycleOwner) {
            when(it.status) {
                Status.SUCCESS -> {
-                   viewModel.loginInputValidations.keys.toList()
-                           .plus(R.id.login_button).plus(R.id.login_checkbox)
-                           .setEnabledById(true, view)
-                   binding.progressBar.visibility = View.GONE
-                   val action = LoginFragmentDirections.actionLoginFragmentToHomeFragment()
-                       .setUserData(it.data?.user)
+                   setLoadingUI(false)
+                   binding.loginPasswordField.setText("")
+                   val action = LoginFragmentDirections.actionLoginFragmentToHomeFragment(it.data?.user)
                    view.findNavController().navigate(action)
                }
                Status.LOADING -> {
-                   viewModel.loginInputValidations.keys.toList()
-                       .plus(R.id.login_button).plus(R.id.login_checkbox)
-                       .setEnabledById(false, view)
-                   binding.progressBar.visibility = View.VISIBLE
+                   setLoadingUI(true)
                }
                Status.ERROR -> {
-                   viewModel.loginInputValidations.keys.toList()
-                       .plus(R.id.login_button).plus(R.id.login_checkbox)
-                       .setEnabledById(true, view)
-                   binding.progressBar.visibility = View.GONE
+                   setLoadingUI(false)
                    Snackbar.make(view,
-                           "Internal error. Please try again later.",
+                           "There was an error with logging you in.",
                            Snackbar.LENGTH_SHORT)
                        .show()
                }
@@ -79,5 +71,12 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
         }
 
         return view
+    }
+
+    private fun setLoadingUI(loading: Boolean) {
+        viewModel.loginInputValidations.keys.toList()
+            .plus(R.id.login_button).plus(R.id.login_checkbox)
+            .setEnabledById(!loading, view)
+        binding.progressBar.visibility = if (loading) View.VISIBLE else View.GONE
     }
 }
