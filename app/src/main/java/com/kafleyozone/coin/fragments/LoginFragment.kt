@@ -38,7 +38,8 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
         _binding = FragmentLoginBinding.inflate(inflater, container, false)
         val view = binding.root
 
-        binding.loginEmailField.setText(args.email)
+        if (args.email != "\"\"") // TODO need a better fix to reinit email from dataStore correctly
+            binding.loginEmailField.setText(args.email)
 
         binding.loginButton.setOnClickListener {
             if (viewModel.validateLoginFields(view, binding)) {
@@ -48,9 +49,9 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
         }
 
         binding.registerOnLoginButton.setOnClickListener {
-            findNavController().popBackStack()
             // TODO check if user has logged in from this device before and do not return to
             //  onboarding if they have
+            findNavController().navigate(LoginFragmentDirections.actionLoginFragmentToOnboardingFlowFragment())
         }
 
         viewModel.loginRes.observe(viewLifecycleOwner) {

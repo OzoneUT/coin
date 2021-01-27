@@ -35,6 +35,11 @@
             android:name="email"
             app:argType="string"
             android:defaultValue='""' />
+        <action
+            android:id="@+id/action_loginFragment_to_onboardingFlowFragment"
+            app:destination="@id/onboardingFlowFragment"
+            app:popUpTo="@id/loginFragment"
+            app:popUpToInclusive="true" />
     </fragment>
     <fragment
         android:id="@+id/homeFragment"
