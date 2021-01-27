@@ -10,6 +10,7 @@ import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import com.google.android.material.snackbar.Snackbar
 import com.kafleyozone.coin.viewmodels.LoginFragmentViewModel
 import com.kafleyozone.coin.R
@@ -25,6 +26,7 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
         const val TAG = "LoginFragment"
     }
 
+    private val args: LoginFragmentArgs by navArgs()
     private val viewModel: LoginFragmentViewModel by viewModels()
     private var _binding: FragmentLoginBinding? = null
     private val binding get() = _binding!!
@@ -35,6 +37,8 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
 
         _binding = FragmentLoginBinding.inflate(inflater, container, false)
         val view = binding.root
+
+        binding.loginEmailField.setText(args.email)
 
         binding.loginButton.setOnClickListener {
             if (viewModel.validateLoginFields(view, binding)) {
@@ -54,7 +58,8 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
                Status.SUCCESS -> {
                    setLoadingUI(false)
                    binding.loginPasswordField.setText("")
-                   val action = LoginFragmentDirections.actionLoginFragmentToHomeFragment(it.data?.user)
+                   val action = LoginFragmentDirections
+                       .actionLoginFragmentToHomeFragment(it.data?.user)
                    view.findNavController().navigate(action)
                }
                Status.LOADING -> {
@@ -63,7 +68,7 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
                Status.ERROR -> {
                    setLoadingUI(false)
                    Snackbar.make(view,
-                           "There was an error with logging you in.",
+                           it.message.toString(),
                            Snackbar.LENGTH_SHORT)
                        .show()
                }

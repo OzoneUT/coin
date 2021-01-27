@@ -56,11 +56,11 @@ class LoginFragmentViewModel @ViewModelInject constructor(
         when(input.id) {
             R.id.login_email_field -> if (!hasFocus) {
                 _loginInputValidations[R.id.login_email_field] =
-                        input.isEmailValid(binding.loginEmailFieldLayout, showDetailedHint = false)
+                        input.isEmailValid(binding.loginEmailFieldLayout, false)
             }
             R.id.login_password_field -> if (!hasFocus) {
                 _loginInputValidations[R.id.login_password_field] =
-                        input.isPasswordValid(binding.loginPasswordFieldLayout, showDetailedHint = false)
+                        input.isPasswordValid(binding.loginPasswordFieldLayout, false)
             }
         }
     }
@@ -75,7 +75,8 @@ class LoginFragmentViewModel @ViewModelInject constructor(
                     _loginRes.postValue(it)
                 }
             } catch (e: Exception) {
-                _loginRes.postValue(Resource.error("Error logging in", null))
+                _loginRes.postValue(Resource.error("We couldn't connect to the Coin server.",
+                    null))
                 Log.e(TAG, "Login failed, stacktrace:")
                 e.printStackTrace()
             }
