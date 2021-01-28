@@ -14,7 +14,7 @@ import com.google.android.material.tabs.TabLayoutMediator
 import com.kafleyozone.coin.databinding.FragmentOnboardingFlowBinding
 import dagger.hilt.android.AndroidEntryPoint
 
-class OnboardingFlowFragment : Fragment(){
+class OnboardingFlowFragment : Fragment() {
 
     interface PagerListenerInterface {
         fun onFlowAdvance()
@@ -46,7 +46,7 @@ class OnboardingFlowFragment : Fragment(){
         onBackPressedSetup()
 
         binding.onboardingViewpager.adapter = OnboardingPagerAdapter(requireActivity(), pagerListener)
-        //binding.onboardingViewpager.isUserInputEnabled = false TODO(enable eventually)
+        binding.onboardingViewpager.isUserInputEnabled = false
         TabLayoutMediator(binding.pageIndicator, binding.onboardingViewpager) { _, _->
             // Empty implementation
         }.attach()

@@ -3,13 +3,14 @@ package com.kafleyozone.coin.data
 import android.util.Log
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
-import androidx.datastore.preferences.core.booleanPreferencesKey
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.stringPreferencesKey
 import com.kafleyozone.coin.data.models.LoginResponse
+import com.kafleyozone.coin.data.models.RegistrationRequest
 import com.kafleyozone.coin.data.models.Resource
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
+import java.net.HttpURLConnection
 import javax.inject.Inject
 
 class UserRepository @Inject constructor(
@@ -18,6 +19,7 @@ class UserRepository @Inject constructor(
 ) {
     companion object {
         const val TAG = "UserRepository"
+        const val EMAIL_TAKEN = "email_taken"
         val KEY_USER_FLAG = stringPreferencesKey("user")
         val KEY_ACCESS_TOKEN = stringPreferencesKey("access_token")
         val KEY_REFRESH_TOKEN = stringPreferencesKey("refresh_token")
@@ -40,6 +42,27 @@ class UserRepository @Inject constructor(
                 "We couldn't log you in. Check your username and password.", null)
         }
     }
+
+    suspend fun register(request: RegistrationRequest): Resource<String> {
+        val response = authenticationService.register(request)
+        return if (response.isSuccessful) {
+            Log.i(TAG, "Registration successful")
+            Resource.success("success")
+        } else {
+            val message = "We couldn't register you. Please try again."
+            var reason: String? = null
+            if (response.code() == HttpURLConnection.HTTP_NOT_ACCEPTABLE) {
+                reason = EMAIL_TAKEN
+            }
+            Resource.error(message, reason)
+        }
+    }
+
+    suspend fun account() {}
+
+    suspend fun logout() {}
+
+    suspend fun refreshAuth() {}
 
     suspend fun getLocalUser(): String {
         return authStore.data.map { authStore ->

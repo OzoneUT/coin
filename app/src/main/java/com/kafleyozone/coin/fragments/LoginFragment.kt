@@ -38,9 +38,13 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
         _binding = FragmentLoginBinding.inflate(inflater, container, false)
         val view = binding.root
 
+        // The args may contain an email from a previous logged in user. Pre-fill this in the
+        // correct field if it's not empty and doesn't not contain empty quotes (dataStore bug)
         if (args.email != "\"\"") // TODO need a better fix to reinit email from dataStore correctly
             binding.loginEmailField.setText(args.email)
 
+        // Setup the login button to do a final validation on the username/password field values
+        // and then call the viewModel's doLogin function
         binding.loginButton.setOnClickListener {
             if (viewModel.validateLoginFields(view, binding)) {
                 viewModel.doLogin(binding.loginEmailField.text.toString(),
@@ -48,12 +52,16 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
             }
         }
 
+        // There is an action set up from the Login screen to the beginning of the onboarding
+        // flow.
         binding.registerOnLoginButton.setOnClickListener {
-            // TODO check if user has logged in from this device before and do not return to
-            //  onboarding if they have
-            findNavController().navigate(LoginFragmentDirections.actionLoginFragmentToOnboardingFlowFragment())
+            findNavController().navigate(LoginFragmentDirections
+                    .actionLoginFragmentToOnboardingFlowFragment())
         }
 
+        // _loginRes in viewModel will update based on the response from the server. If there is a
+        // success, erase the password field, re-enable all UI elements, and pass in the User object
+        // from the response to the HomeFragment.
         viewModel.loginRes.observe(viewLifecycleOwner) {
            when(it.status) {
                Status.SUCCESS -> {
@@ -79,10 +87,11 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
         return view
     }
 
+    // enable or disable screen elements and toggle the loading bar visibility accordingly
     private fun setLoadingUI(loading: Boolean) {
         viewModel.loginInputValidations.keys.toList()
             .plus(R.id.login_button).plus(R.id.login_checkbox)
             .setEnabledById(!loading, view)
-        binding.progressBar.visibility = if (loading) View.VISIBLE else View.GONE
+        binding.progressBar.visibility = if (loading) View.VISIBLE else View.INVISIBLE
     }
 }

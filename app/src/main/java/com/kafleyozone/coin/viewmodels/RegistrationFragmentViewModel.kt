@@ -1,24 +1,34 @@
 package com.kafleyozone.coin.viewmodels
 
+import android.util.Log
 import android.view.View
+import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.google.android.material.textfield.TextInputEditText
 import com.kafleyozone.coin.*
+import com.kafleyozone.coin.data.UserRepository
+import com.kafleyozone.coin.data.models.RegistrationRequest
+import com.kafleyozone.coin.data.models.Resource
 import com.kafleyozone.coin.databinding.FragmentRegistrationBinding
-import com.kafleyozone.coin.utils.isConfirmPasswordValid
-import com.kafleyozone.coin.utils.isEmailValid
-import com.kafleyozone.coin.utils.isNameValid
-import com.kafleyozone.coin.utils.isPasswordValid
+import com.kafleyozone.coin.utils.*
+import kotlinx.coroutines.launch
+import okhttp3.Credentials
 import java.util.*
-import kotlin.concurrent.schedule
 
-class RegistrationFragmentViewModel : ViewModel() {
+class RegistrationFragmentViewModel @ViewModelInject constructor(
+        private val userRepository: UserRepository
+) : ViewModel() {
 
-    private val _registrationSuccessState = MutableLiveData<Boolean>()
-    val registrationSuccessState: LiveData<Boolean>
-        get() = _registrationSuccessState
+    private val _registrationRes = MutableLiveData<Resource<String>>()
+    val registrationRes: LiveData<Resource<String>>
+        get() = _registrationRes
+
+    private val _stateEmailTaken = MutableLiveData<Boolean>()
+    val stateEmailTaken: LiveData<Boolean>
+        get() = _stateEmailTaken
 
     // MEMBER FIELDS
     private val _registrationInputValidations = mutableMapOf(
@@ -70,9 +80,22 @@ class RegistrationFragmentViewModel : ViewModel() {
     }
 
     // REPOSITORY LOGIC
-    fun mockNetworkCallForRegistration() {
-        Timer().schedule(3000) {
-            _registrationSuccessState.postValue(true)
+    fun doRegistration(request: RegistrationRequest) {
+        viewModelScope.launch {
+            try {
+                _registrationRes.postValue(Resource.loading(null))
+                userRepository.register(request).let {
+                    if (it.status == Status.ERROR && it.data == UserRepository.EMAIL_TAKEN) {
+                        _stateEmailTaken.postValue(true)
+                        _registrationInputValidations[R.id.register_email_field] = false
+                    }
+                    _registrationRes.postValue(it)
+                }
+            } catch (e: Exception) {
+                _registrationRes.postValue(Resource.error(
+                        "We couldn't connect to the Coin server.", null))
+                Log.e(LoginFragmentViewModel.TAG, "Registration failed: $e")
+            }
         }
     }
 }
