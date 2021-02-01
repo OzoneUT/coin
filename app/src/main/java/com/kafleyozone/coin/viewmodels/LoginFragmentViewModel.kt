@@ -8,7 +8,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.google.android.material.textfield.TextInputEditText
 import com.kafleyozone.coin.R
-import com.kafleyozone.coin.data.UserRepository
+import com.kafleyozone.coin.data.AuthRepository
 import com.kafleyozone.coin.data.models.LoginResponse
 import com.kafleyozone.coin.data.models.Resource
 import com.kafleyozone.coin.databinding.FragmentLoginBinding
@@ -21,7 +21,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class LoginFragmentViewModel @Inject constructor(
-    private val userRepository: UserRepository
+    private val authRepository: AuthRepository
 ) : ViewModel() {
 
     companion object {
@@ -72,7 +72,7 @@ class LoginFragmentViewModel @Inject constructor(
             try {
                 _loginRes.postValue(Resource.loading(null))
                 val basicValue = Credentials.basic(email, password)
-                userRepository.login(basicValue).let {
+                authRepository.login(basicValue).let {
                     _loginRes.postValue(it)
                 }
             } catch (e: Exception) {

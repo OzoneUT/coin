@@ -2,7 +2,9 @@ package com.kafleyozone.coin.data.network
 
 import android.util.Log
 import com.kafleyozone.coin.data.TokenRepository
+import com.kafleyozone.coin.utils.HEADER_AUTHORIZATION
 import com.kafleyozone.coin.utils.isRefreshingToken
+import com.kafleyozone.coin.utils.toBearerToken
 import com.kafleyozone.coin.utils.usingBasicAuth
 import dagger.Lazy
 import kotlinx.coroutines.runBlocking
@@ -25,14 +27,13 @@ class CoinAuthenticator @Inject constructor(
         Log.i(TAG, "In CoinAuthenticator")
         val authService = authenticationServiceLazy.get() ?: return null
 
-        // if the causing request was made with basic auth,
-        // we don't need to refresh anything.
+        // if the causing request was made with basic auth, we don't need to refresh anything.
         if (usingBasicAuth(response.request)) {
             Log.i(TAG, "no need to refresh b/c basic auth was used")
             return null
         }
 
-        // if the 401-causing request was because of a refresh attempt, don't try again
+        // if the 401-causing request was because of a refresh attempt, don't try again.
         if (isRefreshingToken(response.request)) {
             Log.i(TAG, "no need to refresh b/c previous refresh attempt failed")
             return null
@@ -40,7 +41,7 @@ class CoinAuthenticator @Inject constructor(
 
         // get the refresh token on this thread
         val refreshToken = runBlocking {
-            return@runBlocking "Bearer " + tokenRepository.getCachedRefreshToken()
+            return@runBlocking toBearerToken(tokenRepository.getCachedRefreshToken())
         }
 
         // make the refresh request with Refresh-Token header and refresh token
@@ -60,14 +61,13 @@ class CoinAuthenticator @Inject constructor(
             // return the original request with new access token
             Log.i(TAG, "returning the old request with new access token")
             return response.request.newBuilder()
-                .removeHeader("Authorization")
-                .addHeader("Authorization", "Bearer " + tokens.accessToken)
+                .removeHeader(HEADER_AUTHORIZATION)
+                .addHeader(HEADER_AUTHORIZATION, toBearerToken(tokens.accessToken))
                 .build()
 
         } else {
             Log.i(TAG, "refreshAuth call was not successful")
             return null
         }
-
     }
 }

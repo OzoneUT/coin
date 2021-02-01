@@ -5,7 +5,8 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.kafleyozone.coin.data.UserRepository
+import com.kafleyozone.coin.data.AppRepository
+import com.kafleyozone.coin.data.AuthRepository
 import com.kafleyozone.coin.data.models.Resource
 import com.kafleyozone.coin.data.models.User
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -14,7 +15,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class SplashFragmentViewModel @Inject constructor(
-    private val userRepository: UserRepository
+    private val authRepository: AuthRepository,
+    private val appRepository: AppRepository
 ) : ViewModel() {
 
     companion object {
@@ -33,7 +35,7 @@ class SplashFragmentViewModel @Inject constructor(
         viewModelScope.launch {
             try {
                 _userRes.postValue(Resource.loading(null))
-                userRepository.getAccount().let {
+                appRepository.getAccount().let {
                     _userRes.postValue(it)
                 }
             } catch (e: Exception) {
@@ -51,9 +53,9 @@ class SplashFragmentViewModel @Inject constructor(
 
     fun getUserEmail() {
         viewModelScope.launch {
-            val cachedEmail = userRepository.getLocalUser()
+            val cachedEmail = authRepository.getLocalUser()
             _cachedEmail.postValue(cachedEmail)
-            Log.i(TAG, "found cached email: $cachedEmail")
+            Log.i(TAG, "cached email: $cachedEmail")
         }
     }
 }

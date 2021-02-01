@@ -25,7 +25,7 @@ class TokenRepository @Inject constructor(
             authStore[KEY_ACCESS_TOKEN] = accessToken
             authStore[KEY_REFRESH_TOKEN] = refreshToken
         }
-        Log.i(UserRepository.TAG, "auth updated")
+        Log.i(AuthRepository.TAG, "auth updated")
     }
 
     suspend fun getCachedUserEmail(): String {

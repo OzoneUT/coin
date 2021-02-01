@@ -10,15 +10,17 @@ import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.kafleyozone.coin.viewmodels.AccountSetupFragmentViewModel
 import com.kafleyozone.coin.data.models.BankInstitutionEntity
-import com.kafleyozone.coin.rvadapters.BankListAdapter
 import com.kafleyozone.coin.databinding.FragmentAccountSetupBinding
+import com.kafleyozone.coin.rvadapters.BankListAdapter
 import com.kafleyozone.coin.utils.printListDebug
+import com.kafleyozone.coin.viewmodels.AccountSetupFragmentViewModel
 
-class AccountSetupFragment(pagerListener: OnboardingFlowFragment.PagerListenerInterface) : Fragment() {
+class AccountSetupFragment(
+    pagerListener: OnboardingFlowFragment.PagerListenerInterface
+) : Fragment() {
 
-    private val viewModel: AccountSetupFragmentViewModel by viewModels(ownerProducer = {this})
+    private val viewModel: AccountSetupFragmentViewModel by viewModels(ownerProducer = { this })
     private var _binding: FragmentAccountSetupBinding? = null
     private val binding get() = _binding!!
     private var listAdapter: ListAdapter<BankInstitutionEntity,

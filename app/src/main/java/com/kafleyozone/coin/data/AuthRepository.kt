@@ -4,20 +4,16 @@ import android.util.Log
 import com.kafleyozone.coin.data.models.LoginResponse
 import com.kafleyozone.coin.data.models.RegistrationRequest
 import com.kafleyozone.coin.data.models.Resource
-import com.kafleyozone.coin.data.models.User
-import com.kafleyozone.coin.data.network.AccountService
 import com.kafleyozone.coin.data.network.AuthenticationService
-import okhttp3.ResponseBody
 import java.net.HttpURLConnection
 import javax.inject.Inject
 
-class UserRepository @Inject constructor(
+class AuthRepository @Inject constructor(
     private val authenticationService: AuthenticationService,
-    private val accountService: AccountService,
     private val tokenRepository: TokenRepository
 ) {
     companion object {
-        const val TAG = "UserRepository"
+        const val TAG = "AuthRepository"
         const val EMAIL_TAKEN = "email_taken"
     }
 
@@ -46,27 +42,6 @@ class UserRepository @Inject constructor(
                 reason = EMAIL_TAKEN
             }
             Resource.error(message, reason)
-        }
-    }
-
-    suspend fun getAccount(): Resource<User> {
-        val response = accountService.getAccount()
-        return if (response.isSuccessful) {
-            Log.i(TAG, "got account successfully - getAccount()")
-            Resource.success(response.body())
-        } else {
-            Resource.error("For your security, please login again.", null)
-        }
-    }
-
-    suspend fun logout(): Resource<ResponseBody> {
-        val response = accountService.logout()
-        return if (response.isSuccessful) {
-            Log.i(TAG, "logged user out successfully")
-            Resource.success(null)
-        } else {
-            Log.e(TAG, "got error trying to log out user")
-            Resource.error("", null)
         }
     }
 

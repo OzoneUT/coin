@@ -2,7 +2,9 @@ package com.kafleyozone.coin.data.network
 
 import android.util.Log
 import com.kafleyozone.coin.data.TokenRepository
+import com.kafleyozone.coin.utils.HEADER_AUTHORIZATION
 import com.kafleyozone.coin.utils.hasAuthHeader
+import com.kafleyozone.coin.utils.toBearerToken
 import kotlinx.coroutines.runBlocking
 import okhttp3.Interceptor
 import okhttp3.Response
@@ -29,13 +31,13 @@ class TokenInterceptor @Inject constructor(
 
         // get the access token by running the suspend function on this thread
         val accessToken: String = runBlocking {
-            return@runBlocking "Bearer " + tokenRepository.getCachedAccessToken()
+            return@runBlocking toBearerToken(tokenRepository.getCachedAccessToken())
         }
 
         // add the authorization header to the old request and proceed using it as the new
         Log.i(TAG, "Adding an authorization header with an access token.")
         val authorizedRequest = chain.request().newBuilder()
-            .header("Authorization", accessToken)
+            .header(HEADER_AUTHORIZATION, accessToken)
             .build()
         return chain.proceed(authorizedRequest)
     }

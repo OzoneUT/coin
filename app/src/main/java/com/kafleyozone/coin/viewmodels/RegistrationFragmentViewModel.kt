@@ -8,7 +8,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.google.android.material.textfield.TextInputEditText
 import com.kafleyozone.coin.R
-import com.kafleyozone.coin.data.UserRepository
+import com.kafleyozone.coin.data.AuthRepository
 import com.kafleyozone.coin.data.models.RegistrationRequest
 import com.kafleyozone.coin.data.models.Resource
 import com.kafleyozone.coin.databinding.FragmentRegistrationBinding
@@ -19,7 +19,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class RegistrationFragmentViewModel @Inject constructor(
-    private val userRepository: UserRepository
+    private val authRepository: AuthRepository
 ) : ViewModel() {
 
     private val _registrationRes = MutableLiveData<Resource<String>>()
@@ -84,8 +84,8 @@ class RegistrationFragmentViewModel @Inject constructor(
         viewModelScope.launch {
             try {
                 _registrationRes.postValue(Resource.loading(null))
-                userRepository.register(request).let {
-                    if (it.status == Status.ERROR && it.data == UserRepository.EMAIL_TAKEN) {
+                authRepository.register(request).let {
+                    if (it.status == Status.ERROR && it.data == AuthRepository.EMAIL_TAKEN) {
                         _stateEmailTaken.postValue(true)
                         _registrationInputValidations[R.id.register_email_field] = false
                     }
