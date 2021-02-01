@@ -2,7 +2,6 @@ package com.kafleyozone.coin.viewmodels
 
 import android.util.Log
 import android.view.View
-import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -12,14 +11,16 @@ import com.kafleyozone.coin.R
 import com.kafleyozone.coin.data.UserRepository
 import com.kafleyozone.coin.data.models.LoginResponse
 import com.kafleyozone.coin.data.models.Resource
-import com.kafleyozone.coin.data.models.User
 import com.kafleyozone.coin.databinding.FragmentLoginBinding
 import com.kafleyozone.coin.utils.isEmailValid
 import com.kafleyozone.coin.utils.isPasswordValid
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import okhttp3.Credentials
+import javax.inject.Inject
 
-class LoginFragmentViewModel @ViewModelInject constructor(
+@HiltViewModel
+class LoginFragmentViewModel @Inject constructor(
     private val userRepository: UserRepository
 ) : ViewModel() {
 
@@ -29,7 +30,7 @@ class LoginFragmentViewModel @ViewModelInject constructor(
 
     // MEMBER FIELDS
     private val _loginRes = MutableLiveData<Resource<LoginResponse>>()
-    val loginRes : LiveData<Resource<LoginResponse>>
+    val loginRes: LiveData<Resource<LoginResponse>>
         get() = _loginRes
 
     private val _loginInputValidations: MutableMap<Int, Boolean> = mutableMapOf(

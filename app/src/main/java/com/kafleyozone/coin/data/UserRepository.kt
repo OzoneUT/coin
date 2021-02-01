@@ -1,28 +1,24 @@
 package com.kafleyozone.coin.data
 
 import android.util.Log
-import androidx.datastore.core.DataStore
-import androidx.datastore.preferences.core.Preferences
-import androidx.datastore.preferences.core.edit
-import androidx.datastore.preferences.core.stringPreferencesKey
 import com.kafleyozone.coin.data.models.LoginResponse
 import com.kafleyozone.coin.data.models.RegistrationRequest
 import com.kafleyozone.coin.data.models.Resource
-import kotlinx.coroutines.flow.first
-import kotlinx.coroutines.flow.map
+import com.kafleyozone.coin.data.models.User
+import com.kafleyozone.coin.data.network.AccountService
+import com.kafleyozone.coin.data.network.AuthenticationService
+import okhttp3.ResponseBody
 import java.net.HttpURLConnection
 import javax.inject.Inject
 
 class UserRepository @Inject constructor(
     private val authenticationService: AuthenticationService,
-    private val authStore: DataStore<Preferences>
+    private val accountService: AccountService,
+    private val tokenRepository: TokenRepository
 ) {
     companion object {
         const val TAG = "UserRepository"
         const val EMAIL_TAKEN = "email_taken"
-        val KEY_USER_FLAG = stringPreferencesKey("user")
-        val KEY_ACCESS_TOKEN = stringPreferencesKey("access_token")
-        val KEY_REFRESH_TOKEN = stringPreferencesKey("refresh_token")
     }
 
     suspend fun login(basicValue: String): Resource<LoginResponse> {
@@ -30,12 +26,7 @@ class UserRepository @Inject constructor(
         val tokens = response.body()?.tokens
         val user = response.body()?.user?.email
         return if (response.isSuccessful && tokens != null && user != null) {
-            authStore.edit { authStore ->
-                authStore[KEY_USER_FLAG] = user
-                authStore[KEY_ACCESS_TOKEN] = tokens.accessToken
-                authStore[KEY_REFRESH_TOKEN] = tokens.refreshToken
-            }
-            Log.i(TAG, "new user written to dataStore: $user")
+            tokenRepository.cacheNewAuth(tokens.accessToken, tokens.refreshToken, email = user)
             Resource.success(response.body())
         } else {
             Resource.error(
@@ -58,15 +49,28 @@ class UserRepository @Inject constructor(
         }
     }
 
-    suspend fun account() {}
+    suspend fun getAccount(): Resource<User> {
+        val response = accountService.getAccount()
+        return if (response.isSuccessful) {
+            Log.i(TAG, "got account successfully - getAccount()")
+            Resource.success(response.body())
+        } else {
+            Resource.error("For your security, please login again.", null)
+        }
+    }
 
-    suspend fun logout() {}
-
-    suspend fun refreshAuth() {}
+    suspend fun logout(): Resource<ResponseBody> {
+        val response = accountService.logout()
+        return if (response.isSuccessful) {
+            Log.i(TAG, "logged user out successfully")
+            Resource.success(null)
+        } else {
+            Log.e(TAG, "got error trying to log out user")
+            Resource.error("", null)
+        }
+    }
 
     suspend fun getLocalUser(): String {
-        return authStore.data.map { authStore ->
-            authStore[KEY_USER_FLAG] ?: ""
-        }.first()
+        return tokenRepository.getCachedUserEmail()
     }
 }

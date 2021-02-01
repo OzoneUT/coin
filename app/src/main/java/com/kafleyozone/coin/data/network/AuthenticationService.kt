@@ -1,9 +1,9 @@
-package com.kafleyozone.coin.data
+package com.kafleyozone.coin.data.network
 
 import com.kafleyozone.coin.data.models.LoginResponse
 import com.kafleyozone.coin.data.models.RegistrationRequest
+import com.kafleyozone.coin.data.models.TokenResponse
 import com.kafleyozone.coin.utils.EP_LOGIN
-import com.kafleyozone.coin.utils.EP_LOGOUT
 import com.kafleyozone.coin.utils.EP_REFRESH
 import com.kafleyozone.coin.utils.EP_REGISTER
 import okhttp3.ResponseBody
@@ -22,8 +22,9 @@ interface AuthenticationService {
     suspend fun register(@Body request: RegistrationRequest) : Response<ResponseBody>
 
     @GET(EP_REFRESH)
-    suspend fun refreshAuth() : LoginResponse
-
-    @GET(EP_LOGOUT)
-    suspend fun logout() : ResponseBody
+    fun refreshAuth(
+        @Header("Refresh-Token") value: String = "true",
+        @Header("Authorization") refreshToken: String
+    )
+            : Call<TokenResponse>
 }

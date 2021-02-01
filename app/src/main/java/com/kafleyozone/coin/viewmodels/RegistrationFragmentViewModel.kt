@@ -2,24 +2,24 @@ package com.kafleyozone.coin.viewmodels
 
 import android.util.Log
 import android.view.View
-import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.google.android.material.textfield.TextInputEditText
-import com.kafleyozone.coin.*
+import com.kafleyozone.coin.R
 import com.kafleyozone.coin.data.UserRepository
 import com.kafleyozone.coin.data.models.RegistrationRequest
 import com.kafleyozone.coin.data.models.Resource
 import com.kafleyozone.coin.databinding.FragmentRegistrationBinding
 import com.kafleyozone.coin.utils.*
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
-import okhttp3.Credentials
-import java.util.*
+import javax.inject.Inject
 
-class RegistrationFragmentViewModel @ViewModelInject constructor(
-        private val userRepository: UserRepository
+@HiltViewModel
+class RegistrationFragmentViewModel @Inject constructor(
+    private val userRepository: UserRepository
 ) : ViewModel() {
 
     private val _registrationRes = MutableLiveData<Resource<String>>()

@@ -9,6 +9,7 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity(R.layout.activity_main) {
     companion object {
+        // This static function is used to restart the app from anywhere.
         fun triggerRebirth(context: Context) {
             val packageManager = context.packageManager
             val intent = packageManager.getLaunchIntentForPackage(context.packageName)
