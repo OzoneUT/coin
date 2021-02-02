@@ -1,22 +1,20 @@
 package com.kafleyozone.coin.fragments
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import androidx.fragment.app.viewModels
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.google.android.material.snackbar.Snackbar
-import com.kafleyozone.coin.viewmodels.LoginFragmentViewModel
 import com.kafleyozone.coin.R
 import com.kafleyozone.coin.databinding.FragmentLoginBinding
 import com.kafleyozone.coin.utils.Status
 import com.kafleyozone.coin.utils.setEnabledById
+import com.kafleyozone.coin.viewmodels.LoginFragmentViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -27,7 +25,7 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
     }
 
     private val args: LoginFragmentArgs by navArgs()
-    private val viewModel: LoginFragmentViewModel by viewModels()
+    private val viewModel: LoginFragmentViewModel by activityViewModels()
     private var _binding: FragmentLoginBinding? = null
     private val binding get() = _binding!!
 

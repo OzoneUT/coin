@@ -12,6 +12,7 @@ const val EP_REGISTER = "auth/register"
 const val EP_REFRESH = "auth/refresh"
 const val EP_LOGOUT = "auth/logout"
 const val EP_ACCOUNT = "api/account"
+const val EP_ACCOUNT_SETUP = "api/setup"
 
 // Misc. constants
 const val BEARER = "Bearer"

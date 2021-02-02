@@ -6,9 +6,9 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.kafleyozone.coin.utils.convertStringToFormattedCurrency
-import com.kafleyozone.coin.databinding.ListItemAccountSetupBinding
 import com.kafleyozone.coin.data.models.BankInstitutionEntity
+import com.kafleyozone.coin.databinding.ListItemAccountSetupBinding
+import com.kafleyozone.coin.utils.convertStringToFormattedCurrency
 
 class BankListAdapter : ListAdapter<BankInstitutionEntity,
         BankListAdapter.BankListItemViewHolder>(ItemDiffCallback()) {
@@ -36,7 +36,7 @@ class BankListAdapter : ListAdapter<BankInstitutionEntity,
             itemBinding.institutionNameTextView.text = item.institutionName
             itemBinding.institutionTypeTextView.text = item.institutionType
             itemBinding.institutionAmountTextView.text =
-                    convertStringToFormattedCurrency(item.amount, symbol = true)
+                    convertStringToFormattedCurrency(item.initialAmount, symbol = true)
         }
     }
 

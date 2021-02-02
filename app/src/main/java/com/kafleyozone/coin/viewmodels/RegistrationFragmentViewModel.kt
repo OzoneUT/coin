@@ -30,6 +30,8 @@ class RegistrationFragmentViewModel @Inject constructor(
     val stateEmailTaken: LiveData<Boolean>
         get() = _stateEmailTaken
 
+    lateinit var registrationRequestObject: RegistrationRequest
+
     // MEMBER FIELDS
     private val _registrationInputValidations = mutableMapOf(
             R.id.register_name_field to false,
@@ -89,6 +91,7 @@ class RegistrationFragmentViewModel @Inject constructor(
                         _stateEmailTaken.postValue(true)
                         _registrationInputValidations[R.id.register_email_field] = false
                     }
+                    registrationRequestObject = request
                     _registrationRes.postValue(it)
                 }
             } catch (e: Exception) {

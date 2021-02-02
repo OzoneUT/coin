@@ -5,16 +5,18 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.textfield.TextInputEditText
 import com.kafleyozone.coin.R
 import com.kafleyozone.coin.data.models.RegistrationRequest
-import com.kafleyozone.coin.viewmodels.RegistrationFragmentViewModel
 import com.kafleyozone.coin.databinding.FragmentRegistrationBinding
 import com.kafleyozone.coin.utils.Status
 import com.kafleyozone.coin.utils.setEnabledById
+import com.kafleyozone.coin.viewmodels.LoginFragmentViewModel
+import com.kafleyozone.coin.viewmodels.RegistrationFragmentViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -23,6 +25,7 @@ class RegistrationFragment(
 ) : Fragment() {
 
     private val viewModel by viewModels<RegistrationFragmentViewModel>()
+    private val loginViewModel: LoginFragmentViewModel by activityViewModels()
     private var _binding: FragmentRegistrationBinding? = null
     private val binding get() = _binding!!
 
@@ -61,10 +64,30 @@ class RegistrationFragment(
             }
         }
 
+        // auto-login
+        loginViewModel.loginRes.observe(viewLifecycleOwner) {
+            when (it.status) {
+                Status.SUCCESS -> {
+                    pagerListener.onFlowAdvance()
+                }
+                Status.LOADING -> {
+                    setLoadingUI(loading = true)
+                }
+                Status.ERROR -> {
+                    Snackbar.make(view, "Login with your new credentials", Snackbar.LENGTH_SHORT).show()
+                    OnboardingFlowFragmentDirections.actionOnboardingFlowFragmentToLoginFragment(
+                            viewModel.registrationRequestObject.email
+                    )
+                }
+            }
+        }
+
         viewModel.registrationRes.observe(viewLifecycleOwner) { resource ->
             when (resource.status) {
                 Status.SUCCESS -> {
-                    pagerListener.onFlowAdvance()
+                    // auto-login
+                    loginViewModel.doLogin(viewModel.registrationRequestObject.email,
+                            viewModel.registrationRequestObject.password)
                 }
                 Status.LOADING -> {
                     setLoadingUI(loading = true)

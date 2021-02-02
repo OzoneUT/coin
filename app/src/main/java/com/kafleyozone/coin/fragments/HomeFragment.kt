@@ -34,6 +34,12 @@ class HomeFragment: Fragment(R.layout.fragment_home) {
         onBackPressedSetup()
 
         viewModel.userData.observe(viewLifecycleOwner) {
+            if (!it.accountSetupComplete) {
+                findNavController()
+                        .navigate(HomeFragmentDirections
+                                .actionHomeFragmentToAccountSetupFragment(it.name))
+                return@observe
+            }
             binding.nameTextview.text = it.name
             binding.idTextview.text = it.id
         }

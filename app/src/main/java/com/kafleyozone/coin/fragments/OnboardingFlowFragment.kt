@@ -1,7 +1,6 @@
 package com.kafleyozone.coin.fragments
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,13 +11,11 @@ import androidx.navigation.fragment.findNavController
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.google.android.material.tabs.TabLayoutMediator
 import com.kafleyozone.coin.databinding.FragmentOnboardingFlowBinding
-import dagger.hilt.android.AndroidEntryPoint
 
 class OnboardingFlowFragment : Fragment() {
 
     interface PagerListenerInterface {
         fun onFlowAdvance()
-        fun registrationHandler()
     }
 
     companion object {
@@ -37,9 +34,6 @@ class OnboardingFlowFragment : Fragment() {
         val pagerListener: PagerListenerInterface = object : PagerListenerInterface {
             override fun onFlowAdvance() {
                 binding.onboardingViewpager.currentItem++
-            }
-            override fun registrationHandler() {
-                Log.i(TAG, "beginning registration process")
             }
         }
 
@@ -73,9 +67,9 @@ class OnboardingFlowFragment : Fragment() {
     ) : FragmentStateAdapter(fa){
 
         val fragmentList = listOf(
-            WelcomeFragment(pagerListener),
-            RegistrationFragment(pagerListener),
-            AccountSetupFragment(pagerListener))
+                WelcomeFragment(pagerListener),
+                RegistrationFragment(pagerListener),
+                AccountSetupFragment())
 
         override fun getItemCount(): Int = fragmentList.size
         override fun createFragment(position: Int): Fragment = fragmentList[position]
