@@ -1,12 +1,14 @@
 package com.kafleyozone.coin.fragments
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.activity.addCallback
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -24,9 +26,10 @@ import com.kafleyozone.coin.viewmodels.AccountSetupFragmentViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class AccountSetupFragment : Fragment() {
+class AccountSetupFragment(
+        private val pagerListener: OnboardingFlowFragment.PagerListenerInterface,
+) : Fragment() {
 
-    private val args: AccountSetupFragmentArgs by navArgs()
     private val viewModel: AccountSetupFragmentViewModel by viewModels(ownerProducer = { this })
     private var _binding: FragmentAccountSetupBinding? = null
     private val binding get() = _binding!!
@@ -35,21 +38,16 @@ class AccountSetupFragment : Fragment() {
 
     companion object {
         private const val TAG = "AccountSetupFragment"
+        private const val ARG_NAME_KEY = "name"
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
+    override fun onCreateView(
+            inflater: LayoutInflater,
+            container: ViewGroup?, savedInstanceState: Bundle?,
+    ): View {
         _binding = FragmentAccountSetupBinding.inflate(inflater, container, false)
         val view = binding.root
         listAdapter = BankListAdapter()
-
-        // *** if we have a non-null name argument, previous fragment was HomeFragment
-        args.name?.let {
-            binding.accountSetupWelcome.text =
-                    getString(R.string.welcome_to_coin_with_name, it.trim())
-            binding.setupFinishButton
-                    .setMargins(requireContext(), left = 100, right = 100, bottom = 32)
-            onBackPressedSetup()
-        }
 
         // Simple Swipe to Delete implementation
         val swipeHandler = object : ItemTouchHelper.SimpleCallback(0,
@@ -92,7 +90,14 @@ class AccountSetupFragment : Fragment() {
         viewModel.setupRes.observe(viewLifecycleOwner) {
             when (it.status) {
                 Status.SUCCESS -> {
-                    // TODO
+                    try {
+                        findNavController()
+                                .navigate(AccountSetupFragmentDirections
+                                        .actionAccountSetupFragmentToHomeFragment(it.data?.id
+                                                ?: ""))
+                    } catch (e: Exception) {
+                        pagerListener.onAccountSetupComplete(it.data?.id ?: "")
+                    }
                 }
                 Status.LOADING -> {
                     showLoadingUi(isLoading = true)
@@ -104,7 +109,33 @@ class AccountSetupFragment : Fragment() {
             }
         }
 
+        viewModel.name.observe(viewLifecycleOwner) {
+            binding.accountSetupWelcome.text =
+                    if (it.isNullOrEmpty()) getString(R.string.welcome_to_coin_no_name)
+                    else getString(R.string.welcome_to_coin_with_name, it)
+        }
+
+        setupUI()
+
         return view
+    }
+
+    private fun setupUI() {
+        try {
+            val args: AccountSetupFragmentArgs by navArgs()
+            args.name?.let {
+                viewModel.setName(it)
+                binding.setupFinishButton
+                        .setMargins(requireContext(), left = 100, right = 100, bottom = 32)
+                onBackPressedSetup()
+            }
+        } catch (e: Exception) {
+            Log.i(TAG, "no navArgs found for AccountSetupFragment, must be on onboarding flow")
+        }
+    }
+
+    fun setNameArgument(name: String) {
+        viewModel.setName(name)
     }
 
     private fun showLoadingUi(isLoading: Boolean) {

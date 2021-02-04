@@ -1,6 +1,7 @@
 package com.kafleyozone.coin.fragments
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -24,14 +25,20 @@ class RegistrationFragment(
         private val pagerListener: OnboardingFlowFragment.PagerListenerInterface
 ) : Fragment() {
 
+    companion object {
+        private const val TAG = "RegistrationFragment"
+    }
+
     private val viewModel by viewModels<RegistrationFragmentViewModel>()
     private val loginViewModel: LoginFragmentViewModel by activityViewModels()
     private var _binding: FragmentRegistrationBinding? = null
     private val binding get() = _binding!!
 
-    override fun onCreateView(inflater: LayoutInflater,
-                              container: ViewGroup?,
-                              savedInstanceState: Bundle?): View {
+    override fun onCreateView(
+            inflater: LayoutInflater,
+            container: ViewGroup?,
+            savedInstanceState: Bundle?,
+    ): View {
         _binding = FragmentRegistrationBinding.inflate(inflater, container, false)
         val view = binding.root
 
@@ -68,7 +75,11 @@ class RegistrationFragment(
         loginViewModel.loginRes.observe(viewLifecycleOwner) {
             when (it.status) {
                 Status.SUCCESS -> {
-                    pagerListener.onFlowAdvance()
+                    try {
+                        pagerListener.onRegisterComplete(it.data?.user?.name ?: "")
+                    } catch (e: Exception) {
+                        Log.e(TAG, "couldn't advance page; we may not be on onboarding flow")
+                    }
                 }
                 Status.LOADING -> {
                     setLoadingUI(loading = true)

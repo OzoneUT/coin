@@ -1,6 +1,7 @@
 package com.kafleyozone.coin.fragments
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -15,11 +16,15 @@ import com.kafleyozone.coin.databinding.FragmentOnboardingFlowBinding
 class OnboardingFlowFragment : Fragment() {
 
     interface PagerListenerInterface {
-        fun onFlowAdvance()
+        fun onOnboardingStart()
+        fun onRegisterComplete(name: String)
+        fun onAccountSetupComplete(name: String)
     }
 
     companion object {
         const val TAG = "OnboardingFlowFragment"
+        const val INDEX_REGISTRATION_PAGE = 1
+        const val INDEX_SETUP_PAGE = 2
     }
 
     private var _binding: FragmentOnboardingFlowBinding? = null
@@ -32,9 +37,24 @@ class OnboardingFlowFragment : Fragment() {
         val view = binding.root
 
         val pagerListener: PagerListenerInterface = object : PagerListenerInterface {
-            override fun onFlowAdvance() {
+            override fun onOnboardingStart() {
+                binding.onboardingViewpager.currentItem = INDEX_REGISTRATION_PAGE
+            }
+
+            override fun onRegisterComplete(name: String) {
+                Log.i(TAG, "onRegisterComplete")
+                ((binding.onboardingViewpager.adapter as OnboardingPagerAdapter)
+                        .fragmentList[INDEX_SETUP_PAGE] as AccountSetupFragment)
+                        .setNameArgument(name)
                 binding.onboardingViewpager.currentItem++
             }
+
+            override fun onAccountSetupComplete(name: String) {
+                findNavController()
+                        .navigate(OnboardingFlowFragmentDirections
+                                .actionOnboardingFlowFragmentToHomeFragment(name))
+            }
+
         }
 
         onBackPressedSetup()
@@ -62,14 +82,14 @@ class OnboardingFlowFragment : Fragment() {
     }
 
     private inner class OnboardingPagerAdapter(
-        fa: FragmentActivity,
-        pagerListener: PagerListenerInterface
-    ) : FragmentStateAdapter(fa){
+            fa: FragmentActivity,
+            pagerListener: PagerListenerInterface,
+    ) : FragmentStateAdapter(fa) {
 
-        val fragmentList = listOf(
+        val fragmentList = mutableListOf(
                 WelcomeFragment(pagerListener),
                 RegistrationFragment(pagerListener),
-                AccountSetupFragment())
+                AccountSetupFragment(pagerListener))
 
         override fun getItemCount(): Int = fragmentList.size
         override fun createFragment(position: Int): Fragment = fragmentList[position]

@@ -39,8 +39,8 @@ class SplashFragment: Fragment(R.layout.fragment_splash) {
                     // if we successfully got the user, the cached accessToken was valid. Move the
                     // user to their dashboard
                     findNavController().navigate(
-                        SplashFragmentDirections
-                            .actionSplashFragmentToHomeFragment(it.data)
+                            SplashFragmentDirections
+                                    .actionSplashFragmentToHomeFragment(it.data?.id ?: "")
                     )
                 }
                 Status.LOADING -> {

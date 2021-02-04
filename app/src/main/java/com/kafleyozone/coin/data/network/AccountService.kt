@@ -16,7 +16,8 @@ interface AccountService {
     suspend fun getAccount(): Response<User>
 
     @POST(EP_ACCOUNT_SETUP)
-    suspend fun setupAccount(@Body bankInstitutionEntities: List<BankInstitutionEntity>)
+    suspend fun setupAccount(@Body bankInstitutionEntities: List<BankInstitutionEntity>):
+            Response<User>
 
     @GET(EP_LOGOUT)
     suspend fun logout(): Response<ResponseBody>

@@ -9,38 +9,26 @@
         android:id="@+id/id_textview"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="24dp"
         android:fontFamily="sans-serif-light"
-        tools:text="kafleyozone@gmail.com"
         android:textAppearance="@style/TextAppearance.AppCompat.Display1"
-        android:textColor="@color/black"
-        android:textSize="18sp"
+        android:textColor="@color/white"
+        android:textSize="24sp"
         android:typeface="normal"
-        app:layout_constraintEnd_toEndOf="@+id/name_textview"
-        app:layout_constraintStart_toStartOf="@+id/name_textview"
-        app:layout_constraintTop_toBottomOf="@+id/name_textview" />
-
-    <TextView
-        android:id="@+id/name_textview"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:fontFamily="sans-serif-light"
-        tools:text="Ozone"
-        android:textAppearance="@style/TextAppearance.AppCompat.Display1"
-        android:textColor="@color/black"
-        android:typeface="normal"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/logout_button"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.38" />
+        app:layout_constraintVertical_chainStyle="packed"
+        tools:text="kafleyozone@gmail.com" />
 
     <Button
         android:id="@+id/logout_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
         android:text="@string/logout_button_label"
-        app:layout_constraintEnd_toEndOf="@+id/id_textview"
-        app:layout_constraintStart_toStartOf="@+id/id_textview"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/id_textview" />
 </androidx.constraintlayout.widget.ConstraintLayout>

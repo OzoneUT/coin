@@ -66,7 +66,7 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
                    setLoadingUI(false)
                    binding.loginPasswordField.setText("")
                    val action = LoginFragmentDirections
-                       .actionLoginFragmentToHomeFragment(it.data?.user)
+                           .actionLoginFragmentToHomeFragment(it.data?.user?.id ?: "")
                    view.findNavController().navigate(action)
                }
                Status.LOADING -> {

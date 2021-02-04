@@ -20,7 +20,7 @@ class WelcomeFragment(private val pagerListener: OnboardingFlowFragment.PagerLis
         val view = binding.root
 
         binding.startButton.setOnClickListener {
-            pagerListener.onFlowAdvance()
+            pagerListener.onOnboardingStart()
         }
 
         return view

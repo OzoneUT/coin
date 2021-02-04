@@ -8,7 +8,6 @@ import android.widget.Toast
 import androidx.activity.addCallback
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.kafleyozone.coin.MainActivity
 import com.kafleyozone.coin.R
@@ -34,14 +33,14 @@ class HomeFragment: Fragment(R.layout.fragment_home) {
         onBackPressedSetup()
 
         viewModel.userData.observe(viewLifecycleOwner) {
-            if (!it.accountSetupComplete) {
-                findNavController()
-                        .navigate(HomeFragmentDirections
-                                .actionHomeFragmentToAccountSetupFragment(it.name))
-                return@observe
-            }
-            binding.nameTextview.text = it.name
-            binding.idTextview.text = it.id
+//            if (!it.accountSetupComplete) {
+//                findNavController()
+//                        .navigate(HomeFragmentDirections
+//                                .actionHomeFragmentToAccountSetupFragment(""))
+//                return@observe
+//            }
+//            binding.nameTextview.text = it.name
+            binding.idTextview.text = it
         }
 
         viewModel.authorized.observe(viewLifecycleOwner) { authorized ->
@@ -53,7 +52,7 @@ class HomeFragment: Fragment(R.layout.fragment_home) {
             }
         }
 
-        viewModel.setUserData(args.userData)
+        viewModel.setUserId(args.userId)
 
         binding.logoutButton.setOnClickListener {
             MainActivity.triggerRebirth(requireContext())

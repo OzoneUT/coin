@@ -19,6 +19,9 @@
         <action
             android:id="@+id/action_onboardingFlowFragment_to_exitOnboardingDialogFragment"
             app:destination="@id/exitOnboardingDialogFragment" />
+        <action
+            android:id="@+id/action_onboardingFlowFragment_to_homeFragment"
+            app:destination="@id/homeFragment" />
     </fragment>
     <fragment
         android:id="@+id/loginFragment"
@@ -47,10 +50,8 @@
         android:label="HomeFragment"
         tools:layout="@layout/fragment_home">
         <argument
-            android:name="userData"
-            app:argType="com.kafleyozone.coin.data.models.User"
-            app:nullable="true"
-            android:defaultValue="@null" />
+            android:name="userId"
+            app:argType="string" />
         <action
             android:id="@+id/action_homeFragment_to_accountSetupFragment"
             app:destination="@id/accountSetupFragment" />
@@ -88,7 +89,13 @@
         <argument
             android:name="name"
             app:argType="string"
+            android:defaultValue="@null"
             app:nullable="true" />
+        <action
+            android:id="@+id/action_accountSetupFragment_to_homeFragment"
+            app:destination="@id/homeFragment"
+            app:popUpTo="@id/accountSetupFragment"
+            app:popUpToInclusive="true" />
     </fragment>
 
 </navigation>

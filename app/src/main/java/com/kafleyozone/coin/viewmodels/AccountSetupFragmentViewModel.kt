@@ -8,6 +8,7 @@ import androidx.lifecycle.viewModelScope
 import com.kafleyozone.coin.data.AppRepository
 import com.kafleyozone.coin.data.models.BankInstitutionEntity
 import com.kafleyozone.coin.data.models.Resource
+import com.kafleyozone.coin.data.models.User
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -17,16 +18,28 @@ class AccountSetupFragmentViewModel @Inject constructor(
         private val appRepository: AppRepository,
 ) : ViewModel() {
 
+    companion object {
+        private const val TAG = "AccountSetupFragmentViewModel"
+    }
+
+    private var _name = MutableLiveData<String>()
+    val name: LiveData<String>
+        get() = _name
+
     private var _setupBankList = MutableLiveData<MutableList<BankInstitutionEntity>>()
     val setupBankList: LiveData<MutableList<BankInstitutionEntity>>
         get() = _setupBankList
 
-    private var _setupRes = MutableLiveData<Resource<String>>()
-    val setupRes: LiveData<Resource<String>>
+    private var _setupRes = MutableLiveData<Resource<User>>()
+    val setupRes: LiveData<Resource<User>>
         get() = _setupRes
 
     init {
         _setupBankList.value = mutableListOf()
+    }
+
+    fun setName(name: String) {
+        _name.value = name
     }
 
     fun addBankAccount(name: String, description: String, amount: Double) {
@@ -42,13 +55,18 @@ class AccountSetupFragmentViewModel @Inject constructor(
     }
 
     fun doAccountSetup() {
-        viewModelScope.launch {
-            try {
-                _setupRes.postValue(Resource.loading(null))
-            } catch (e: Exception) {
-                _setupRes.postValue(Resource.error(
-                        "We couldn't connect to the Coin server.", null))
-                Log.e(LoginFragmentViewModel.TAG, "Registration failed: $e")
+        setupBankList.value?.let {
+            viewModelScope.launch {
+                try {
+                    _setupRes.postValue(Resource.loading(null))
+                    appRepository.setupAccount(it.toList()).let {
+                        _setupRes.postValue(it)
+                    }
+                } catch (e: Exception) {
+                    _setupRes.postValue(Resource.error(
+                            "We couldn't connect to the Coin server.", null))
+                    Log.e(TAG, "account setup failed: ${e.message}")
+                }
             }
         }
     }

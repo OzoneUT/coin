@@ -4,7 +4,6 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.kafleyozone.coin.data.models.User
 
 class HomeViewModel: ViewModel() {
 
@@ -16,17 +15,17 @@ class HomeViewModel: ViewModel() {
     val authorized: LiveData<Boolean>
         get() = _authorized
 
-    private var _userData = MutableLiveData<User>()
-    val userData: LiveData<User>
-        get() = _userData
+    private var _userId = MutableLiveData<String>()
+    val userData: LiveData<String>
+        get() = _userId
 
-    fun setUserData(u: User?) {
-        if (u == null) {
-            Log.e(TAG, "FATAL: user was null! Finishing activity.")
+    fun setUserId(id: String) {
+        if (id.isEmpty()) {
+            Log.e(TAG, "FATAL: userId was empty!")
             _authorized.value = false
             return
         }
         _authorized.value = true
-        _userData.postValue(u)
+        _userId.postValue(id)
     }
 }
