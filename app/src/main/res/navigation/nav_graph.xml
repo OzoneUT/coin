@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    tools:context=".MainActivity"
+    app:startDestination="@id/splashFragment">
+
+    <fragment
+        android:id="@+id/onboardingFlowFragment"
+        android:name="com.kafleyozone.coin.fragments.OnboardingFlowFragment"
+        android:label="OnboardingFlowFragment"
+        tools:layout="@layout/fragment_welcome">
+        <action
+            android:id="@+id/action_onboardingFlowFragment_to_loginFragment"
+            app:destination="@id/loginFragment"
+            app:popUpTo="@id/onboardingFlowFragment"
+            app:popUpToInclusive="false" />
+        <action
+            android:id="@+id/action_onboardingFlowFragment_to_exitOnboardingDialogFragment"
+            app:destination="@id/exitOnboardingDialogFragment" />
+        <action
+            android:id="@+id/action_onboardingFlowFragment_to_homeFragment"
+            app:destination="@id/homeFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/loginFragment"
+        android:name="com.kafleyozone.coin.fragments.LoginFragment"
+        android:label="LoginFragment"
+        tools:layout="@layout/fragment_login">
+        <action
+            android:id="@+id/action_loginFragment_to_homeFragment"
+            app:destination="@id/homeFragment"
+            app:popUpTo="@id/onboardingFlowFragment"
+            app:popUpToInclusive="true">
+        </action>
+        <argument
+            android:name="email"
+            app:argType="string"
+            android:defaultValue='""' />
+        <action
+            android:id="@+id/action_loginFragment_to_onboardingFlowFragment"
+            app:destination="@id/onboardingFlowFragment"
+            app:popUpTo="@id/loginFragment"
+            app:popUpToInclusive="true" />
+    </fragment>
+    <fragment
+        android:id="@+id/homeFragment"
+        android:name="com.kafleyozone.coin.fragments.HomeFragment"
+        android:label="HomeFragment"
+        tools:layout="@layout/fragment_home">
+        <argument
+            android:name="userId"
+            app:argType="string" />
+        <action
+            android:id="@+id/action_homeFragment_to_accountSetupFragment"
+            app:destination="@id/accountSetupFragment" />
+    </fragment>
+    <dialog
+        android:id="@+id/exitOnboardingDialogFragment"
+        android:name="com.kafleyozone.coin.fragments.ExitOnboardingDialogFragment"
+        android:label="ExitOnboardingDialogFragment" />
+    <fragment
+        android:id="@+id/splashFragment"
+        android:name="com.kafleyozone.coin.fragments.SplashFragment"
+        android:label="SplashFragment"
+        tools:layout="@layout/fragment_splash">
+        <action
+            android:id="@+id/action_splashFragment_to_onboardingFlowFragment"
+            app:destination="@id/onboardingFlowFragment"
+            app:popUpTo="@id/splashFragment"
+            app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/action_splashFragment_to_loginFragment"
+            app:destination="@id/loginFragment"
+            app:popUpTo="@id/splashFragment"
+            app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/action_splashFragment_to_homeFragment"
+            app:destination="@id/homeFragment"
+            app:popUpTo="@id/splashFragment"
+            app:popUpToInclusive="true" />
+    </fragment>
+    <fragment
+        android:id="@+id/accountSetupFragment"
+        android:name="com.kafleyozone.coin.fragments.AccountSetupFragment"
+        android:label="AccountSetupFragment"
+        tools:layout="@layout/fragment_account_setup">
+        <argument
+            android:name="name"
+            app:argType="string"
+            android:defaultValue="@null"
+            app:nullable="true" />
+        <action
+            android:id="@+id/action_accountSetupFragment_to_homeFragment"
+            app:destination="@id/homeFragment"
+            app:popUpTo="@id/accountSetupFragment"
+            app:popUpToInclusive="true" />
+    </fragment>
+
+</navigation>

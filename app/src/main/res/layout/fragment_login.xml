@@ -8,13 +8,13 @@
 
     <ProgressBar
         android:id="@+id/progressBar"
-        android:minHeight="4dp"
-        android:paddingBottom="8dp"
         style="?android:attr/progressBarStyleHorizontal"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:indeterminate="true"
         android:indeterminateTint="@color/amber_400"
+        android:minHeight="4dp"
+        android:paddingBottom="8dp"
         android:visibility="invisible"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -72,8 +72,8 @@
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="@+id/textView6"
         app:layout_constraintTop_toBottomOf="@+id/textView6"
-        app:startIconDrawable="@drawable/ic_baseline_alternate_email_24"
-        app:startIconContentDescription="@string/email_field_hint">
+        app:startIconContentDescription="@string/email_field_hint"
+        app:startIconDrawable="@drawable/ic_baseline_alternate_email_24">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/login_email_field"
@@ -87,13 +87,13 @@
         style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        app:layout_constraintBottom_toTopOf="@+id/login_checkbox"
+        app:endIconMode="password_toggle"
+        app:layout_constraintBottom_toTopOf="@+id/login_button"
         app:layout_constraintEnd_toEndOf="@+id/login_email_field_layout"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="@+id/login_email_field_layout"
         app:layout_constraintTop_toBottomOf="@+id/login_email_field_layout"
-        app:startIconDrawable="@drawable/ic_baseline_lock_24"
-        app:endIconMode="password_toggle">
+        app:startIconDrawable="@drawable/ic_baseline_lock_24">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/login_password_field"
@@ -103,30 +103,20 @@
             android:inputType="textPassword" />
     </com.google.android.material.textfield.TextInputLayout>
 
-    <CheckBox
-        android:id="@+id/login_checkbox"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/keep_me_logged_in_login_helper"
-        android:textColor="@color/light_gray_text"
-        app:layout_constraintBottom_toTopOf="@+id/login_button"
-        app:layout_constraintStart_toStartOf="@+id/login_password_field_layout"
-        app:layout_constraintTop_toBottomOf="@+id/login_password_field_layout" />
-
     <Button
         android:id="@+id/login_button"
         style="@style/Theme.Coin.MaterialButton"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="64dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="16dp"
         android:layout_marginEnd="64dp"
         android:text="@string/login_button_label"
         app:layout_constraintBottom_toTopOf="@+id/linearLayout"
         app:layout_constraintEnd_toEndOf="@+id/login_password_field_layout"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="@+id/login_password_field_layout"
-        app:layout_constraintTop_toBottomOf="@+id/login_checkbox" />
+        app:layout_constraintTop_toBottomOf="@+id/login_password_field_layout" />
 
     <View
         android:id="@+id/view"
