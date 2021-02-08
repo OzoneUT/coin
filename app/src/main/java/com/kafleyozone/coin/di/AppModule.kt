@@ -2,10 +2,13 @@ package com.kafleyozone.coin.di
 
 import android.content.Context
 import androidx.datastore.preferences.createDataStore
+import androidx.room.Room
 import com.kafleyozone.coin.data.network.AccountService
 import com.kafleyozone.coin.data.network.AuthenticationService
 import com.kafleyozone.coin.data.network.CoinAuthenticator
 import com.kafleyozone.coin.data.network.TokenInterceptor
+import com.kafleyozone.coin.data.room.AppDatabase
+import com.kafleyozone.coin.data.room.UserDao
 import com.kafleyozone.coin.utils.BASE_URL
 import dagger.Module
 import dagger.Provides
@@ -21,6 +24,22 @@ import javax.inject.Singleton
 @Module
 @InstallIn(SingletonComponent::class)
 object AppModule {
+
+    @Singleton
+    @Provides
+    fun provideRoomDatabase(@ApplicationContext context: Context): AppDatabase {
+        return Room.databaseBuilder(
+            context,
+            AppDatabase::class.java,
+            "AppDatabase"
+        ).build()
+    }
+
+    @Singleton
+    @Provides
+    fun provideUserDao(appDatabase: AppDatabase): UserDao {
+        return appDatabase.userDao()
+    }
 
     @Singleton
     @Provides

@@ -87,9 +87,10 @@ class OnboardingFlowFragment : Fragment() {
     ) : FragmentStateAdapter(fa) {
 
         val fragmentList = mutableListOf(
-                WelcomeFragment(pagerListener),
-                RegistrationFragment(pagerListener),
-                AccountSetupFragment(pagerListener))
+            WelcomeFragment(pagerListener),
+            RegistrationFragment(pagerListener),
+            AccountSetupFragment().setPagerListener(pagerListener)
+        )
 
         override fun getItemCount(): Int = fragmentList.size
         override fun createFragment(position: Int): Fragment = fragmentList[position]

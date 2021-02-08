@@ -7,8 +7,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.kafleyozone.coin.data.AppRepository
 import com.kafleyozone.coin.data.AuthRepository
-import com.kafleyozone.coin.data.models.Resource
-import com.kafleyozone.coin.data.models.User
+import com.kafleyozone.coin.data.domain.User
+import com.kafleyozone.coin.data.network.models.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -34,19 +34,22 @@ class SplashFragmentViewModel @Inject constructor(
     fun initialize() {
         viewModelScope.launch {
             try {
-                _userRes.postValue(Resource.loading(null))
-                appRepository.getAccount().let {
-                    _userRes.postValue(it)
+                if (authRepository.checkAuth()) {
+                    _userRes.postValue(Resource.loading(null))
+                    appRepository.getAccount().let {
+                        _userRes.postValue(it)
+                    }
+                } else {
+                    throw IllegalStateException("no cached auth")
                 }
             } catch (e: Exception) {
                 _userRes.postValue(
                     Resource.error(
-                        "We couldn't connect to the Coin server.",
+                        "couldn't get user data automatically",
                         null
                     )
                 )
-                Log.e(TAG, "couldn't get user data automatically")
-                e.printStackTrace()
+                Log.i(TAG, "couldn't get user data automatically")
             }
         }
     }

@@ -12,7 +12,7 @@ import androidx.navigation.fragment.findNavController
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.textfield.TextInputEditText
 import com.kafleyozone.coin.R
-import com.kafleyozone.coin.data.models.RegistrationRequest
+import com.kafleyozone.coin.data.network.models.RegistrationRequest
 import com.kafleyozone.coin.databinding.FragmentRegistrationBinding
 import com.kafleyozone.coin.utils.Status
 import com.kafleyozone.coin.utils.setEnabledById
@@ -85,10 +85,13 @@ class RegistrationFragment(
                     setLoadingUI(loading = true)
                 }
                 Status.ERROR -> {
-                    Snackbar.make(view, "Login with your new credentials", Snackbar.LENGTH_SHORT).show()
-                    OnboardingFlowFragmentDirections.actionOnboardingFlowFragmentToLoginFragment(
+                    try {
+                        OnboardingFlowFragmentDirections.actionOnboardingFlowFragmentToLoginFragment(
                             viewModel.registrationRequestObject.email
-                    )
+                        )
+                    } catch (e: Exception) {
+                        Log.e(TAG, "there was an error; must not be on onboarding flow")
+                    }
                 }
             }
         }

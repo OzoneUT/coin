@@ -10,11 +10,10 @@ import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.viewModels
 import com.google.android.material.textfield.TextInputEditText
+import com.kafleyozone.coin.data.domain.BankInstitutionEntity
+import com.kafleyozone.coin.databinding.FragmentAddNewBankDialogBinding
 import com.kafleyozone.coin.viewmodels.AccountSetupFragmentViewModel
 import com.kafleyozone.coin.viewmodels.AddNewBankDialogFragmentViewModel
-import com.kafleyozone.coin.data.models.BankInstitutionEntity
-import com.kafleyozone.coin.databinding.FragmentAddNewBankDialogBinding
-import java.lang.IllegalStateException
 
 class AddNewBankDialogFragment : DialogFragment() {
 

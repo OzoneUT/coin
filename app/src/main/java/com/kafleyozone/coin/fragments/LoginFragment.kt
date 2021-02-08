@@ -87,8 +87,7 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
 
     // enable or disable screen elements and toggle the loading bar visibility accordingly
     private fun setLoadingUI(loading: Boolean) {
-        viewModel.loginInputValidations.keys.toList()
-            .plus(R.id.login_button).plus(R.id.login_checkbox)
+        viewModel.loginInputValidations.keys.toList().plus(R.id.login_button)
             .setEnabledById(!loading, view)
         binding.progressBar.visibility = if (loading) View.VISIBLE else View.INVISIBLE
     }

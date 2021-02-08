@@ -9,8 +9,8 @@ import androidx.lifecycle.viewModelScope
 import com.google.android.material.textfield.TextInputEditText
 import com.kafleyozone.coin.R
 import com.kafleyozone.coin.data.AuthRepository
-import com.kafleyozone.coin.data.models.LoginResponse
-import com.kafleyozone.coin.data.models.Resource
+import com.kafleyozone.coin.data.network.models.LoginResponse
+import com.kafleyozone.coin.data.network.models.Resource
 import com.kafleyozone.coin.databinding.FragmentLoginBinding
 import com.kafleyozone.coin.utils.isEmailValid
 import com.kafleyozone.coin.utils.isPasswordValid
@@ -76,8 +76,12 @@ class LoginFragmentViewModel @Inject constructor(
                     _loginRes.postValue(it)
                 }
             } catch (e: Exception) {
-                _loginRes.postValue(Resource.error("We couldn't connect to the Coin server.",
-                    null))
+                _loginRes.postValue(
+                    Resource.error(
+                        "We couldn't connect to the Coin server.",
+                        null
+                    )
+                )
                 Log.e(TAG, "Login failed, stacktrace:")
                 e.printStackTrace()
             }

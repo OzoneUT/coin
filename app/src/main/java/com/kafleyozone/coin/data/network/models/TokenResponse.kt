@@ -1,4 +1,4 @@
-package com.kafleyozone.coin.data.models
+package com.kafleyozone.coin.data.network.models
 
 data class TokenResponse(
         var accessToken: String,

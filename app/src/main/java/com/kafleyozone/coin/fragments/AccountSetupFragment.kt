@@ -16,21 +16,19 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.snackbar.Snackbar
 import com.kafleyozone.coin.R
-import com.kafleyozone.coin.data.models.BankInstitutionEntity
+import com.kafleyozone.coin.data.domain.BankInstitutionEntity
 import com.kafleyozone.coin.databinding.FragmentAccountSetupBinding
 import com.kafleyozone.coin.rvadapters.BankListAdapter
 import com.kafleyozone.coin.utils.Status
-import com.kafleyozone.coin.utils.printListDebug
 import com.kafleyozone.coin.utils.setMargins
 import com.kafleyozone.coin.viewmodels.AccountSetupFragmentViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class AccountSetupFragment(
-        private val pagerListener: OnboardingFlowFragment.PagerListenerInterface,
-) : Fragment() {
+class AccountSetupFragment : Fragment() {
 
-    private val viewModel: AccountSetupFragmentViewModel by viewModels(ownerProducer = { this })
+    private lateinit var mPagerListener: OnboardingFlowFragment.PagerListenerInterface
+    private val viewModel: AccountSetupFragmentViewModel by viewModels()
     private var _binding: FragmentAccountSetupBinding? = null
     private val binding get() = _binding!!
     private var listAdapter: ListAdapter<BankInstitutionEntity,
@@ -38,12 +36,16 @@ class AccountSetupFragment(
 
     companion object {
         private const val TAG = "AccountSetupFragment"
-        private const val ARG_NAME_KEY = "name"
+    }
+
+    fun setPagerListener(pagerListener: OnboardingFlowFragment.PagerListenerInterface): AccountSetupFragment {
+        mPagerListener = pagerListener
+        return this
     }
 
     override fun onCreateView(
-            inflater: LayoutInflater,
-            container: ViewGroup?, savedInstanceState: Bundle?,
+        inflater: LayoutInflater,
+        container: ViewGroup?, savedInstanceState: Bundle?,
     ): View {
         _binding = FragmentAccountSetupBinding.inflate(inflater, container, false)
         val view = binding.root
@@ -78,7 +80,6 @@ class AccountSetupFragment(
         }
 
         viewModel.setupBankList.observe(viewLifecycleOwner) {
-            printListDebug(TAG, it)
             binding.setupFinishButton.isEnabled = !it.isNullOrEmpty()
             (listAdapter as BankListAdapter).submitList(it.toList())
         }
@@ -92,11 +93,15 @@ class AccountSetupFragment(
                 Status.SUCCESS -> {
                     try {
                         findNavController()
-                                .navigate(AccountSetupFragmentDirections
-                                        .actionAccountSetupFragmentToHomeFragment(it.data?.id
-                                                ?: ""))
+                            .navigate(
+                                AccountSetupFragmentDirections
+                                    .actionAccountSetupFragmentToHomeFragment(
+                                        it.data?.id
+                                            ?: ""
+                                    )
+                            )
                     } catch (e: Exception) {
-                        pagerListener.onAccountSetupComplete(it.data?.id ?: "")
+                        mPagerListener.onAccountSetupComplete(it.data?.id ?: "")
                     }
                 }
                 Status.LOADING -> {

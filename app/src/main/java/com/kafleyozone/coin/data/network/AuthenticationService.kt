@@ -1,8 +1,8 @@
 package com.kafleyozone.coin.data.network
 
-import com.kafleyozone.coin.data.models.LoginResponse
-import com.kafleyozone.coin.data.models.RegistrationRequest
-import com.kafleyozone.coin.data.models.TokenResponse
+import com.kafleyozone.coin.data.network.models.LoginResponse
+import com.kafleyozone.coin.data.network.models.RegistrationRequest
+import com.kafleyozone.coin.data.network.models.TokenResponse
 import com.kafleyozone.coin.utils.*
 import okhttp3.ResponseBody
 import retrofit2.Call

@@ -9,8 +9,8 @@ import androidx.lifecycle.viewModelScope
 import com.google.android.material.textfield.TextInputEditText
 import com.kafleyozone.coin.R
 import com.kafleyozone.coin.data.AuthRepository
-import com.kafleyozone.coin.data.models.RegistrationRequest
-import com.kafleyozone.coin.data.models.Resource
+import com.kafleyozone.coin.data.network.models.RegistrationRequest
+import com.kafleyozone.coin.data.network.models.Resource
 import com.kafleyozone.coin.databinding.FragmentRegistrationBinding
 import com.kafleyozone.coin.utils.*
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -95,8 +95,11 @@ class RegistrationFragmentViewModel @Inject constructor(
                     _registrationRes.postValue(it)
                 }
             } catch (e: Exception) {
-                _registrationRes.postValue(Resource.error(
-                        "We couldn't connect to the Coin server.", null))
+                _registrationRes.postValue(
+                    Resource.error(
+                        "We couldn't connect to the Coin server.", null
+                    )
+                )
                 Log.e(LoginFragmentViewModel.TAG, "Registration failed: $e")
             }
         }

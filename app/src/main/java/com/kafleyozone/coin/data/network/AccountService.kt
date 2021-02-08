@@ -1,7 +1,7 @@
 package com.kafleyozone.coin.data.network
 
-import com.kafleyozone.coin.data.models.BankInstitutionEntity
-import com.kafleyozone.coin.data.models.User
+import com.kafleyozone.coin.data.domain.BankInstitutionEntity
+import com.kafleyozone.coin.data.domain.User
 import com.kafleyozone.coin.utils.EP_ACCOUNT
 import com.kafleyozone.coin.utils.EP_ACCOUNT_SETUP
 import com.kafleyozone.coin.utils.EP_LOGOUT

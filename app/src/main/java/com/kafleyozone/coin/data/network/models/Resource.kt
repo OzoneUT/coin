@@ -1,4 +1,4 @@
-package com.kafleyozone.coin.data.models
+package com.kafleyozone.coin.data.network.models
 
 import com.kafleyozone.coin.utils.Status
 

@@ -6,9 +6,9 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.kafleyozone.coin.data.AppRepository
-import com.kafleyozone.coin.data.models.BankInstitutionEntity
-import com.kafleyozone.coin.data.models.Resource
-import com.kafleyozone.coin.data.models.User
+import com.kafleyozone.coin.data.domain.BankInstitutionEntity
+import com.kafleyozone.coin.data.domain.User
+import com.kafleyozone.coin.data.network.models.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -63,8 +63,11 @@ class AccountSetupFragmentViewModel @Inject constructor(
                         _setupRes.postValue(it)
                     }
                 } catch (e: Exception) {
-                    _setupRes.postValue(Resource.error(
-                            "We couldn't connect to the Coin server.", null))
+                    _setupRes.postValue(
+                        Resource.error(
+                            "We couldn't connect to the Coin server.", null
+                        )
+                    )
                     Log.e(TAG, "account setup failed: ${e.message}")
                 }
             }

@@ -14,6 +14,7 @@ class TokenRepository @Inject constructor(
 ) {
 
     companion object {
+        private const val TAG = "TokenRepository"
         val KEY_USER_FLAG = stringPreferencesKey("user")
         val KEY_ACCESS_TOKEN = stringPreferencesKey("access_token")
         val KEY_REFRESH_TOKEN = stringPreferencesKey("refresh_token")
@@ -25,7 +26,15 @@ class TokenRepository @Inject constructor(
             authStore[KEY_ACCESS_TOKEN] = accessToken
             authStore[KEY_REFRESH_TOKEN] = refreshToken
         }
-        Log.i(AuthRepository.TAG, "auth updated")
+        Log.i(TAG, "auth updated")
+    }
+
+    suspend fun deleteCachedAuth() {
+        authStore.edit { authStore ->
+            authStore[KEY_ACCESS_TOKEN] = ""
+            authStore[KEY_REFRESH_TOKEN] = ""
+        }
+        Log.i(TAG, "cached auth tokens emptied")
     }
 
     suspend fun getCachedUserEmail(): String {

@@ -4,12 +4,11 @@ import android.util.Log
 import android.view.View
 import androidx.lifecycle.ViewModel
 import com.google.android.material.textfield.TextInputEditText
-import com.kafleyozone.coin.data.models.BankInstitutionEntity
 import com.kafleyozone.coin.R
+import com.kafleyozone.coin.data.domain.BankInstitutionEntity
 import com.kafleyozone.coin.databinding.FragmentAddNewBankDialogBinding
 import com.kafleyozone.coin.utils.isMonetaryAmountValid
 import com.kafleyozone.coin.utils.isNameValid
-import kotlin.NumberFormatException
 
 class AddNewBankDialogFragmentViewModel : ViewModel() {
 
