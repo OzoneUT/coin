@@ -10,6 +10,8 @@ import com.kafleyozone.coin.data.network.TokenInterceptor
 import com.kafleyozone.coin.data.room.AppDatabase
 import com.kafleyozone.coin.data.room.UserDao
 import com.kafleyozone.coin.utils.BASE_URL
+import com.kafleyozone.coin.utils.MOCK_BASE_URL
+import com.kafleyozone.coin.utils.MOCK_DEBUG
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -60,8 +62,8 @@ object AppModule {
     @Provides
     fun provideRetrofit(okHttpClient: OkHttpClient): Retrofit {
         return Retrofit.Builder()
-            .addConverterFactory(GsonConverterFactory.create())
-            .baseUrl(BASE_URL)
+                .addConverterFactory(GsonConverterFactory.create())
+                .baseUrl(if (MOCK_DEBUG) MOCK_BASE_URL else BASE_URL)
             .client(okHttpClient)
             .build()
     }

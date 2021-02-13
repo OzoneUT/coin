@@ -9,7 +9,6 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
-import com.kafleyozone.coin.MainActivity
 import com.kafleyozone.coin.R
 import com.kafleyozone.coin.databinding.FragmentHomeBinding
 import com.kafleyozone.coin.viewmodels.HomeViewModel
@@ -43,20 +42,20 @@ class HomeFragment: Fragment(R.layout.fragment_home) {
                     )
                 return@observe
             }
-            binding.idTextview.text = it.toString()
         }
 
         viewModel.authorized.observe(viewLifecycleOwner) { authorized ->
             if (!authorized) {
-                MainActivity.triggerRebirth(requireContext())
+                requireActivity().finish()
             }
         }
 
+        binding.toolbar.title = viewModel.getCurrentDate()
         viewModel.getUserFromDB(args.userId)
 
-        binding.logoutButton.setOnClickListener {
-            viewModel.logoutUser()
-        }
+//        binding.logoutButton.setOnClickListener {
+//            viewModel.logoutUser()
+//        }
 
         return view
     }

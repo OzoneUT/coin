@@ -23,9 +23,22 @@ class AppRepository @Inject constructor(
 
     suspend fun getAccount(): Resource<User> {
         val response = accountService.getAccount()
+        val user = response.body()
         return if (response.isSuccessful) {
             Log.i(TAG, "got account data successfully")
-            Resource.success(response.body())
+            if (user?.bankInstitutionEntities != null) {
+                userDao.clearUser()
+                userDao.clearUserBanks()
+                userDao.insertUser(user.toDBUser())
+                userDao.insertBankInstitutionEntities(
+                        user.bankInstitutionEntities.toDBBankInstitutionEntities(
+                                user.id
+                        )
+                )
+                Resource.success(response.body())
+            } else {
+                Resource.error("There was an error getting your account details.", null)
+            }
         } else {
             Resource.error("For your security, please login again.", null)
         }
@@ -53,7 +66,7 @@ class AppRepository @Inject constructor(
                 )
                 Resource.success(response.body())
             } else {
-                Resource.error("\"There was an error setting up your account.", null)
+                Resource.error("There was an error setting up your account.", null)
             }
         } else {
             Log.e(AuthRepository.TAG, "got error trying to set up user")

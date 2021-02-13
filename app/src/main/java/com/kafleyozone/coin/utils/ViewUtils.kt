@@ -26,6 +26,25 @@ fun convertStringToFormattedCurrency(value: Double, symbol: Boolean = false): St
     return if (symbol) '$'.plus(formatted) else formatted
 }
 
+/*
+* Gets the current date's formatter string with the correct day-of-month suffix (b/c English is
+* hella annoying and inconsistent).
+* */
+fun getDateFormatPattern(): String {
+    val now = Calendar.getInstance()
+    val daySuffix = when (now.get(Calendar.DAY_OF_MONTH)) {
+        1 -> "st"
+        21 -> "st"
+        31 -> "st"
+        2 -> "nd"
+        22 -> "nd"
+        3 -> "rd"
+        23 -> "rd"
+        else -> "th"
+    }
+    return "EEEE, MMM. d'$daySuffix', yyyy"
+}
+
 fun printListDebug(tag: String, list: List<Any?>?) {
     if (list == null) {
         Log.i(tag, "list was null!")
