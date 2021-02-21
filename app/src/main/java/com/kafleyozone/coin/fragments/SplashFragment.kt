@@ -38,10 +38,10 @@ class SplashFragment: Fragment(R.layout.fragment_splash) {
                 Status.SUCCESS -> {
                     // if we successfully got the user, the cached accessToken was valid. Move the
                     // user to their dashboard
-                    findNavController().navigate(
-                            SplashFragmentDirections
-                                    .actionSplashFragmentToHomeFragment(it.data?.id ?: "")
-                    )
+                    Bundle().let { b ->
+                        b.putString(HomeContainerFragment.ID_ARG_KEY, it.data?.id)
+                        findNavController().navigate(R.id.action_global_homeContainerFragment, b)
+                    }
                 }
                 Status.LOADING -> {
                     // do nothing TODO: after x sec have passed, show a loading spinner

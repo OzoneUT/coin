@@ -92,14 +92,13 @@ class AccountSetupFragment : Fragment() {
             when (it.status) {
                 Status.SUCCESS -> {
                     try {
-                        findNavController()
-                            .navigate(
-                                AccountSetupFragmentDirections
-                                    .actionAccountSetupFragmentToHomeFragment(
-                                        it.data?.id
-                                            ?: ""
-                                    )
+                        Bundle().let { b ->
+                            b.putString(HomeContainerFragment.ID_ARG_KEY, it.data?.id)
+                            findNavController().navigate(
+                                R.id.action_global_homeContainerFragment,
+                                b
                             )
+                        }
                     } catch (e: Exception) {
                         mPagerListener.onAccountSetupComplete(it.data?.id ?: "")
                     }

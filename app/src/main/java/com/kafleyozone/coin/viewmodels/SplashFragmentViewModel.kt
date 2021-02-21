@@ -36,6 +36,10 @@ class SplashFragmentViewModel @Inject constructor(
             try {
                 if (authRepository.checkAuth()) {
                     _userRes.postValue(Resource.loading(null))
+                    appRepository.getAuthorizedUserFromDB(authRepository.getLocalUser())?.let {
+                        _userRes.postValue(Resource.success(it))
+                        return@launch
+                    }
                     appRepository.getAccount().let {
                         _userRes.postValue(it)
                     }

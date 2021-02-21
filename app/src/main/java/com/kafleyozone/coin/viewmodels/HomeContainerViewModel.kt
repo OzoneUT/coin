@@ -15,12 +15,12 @@ import java.util.*
 import javax.inject.Inject
 
 @HiltViewModel
-class HomeViewModel @Inject constructor(
-    private val appRepository: AppRepository
+class HomeContainerViewModel @Inject constructor(
+    private val appRepository: AppRepository,
 ) : ViewModel() {
 
     companion object {
-        const val TAG = "HomeViewModel"
+        const val TAG = "HomeContainerViewModel"
     }
 
     private var _authorized = MutableLiveData<Boolean>()
@@ -31,8 +31,8 @@ class HomeViewModel @Inject constructor(
     val userData: LiveData<User>
         get() = _userData
 
-    fun getUserFromDB(id: String) {
-        if (id.isEmpty()) {
+    fun getUserFromDB(id: String?) {
+        if (id.isNullOrEmpty()) {
             Log.e(TAG, "FATAL: userId was empty!")
             _authorized.value = false
             return

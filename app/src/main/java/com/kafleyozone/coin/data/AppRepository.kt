@@ -26,15 +26,13 @@ class AppRepository @Inject constructor(
         val user = response.body()
         return if (response.isSuccessful) {
             Log.i(TAG, "got account data successfully")
-            if (user?.bankInstitutionEntities != null) {
+            if (user != null) {
                 userDao.clearUser()
                 userDao.clearUserBanks()
                 userDao.insertUser(user.toDBUser())
-                userDao.insertBankInstitutionEntities(
-                        user.bankInstitutionEntities.toDBBankInstitutionEntities(
-                                user.id
-                        )
-                )
+                user.bankInstitutionEntities?.let {
+                    userDao.insertBankInstitutionEntities(it.toDBBankInstitutionEntities(user.id))
+                }
                 Resource.success(response.body())
             } else {
                 Resource.error("There was an error getting your account details.", null)

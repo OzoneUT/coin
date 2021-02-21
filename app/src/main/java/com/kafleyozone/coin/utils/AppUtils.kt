@@ -1,3 +1,3 @@
 package com.kafleyozone.coin.utils
 
-const val MOCK_DEBUG = true
+const val MOCK_DEBUG = false
