@@ -33,8 +33,6 @@ class BankListAdapter : ListAdapter<BankInstitutionEntity,
         : RecyclerView.ViewHolder(itemBinding.root) {
 
         fun bind(item: BankInstitutionEntity) {
-            itemBinding.institutionNameTextView.text = item.institutionName
-            itemBinding.institutionTypeTextView.text = item.institutionType
             itemBinding.institutionAmountTextView.text =
                     convertStringToFormattedCurrency(item.initialAmount, symbol = true)
         }

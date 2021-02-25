@@ -1,6 +1,7 @@
 package com.kafleyozone.coin.fragments
 
 import android.os.Bundle
+import android.transition.TransitionManager
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -15,6 +16,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.snackbar.Snackbar
+import com.google.android.material.transition.platform.MaterialFade
 import com.kafleyozone.coin.R
 import com.kafleyozone.coin.data.domain.BankInstitutionEntity
 import com.kafleyozone.coin.databinding.FragmentAccountSetupBinding
@@ -74,9 +76,13 @@ class AccountSetupFragment : Fragment() {
         binding.accountSetupRecyclerView.adapter = listAdapter
         binding.accountSetupRecyclerView.layoutManager = LinearLayoutManager(context)
 
-        binding.setupAddAccountButton.setOnClickListener {
-            AddNewBankDialogFragment()
-                    .show(childFragmentManager, AddNewBankDialogFragment.TAG)
+        binding.addMoneyChip.setOnClickListener {
+            toggleAddMoneyVisibilityWithFade(true)
+            binding.addMoneyTextInputLayout.requestFocus()
+        }
+
+        binding.cancelAddButton.setOnClickListener {
+            toggleAddMoneyVisibilityWithFade(false)
         }
 
         viewModel.setupBankList.observe(viewLifecycleOwner) {
@@ -145,8 +151,16 @@ class AccountSetupFragment : Fragment() {
     private fun showLoadingUi(isLoading: Boolean) {
         binding.accountSetupRecyclerView.isEnabled = !isLoading
         binding.setupFinishButton.isEnabled = !isLoading
-        binding.setupAddAccountButton.isEnabled = !isLoading
+        binding.addMoneyChip.isEnabled = !isLoading
         binding.progressBar.visibility = if (isLoading) View.VISIBLE else View.INVISIBLE
+    }
+
+    private fun toggleAddMoneyVisibilityWithFade(adding: Boolean) {
+        TransitionManager.beginDelayedTransition(binding.accountSetupContainer, MaterialFade())
+        binding.addMoneyChip.visibility = if (adding) View.GONE else View.VISIBLE
+        binding.addMoneyTextInputLayout.visibility = if (adding) View.VISIBLE else View.GONE
+        binding.confirmAddButton.visibility = if (adding) View.VISIBLE else View.GONE
+        binding.cancelAddButton.visibility = if (adding) View.VISIBLE else View.GONE
     }
 
     private fun onBackPressedSetup() {

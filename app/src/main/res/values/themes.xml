@@ -33,6 +33,10 @@
         </item>
     </style>
 
+    <style name="Widget.MaterialComponents.Toolbar.NewTransaction.Coin" parent="ThemeOverlay.MaterialComponents.ActionBar">
+        <item name="iconTint">@color/dark_gray_text</item>
+    </style>
+
     <style name="Theme.Coin.Subheading" parent="Widget.MaterialComponents.TextView">
         <item name="android:lineSpacingExtra">4sp</item>
         <item name="android:textAlignment">center</item>

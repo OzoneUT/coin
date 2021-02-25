@@ -25,11 +25,11 @@
     <string name="no_account_helper_login">Don\'t have an account yet?</string>
     <string name="welcome_to_coin_no_name">Welcome to Coin!</string>
     <string name="welcome_to_coin_with_name">Welcome to Coin, %s!</string>
-    <string name="setup_page_description">Now that you have a Coin account, we\'d like for you to tell us about the cash you have on-hand.</string>
-    <string name="setup_page_tip">Tip: Only include money from accounts to which you readily have access (i.e. savings and checking accounts, etc.)</string>
+    <string name="setup_page_description">Next, we\'d like for you to tell us about the cash you have on-hand.</string>
+    <string name="setup_page_tip">Tip: Only include cash and funds from checking and savings accounts, not credit cards.</string>
     <string name="lightbulb_content_description">lightbulb</string>
     <string name="finish_label">Finish</string>
-    <string name="add_an_account_label">Add an account</string>
+    <string name="add_an_account_label">Add Money</string>
     <string name="bank_type_checking">Checking</string>
     <string name="bank_type_savings">Savings</string>
     <string name="bank_type_cash">Cash</string>
@@ -41,4 +41,6 @@
     <string name="logout_button_label">Logout</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="initial_value_hint">0.00</string>
+    <string name="currency_hint_usd">USD</string>
 </resources>

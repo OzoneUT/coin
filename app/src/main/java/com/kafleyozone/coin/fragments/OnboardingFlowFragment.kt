@@ -62,7 +62,7 @@ class OnboardingFlowFragment : Fragment() {
         onBackPressedSetup()
 
         binding.onboardingViewpager.adapter = OnboardingPagerAdapter(requireActivity(), pagerListener)
-        binding.onboardingViewpager.isUserInputEnabled = false
+//        binding.onboardingViewpager.isUserInputEnabled = false
         TabLayoutMediator(binding.pageIndicator, binding.onboardingViewpager) { _, _->
             // Empty implementation
         }.attach()
