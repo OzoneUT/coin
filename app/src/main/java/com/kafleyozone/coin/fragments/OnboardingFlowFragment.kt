@@ -84,8 +84,8 @@ class OnboardingFlowFragment : Fragment() {
     }
 
     private inner class OnboardingPagerAdapter(
-            fa: FragmentActivity,
-            pagerListener: PagerListenerInterface,
+        fa: FragmentActivity,
+        pagerListener: PagerListenerInterface
     ) : FragmentStateAdapter(fa) {
 
         val fragmentList = mutableListOf(

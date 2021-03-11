@@ -11,7 +11,7 @@ data class User(
     val password: String,
     val created: String,
     val accountSetupComplete: Boolean,
-    val bankInstitutionEntities: List<BankInstitutionEntity>?,
+    val bankInstitutionEntities: List<BankInstitutionEntity>?
 ) {
     companion object {
         fun from(savedUser: SavedUser): User {
@@ -34,6 +34,6 @@ fun User.toDBUser(): DBUser {
         name = this.name,
         email = this.email,
         created = this.created,
-        accountSetupComplete = this.accountSetupComplete,
+        accountSetupComplete = this.accountSetupComplete
     )
 }

@@ -4,5 +4,5 @@ data class NetworkBankInstitutionEntity(
     val id: String,
     val institutionName: String,
     val institutionType: String,
-    val initialAmount: Double,
+    val initialAmount: Double
 )

@@ -16,7 +16,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class HomeContainerViewModel @Inject constructor(
-    private val appRepository: AppRepository,
+    private val appRepository: AppRepository
 ) : ViewModel() {
 
     companion object {

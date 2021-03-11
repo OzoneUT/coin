@@ -8,7 +8,7 @@ data class BankInstitutionEntity(
     val institutionName: String,
     val institutionType: String,
     val initialAmount: Double,
-    val id: String = UUID.randomUUID().toString(),
+    val id: String = UUID.randomUUID().toString()
 ) {
 
     enum class Type {

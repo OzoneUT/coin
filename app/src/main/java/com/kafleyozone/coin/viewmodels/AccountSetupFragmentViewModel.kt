@@ -15,7 +15,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class AccountSetupFragmentViewModel @Inject constructor(
-        private val appRepository: AppRepository,
+    private val appRepository: AppRepository
 ) : ViewModel() {
 
     companion object {
@@ -45,13 +45,13 @@ class AccountSetupFragmentViewModel @Inject constructor(
     fun addBankAccount(name: String, description: String, amount: Double) {
         val mutableList = _setupBankList.value
         mutableList?.add(0, BankInstitutionEntity(name, description, amount))
-        _setupBankList.value = mutableList
+        _setupBankList.value = mutableList!!
     }
 
     fun removeBankEntityItemAt(position: Int) {
         val mutableList = _setupBankList.value
         mutableList?.removeAt(position)
-        _setupBankList.value = mutableList
+        _setupBankList.value = mutableList!!
     }
 
     fun doAccountSetup() {
