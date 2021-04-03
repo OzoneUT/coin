@@ -21,7 +21,7 @@
         app:titleTextColor="@color/dark_gray_text" />
 
     <EditText
-        android:id="@+id/total_money_edittext"
+        android:id="@+id/total_ticker"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="64dp"
@@ -46,8 +46,8 @@
         android:text="@string/currency_hint_usd"
         android:textColor="@color/light_gray_text"
         android:textSize="12sp"
-        app:layout_constraintBaseline_toBaselineOf="@+id/total_money_edittext"
-        app:layout_constraintStart_toEndOf="@+id/total_money_edittext" />
+        app:layout_constraintBaseline_toBaselineOf="@+id/total_ticker"
+        app:layout_constraintStart_toEndOf="@+id/total_ticker" />
 
     <com.google.android.material.chip.ChipGroup
         android:id="@+id/chipGroup"
@@ -58,7 +58,7 @@
         app:chipSpacingHorizontal="16dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/total_money_edittext"
+        app:layout_constraintTop_toBottomOf="@+id/total_ticker"
         app:selectionRequired="true"
         app:singleLine="true"
         app:singleSelection="true">

@@ -30,12 +30,7 @@
     <string name="lightbulb_content_description">lightbulb</string>
     <string name="finish_label">Finish</string>
     <string name="add_an_account_label">Add Money</string>
-    <string name="bank_type_checking">Checking</string>
-    <string name="bank_type_savings">Savings</string>
-    <string name="bank_type_cash">Cash</string>
-    <string name="bank_institution_label">Institution</string>
-    <string name="bank_amount_label">Amount</string>
-    <string name="add_bank_dialog_amount_tip">Specify an exact amount. For example: 562.36</string>
+    <string name="setup_amount_label">Amount</string>
     <string name="input_validation_email_login">Enter the e-mail address associated with your Coin account.</string>
     <string name="input_validation_password_login">Enter your password.</string>
     <string name="logout_button_label">Logout</string>
@@ -43,4 +38,8 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="initial_value_hint">0.00</string>
     <string name="currency_hint_usd">USD</string>
+    <plurals name="number_of_items_in_history">
+        <item quantity="one">%d item</item>
+        <item quantity="other">%d items</item>
+    </plurals>
 </resources>

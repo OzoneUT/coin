@@ -1,9 +1,8 @@
 package com.kafleyozone.coin.data
 
 import android.util.Log
-import com.kafleyozone.coin.data.domain.BankInstitutionEntity
+import com.kafleyozone.coin.data.domain.SetupAmountEntity
 import com.kafleyozone.coin.data.domain.User
-import com.kafleyozone.coin.data.domain.toDBBankInstitutionEntities
 import com.kafleyozone.coin.data.domain.toDBUser
 import com.kafleyozone.coin.data.network.AccountService
 import com.kafleyozone.coin.data.network.models.Resource
@@ -28,11 +27,7 @@ class AppRepository @Inject constructor(
             Log.i(TAG, "got account data successfully")
             if (user != null) {
                 userDao.clearUser()
-                userDao.clearUserBanks()
                 userDao.insertUser(user.toDBUser())
-                user.bankInstitutionEntities?.let {
-                    userDao.insertBankInstitutionEntities(it.toDBBankInstitutionEntities(user.id))
-                }
                 Resource.success(response.body())
             } else {
                 Resource.error("There was an error getting your account details.", null)
@@ -47,25 +42,15 @@ class AppRepository @Inject constructor(
         return savedUser?.let { User.from(it) }
     }
 
-    suspend fun setupAccount(bankInstitutionEntities: List<BankInstitutionEntity>): Resource<User> {
-        val response = accountService.setupAccount(bankInstitutionEntities)
+    suspend fun setupAccount(setupAmountEntities: List<SetupAmountEntity>): Resource<User> {
+        val response = accountService.setupAccount(setupAmountEntities)
         val user = response.body()
         return if (response.isSuccessful) {
             Log.i(TAG, "setupAccount was a success")
-            if (user?.bankInstitutionEntities != null) {
-                Log.i(TAG, "replacing existing user and banks with new response data")
-                userDao.clearUser()
-                userDao.clearUserBanks()
-                userDao.insertUser(user.toDBUser())
-                userDao.insertBankInstitutionEntities(
-                    user.bankInstitutionEntities.toDBBankInstitutionEntities(
-                        user.id
-                    )
-                )
-                Resource.success(response.body())
-            } else {
-                Resource.error("There was an error setting up your account.", null)
-            }
+
+            userDao.clearUser()
+            user?.toDBUser()?.let { userDao.insertUser(it) }
+            Resource.success(response.body())
         } else {
             Log.e(AuthRepository.TAG, "got error trying to set up user")
             Resource.error("There was an error setting up your account.", null)
@@ -75,7 +60,6 @@ class AppRepository @Inject constructor(
     suspend fun logout(): Resource<ResponseBody> {
         val response = accountService.logout()
         userDao.clearUser()
-        userDao.clearUserBanks()
         tokenRepository.deleteCachedAuth()
         return if (response.isSuccessful) {
             Log.i(AuthRepository.TAG, "logged user out successfully")

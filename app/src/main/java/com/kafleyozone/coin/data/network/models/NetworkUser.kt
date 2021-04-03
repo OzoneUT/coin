@@ -7,6 +7,5 @@ data class NetworkUser(
     val password: String,
     val email: String,
     val created: String,
-    val accountSetupComplete: Boolean,
-    val bankInstitutionEntities: List<NetworkBankInstitutionEntity>
+    val accountSetupComplete: Boolean
 )

@@ -1,6 +1,6 @@
 package com.kafleyozone.coin.data.network
 
-import com.kafleyozone.coin.data.domain.BankInstitutionEntity
+import com.kafleyozone.coin.data.domain.SetupAmountEntity
 import com.kafleyozone.coin.data.domain.User
 import com.kafleyozone.coin.utils.EP_ACCOUNT
 import com.kafleyozone.coin.utils.EP_ACCOUNT_SETUP
@@ -16,7 +16,7 @@ interface AccountService {
     suspend fun getAccount(): Response<User>
 
     @POST(EP_ACCOUNT_SETUP)
-    suspend fun setupAccount(@Body bankInstitutionEntities: List<BankInstitutionEntity>):
+    suspend fun setupAccount(@Body setupAmountEntities: List<SetupAmountEntity>):
             Response<User>
 
     @GET(EP_LOGOUT)

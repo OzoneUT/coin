@@ -1,7 +1,6 @@
 package com.kafleyozone.coin.data
 
 import android.util.Log
-import com.kafleyozone.coin.data.domain.toDBBankInstitutionEntities
 import com.kafleyozone.coin.data.domain.toDBUser
 import com.kafleyozone.coin.data.network.AuthenticationService
 import com.kafleyozone.coin.data.network.models.LoginResponse
@@ -33,11 +32,7 @@ class AuthRepository @Inject constructor(
                 email = user.email
             )
             userDao.clearUser()
-            userDao.clearUserBanks()
             userDao.insertUser(user.toDBUser())
-            user.bankInstitutionEntities?.toDBBankInstitutionEntities(user.id)?.let {
-                userDao.insertBankInstitutionEntities(it)
-            }
             Resource.success(response.body())
         } else {
             Resource.error(
