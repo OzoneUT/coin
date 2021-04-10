@@ -2,7 +2,7 @@
     <string name="app_name">Coin</string>
     <string name="welcome_to_coin_content_description">Welcome to Coin.</string>
     <string name="from_now_on_helper_text">From now on, you can count on us to help you track your finances.</string>
-    <string name="ready_to_get_started_helper_text">Ready to get started?</string>
+    <string name="ready_to_get_started_helper_text">Let\'s begin!</string>
     <string name="start_button_label">Start</string>
     <string name="exit_onboarding_dialog_title">Exit Coin Onboarding?</string>
     <string name="exit_onboarding_dialog_message">If you exit Coin\'s onboarding steps now, we\'ll have to start from the beginning the next time you launch Coin.</string>
