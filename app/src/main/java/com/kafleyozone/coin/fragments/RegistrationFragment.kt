@@ -57,8 +57,9 @@ class RegistrationFragment(
         }
 
         binding.loginOnRegisterButton.setOnClickListener {
+            pagerListener.onLoginPageEntry()
             val action = OnboardingFlowFragmentDirections
-                    .actionOnboardingFlowFragmentToLoginFragment()
+                .actionOnboardingFlowFragmentToLoginFragment()
             findNavController().navigate(action)
         }
 

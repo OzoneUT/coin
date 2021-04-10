@@ -5,6 +5,7 @@ import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.stringPreferencesKey
+import com.kafleyozone.coin.utils.MOCK_DEBUG
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
 import javax.inject.Inject
@@ -44,12 +45,14 @@ class TokenRepository @Inject constructor(
     }
 
     suspend fun getCachedAccessToken(): String {
+        if (MOCK_DEBUG) return "mock_access_token"
         return authStore.data.map { authStore ->
             authStore[KEY_ACCESS_TOKEN] ?: ""
         }.first()
     }
 
     suspend fun getCachedRefreshToken(): String {
+        if (MOCK_DEBUG) return "mock_refresh_token"
         return authStore.data.map { authStore ->
             authStore[KEY_REFRESH_TOKEN] ?: ""
         }.first()

@@ -1,6 +1,8 @@
 package com.kafleyozone.coin.fragments
 
+import android.graphics.Color
 import android.os.Bundle
+import android.transition.TransitionManager
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -10,18 +12,18 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
-import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.ListAdapter
-import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.snackbar.Snackbar
+import com.google.android.material.transition.platform.MaterialContainerTransform
 import com.kafleyozone.coin.R
-import com.kafleyozone.coin.data.domain.BankInstitutionEntity
+import com.kafleyozone.coin.data.domain.SetupAmountEntity
 import com.kafleyozone.coin.databinding.FragmentAccountSetupBinding
-import com.kafleyozone.coin.rvadapters.BankListAdapter
+import com.kafleyozone.coin.rvadapters.SetupHistoryAdapter
 import com.kafleyozone.coin.utils.Status
 import com.kafleyozone.coin.utils.setMargins
 import com.kafleyozone.coin.viewmodels.AccountSetupFragmentViewModel
+import com.robinhood.ticker.TickerUtils
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -31,8 +33,8 @@ class AccountSetupFragment : Fragment() {
     private val viewModel: AccountSetupFragmentViewModel by viewModels()
     private var _binding: FragmentAccountSetupBinding? = null
     private val binding get() = _binding!!
-    private var listAdapter: ListAdapter<BankInstitutionEntity,
-            BankListAdapter.BankListItemViewHolder>? = null
+    private var mListAdapter: ListAdapter<SetupAmountEntity,
+            SetupHistoryAdapter.HistoryItemViewHolder>? = null
 
     companion object {
         private const val TAG = "AccountSetupFragment"
@@ -45,61 +47,59 @@ class AccountSetupFragment : Fragment() {
 
     override fun onCreateView(
         inflater: LayoutInflater,
-        container: ViewGroup?, savedInstanceState: Bundle?,
+        container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
         _binding = FragmentAccountSetupBinding.inflate(inflater, container, false)
         val view = binding.root
-        listAdapter = BankListAdapter()
-
-        // Simple Swipe to Delete implementation
-        val swipeHandler = object : ItemTouchHelper.SimpleCallback(0,
-                ItemTouchHelper.RIGHT + ItemTouchHelper.LEFT) {
-            // to add an icon/background to the swipe, override onChildDraw
-            // https://medium.com/@kitek/recyclerview-swipe-to-delete-easier-than-you-thought-cff67ff5e5f6
-            override fun onMove(
-                    recyclerView: RecyclerView, viewHolder: RecyclerView.ViewHolder,
-                    target: RecyclerView.ViewHolder,
-            ): Boolean {
-                return false
-            }
-
-            override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
-                viewModel.removeBankEntityItemAt(viewHolder.adapterPosition)
-            }
+        mListAdapter = SetupHistoryAdapter {
+            // triggered on delete of this setupAmountEntity
+            viewModel.removeSetupAmountFromHistory(it)
         }
-
-        val itemTouchHelper = ItemTouchHelper(swipeHandler)
-        itemTouchHelper.attachToRecyclerView(binding.accountSetupRecyclerView)
-
-        binding.accountSetupRecyclerView.adapter = listAdapter
+        binding.totalTicker.setCharacterLists(TickerUtils.provideNumberList())
+        binding.accountSetupRecyclerView.adapter = mListAdapter
         binding.accountSetupRecyclerView.layoutManager = LinearLayoutManager(context)
 
-        binding.setupAddAccountButton.setOnClickListener {
-            AddNewBankDialogFragment()
-                    .show(childFragmentManager, AddNewBankDialogFragment.TAG)
+        binding.addMoneyChip.setOnClickListener {
+            toggleAddMoneyVisibilityWithFade(true)
+            binding.addMoneyTextInputLayout.requestFocus()
         }
 
-        viewModel.setupBankList.observe(viewLifecycleOwner) {
-            binding.setupFinishButton.isEnabled = !it.isNullOrEmpty()
-            (listAdapter as BankListAdapter).submitList(it.toList())
+        binding.cancelAddButton.setOnClickListener {
+            toggleAddMoneyVisibilityWithFade(false)
         }
+
+        binding.confirmAddButton.setOnClickListener {
+            viewModel.addSetupAmountToHistory(binding.addMoneyEditText.text.toString())
+            binding.addMoneyEditText.setText("")
+            toggleAddMoneyVisibilityWithFade(false)
+        }
+
+        viewModel.sumAmountFormatted.observe(viewLifecycleOwner, {
+            binding.totalTicker.text = it
+        })
+
+        viewModel.setupHistoryList.observe(viewLifecycleOwner, {
+            viewModel.calculateSetupHistorySum()
+            binding.numItems.text =
+                resources.getQuantityString(R.plurals.number_of_items_in_history, it.size, it.size)
+            binding.setupFinishButton.isEnabled = !it.isNullOrEmpty()
+            (mListAdapter as SetupHistoryAdapter).submitList(it.toList())
+        })
 
         binding.setupFinishButton.setOnClickListener {
             viewModel.doAccountSetup()
         }
 
-        viewModel.setupRes.observe(viewLifecycleOwner) {
+        viewModel.setupRes.observe(viewLifecycleOwner, {
             when (it.status) {
                 Status.SUCCESS -> {
                     try {
-                        findNavController()
-                            .navigate(
-                                AccountSetupFragmentDirections
-                                    .actionAccountSetupFragmentToHomeFragment(
-                                        it.data?.id
-                                            ?: ""
-                                    )
+                        Bundle().let { bundle ->
+                            bundle.putString(HomeContainerFragment.ID_ARG_KEY, it.data?.id)
+                            findNavController().navigate(
+                                R.id.action_global_homeContainerFragment, bundle
                             )
+                        }
                     } catch (e: Exception) {
                         mPagerListener.onAccountSetupComplete(it.data?.id ?: "")
                     }
@@ -112,13 +112,13 @@ class AccountSetupFragment : Fragment() {
                     Snackbar.make(view, it.message.toString(), Snackbar.LENGTH_SHORT).show()
                 }
             }
-        }
+        })
 
-        viewModel.name.observe(viewLifecycleOwner) {
+        viewModel.name.observe(viewLifecycleOwner, {
             binding.accountSetupWelcome.text =
-                    if (it.isNullOrEmpty()) getString(R.string.welcome_to_coin_no_name)
-                    else getString(R.string.welcome_to_coin_with_name, it)
-        }
+                if (it.isEmpty()) getString(R.string.welcome_to_coin_no_name)
+                else getString(R.string.welcome_to_coin_with_name, it)
+        })
 
         setupUI()
 
@@ -146,8 +146,28 @@ class AccountSetupFragment : Fragment() {
     private fun showLoadingUi(isLoading: Boolean) {
         binding.accountSetupRecyclerView.isEnabled = !isLoading
         binding.setupFinishButton.isEnabled = !isLoading
-        binding.setupAddAccountButton.isEnabled = !isLoading
+        binding.addMoneyChip.isEnabled = !isLoading
         binding.progressBar.visibility = if (isLoading) View.VISIBLE else View.INVISIBLE
+    }
+
+    private fun toggleAddMoneyVisibilityWithFade(adding: Boolean) {
+        val transform = MaterialContainerTransform().apply {
+            // Manually tell the container transform which Views to transform between.
+            startView = if (adding) binding.addMoneyChip else binding.addMoneyTextInputLayout
+            endView = if (adding) binding.addMoneyTextInputLayout else binding.addMoneyChip
+
+            // Ensure the container transform only runs on a single target
+            addTarget(endView)
+
+            // Since View to View transforms often are not transforming into full screens,
+            // remove the transition's scrim.
+            scrimColor = Color.TRANSPARENT
+        }
+        TransitionManager.beginDelayedTransition(binding.accountSetupContainer, transform)
+        binding.addMoneyChip.visibility = if (adding) View.GONE else View.VISIBLE
+        binding.addMoneyTextInputLayout.visibility = if (adding) View.VISIBLE else View.GONE
+        binding.confirmAddButton.visibility = if (adding) View.VISIBLE else View.GONE
+        binding.cancelAddButton.visibility = if (adding) View.VISIBLE else View.GONE
     }
 
     private fun onBackPressedSetup() {

@@ -7,17 +7,20 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.kafleyozone.coin.data.AppRepository
 import com.kafleyozone.coin.data.domain.User
+import com.kafleyozone.coin.utils.getDateFormatPattern
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import java.text.SimpleDateFormat
+import java.util.*
 import javax.inject.Inject
 
 @HiltViewModel
-class HomeViewModel @Inject constructor(
+class HomeContainerViewModel @Inject constructor(
     private val appRepository: AppRepository
 ) : ViewModel() {
 
     companion object {
-        const val TAG = "HomeViewModel"
+        const val TAG = "HomeContainerViewModel"
     }
 
     private var _authorized = MutableLiveData<Boolean>()
@@ -28,8 +31,8 @@ class HomeViewModel @Inject constructor(
     val userData: LiveData<User>
         get() = _userData
 
-    fun getUserFromDB(id: String) {
-        if (id.isEmpty()) {
+    fun getUserFromDB(id: String?) {
+        if (id.isNullOrEmpty()) {
             Log.e(TAG, "FATAL: userId was empty!")
             _authorized.value = false
             return
@@ -49,6 +52,13 @@ class HomeViewModel @Inject constructor(
         viewModelScope.launch {
             appRepository.logout()
             _authorized.postValue(false)
+        }
+    }
+
+    fun getCurrentDate(): String {
+        return (SimpleDateFormat.getDateInstance() as SimpleDateFormat).let {
+            it.applyPattern(getDateFormatPattern())
+            it.format(Date())
         }
     }
 }

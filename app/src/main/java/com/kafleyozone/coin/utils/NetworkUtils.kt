@@ -3,8 +3,9 @@ package com.kafleyozone.coin.utils
 import okhttp3.Request
 import java.util.*
 
-// Base url
-const val BASE_URL = "http://www.shinkansen.freeddns.org:8080/"
+// Base urls
+const val BASE_URL = "http://10.0.2.2:8080/" //10.0.2.2 to access host machine's loopback address
+const val MOCK_BASE_URL = "https://f4ceca4f-5f0f-4f72-bcb7-533e484397af.mock.pstmn.io"
 
 // Retrofit endpoints
 const val EP_LOGIN = "auth/login"

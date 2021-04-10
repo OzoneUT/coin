@@ -2,16 +2,14 @@ package com.kafleyozone.coin.data.domain
 
 import com.kafleyozone.coin.data.room.models.DBUser
 import com.kafleyozone.coin.data.room.models.SavedUser
-import com.kafleyozone.coin.data.room.models.toBankInstitutionEntities
 
 data class User(
     val id: String,
     val name: String,
     val email: String,
-    val password: String,
     val created: String,
     val accountSetupComplete: Boolean,
-    val bankInstitutionEntities: List<BankInstitutionEntity>?,
+    val setupAmount: Double,
 ) {
     companion object {
         fun from(savedUser: SavedUser): User {
@@ -19,10 +17,9 @@ data class User(
                 id = savedUser.dbUser.id,
                 name = savedUser.dbUser.name,
                 email = savedUser.dbUser.email,
-                password = "",
                 created = savedUser.dbUser.created,
                 accountSetupComplete = savedUser.dbUser.accountSetupComplete,
-                bankInstitutionEntities = savedUser.dbBankInstitutionEntities.toBankInstitutionEntities()
+                setupAmount = savedUser.dbUser.setupAmount,
             )
         }
     }
@@ -35,5 +32,6 @@ fun User.toDBUser(): DBUser {
         email = this.email,
         created = this.created,
         accountSetupComplete = this.accountSetupComplete,
+        setupAmount = this.setupAmount
     )
 }

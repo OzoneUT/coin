@@ -1,13 +1,13 @@
 package com.kafleyozone.coin.data
 
 import android.util.Log
-import com.kafleyozone.coin.data.domain.toDBBankInstitutionEntities
 import com.kafleyozone.coin.data.domain.toDBUser
 import com.kafleyozone.coin.data.network.AuthenticationService
 import com.kafleyozone.coin.data.network.models.LoginResponse
 import com.kafleyozone.coin.data.network.models.RegistrationRequest
 import com.kafleyozone.coin.data.network.models.Resource
 import com.kafleyozone.coin.data.room.UserDao
+import com.kafleyozone.coin.utils.MOCK_DEBUG
 import java.net.HttpURLConnection
 import javax.inject.Inject
 
@@ -32,11 +32,7 @@ class AuthRepository @Inject constructor(
                 email = user.email
             )
             userDao.clearUser()
-            userDao.clearUserBanks()
             userDao.insertUser(user.toDBUser())
-            user.bankInstitutionEntities?.toDBBankInstitutionEntities(user.id)?.let {
-                userDao.insertBankInstitutionEntities(it)
-            }
             Resource.success(response.body())
         } else {
             Resource.error(
@@ -64,6 +60,7 @@ class AuthRepository @Inject constructor(
     }
 
     suspend fun checkAuth(): Boolean {
+        if (MOCK_DEBUG) return true
         return tokenRepository.getCachedAccessToken().isNotEmpty()
                 && tokenRepository.getCachedRefreshToken().isNotEmpty()
     }

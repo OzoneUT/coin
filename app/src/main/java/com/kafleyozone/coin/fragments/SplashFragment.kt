@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import com.google.android.material.transition.MaterialFadeThrough
 import com.kafleyozone.coin.R
 import com.kafleyozone.coin.utils.Status
 import com.kafleyozone.coin.viewmodels.SplashFragmentViewModel
@@ -23,6 +24,8 @@ class SplashFragment: Fragment(R.layout.fragment_splash) {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 
+        exitTransition = MaterialFadeThrough()
+
         viewModel.cachedEmail.observe(viewLifecycleOwner) { email ->
             if (email.isNullOrEmpty() || email == "\"\"") {
                 findNavController()
@@ -38,10 +41,10 @@ class SplashFragment: Fragment(R.layout.fragment_splash) {
                 Status.SUCCESS -> {
                     // if we successfully got the user, the cached accessToken was valid. Move the
                     // user to their dashboard
-                    findNavController().navigate(
-                            SplashFragmentDirections
-                                    .actionSplashFragmentToHomeFragment(it.data?.id ?: "")
-                    )
+                    Bundle().let { b ->
+                        b.putString(HomeContainerFragment.ID_ARG_KEY, it.data?.id)
+                        findNavController().navigate(R.id.action_global_homeContainerFragment, b)
+                    }
                 }
                 Status.LOADING -> {
                     // do nothing TODO: after x sec have passed, show a loading spinner

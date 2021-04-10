@@ -1,21 +1,20 @@
 package com.kafleyozone.coin.viewmodels
 
 import android.util.Log
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.*
 import com.kafleyozone.coin.data.AppRepository
-import com.kafleyozone.coin.data.domain.BankInstitutionEntity
+import com.kafleyozone.coin.data.domain.SetupAmountEntity
 import com.kafleyozone.coin.data.domain.User
+import com.kafleyozone.coin.data.network.models.NetworkSetupAmountEntity
 import com.kafleyozone.coin.data.network.models.Resource
+import com.kafleyozone.coin.utils.convertDoubleToFormattedCurrency
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class AccountSetupFragmentViewModel @Inject constructor(
-        private val appRepository: AppRepository,
+    private val appRepository: AppRepository
 ) : ViewModel() {
 
     companion object {
@@ -26,46 +25,68 @@ class AccountSetupFragmentViewModel @Inject constructor(
     val name: LiveData<String>
         get() = _name
 
-    private var _setupBankList = MutableLiveData<MutableList<BankInstitutionEntity>>()
-    val setupBankList: LiveData<MutableList<BankInstitutionEntity>>
-        get() = _setupBankList
+    private var _setupHistoryList = MutableLiveData<MutableList<SetupAmountEntity>>()
+    val setupHistoryList: LiveData<MutableList<SetupAmountEntity>>
+        get() = _setupHistoryList
+
+    private var _setupHistorySum = MutableLiveData<Double>()
+    val sumAmountFormatted = Transformations.map(_setupHistorySum) {
+        convertDoubleToFormattedCurrency(it, true)
+    }
 
     private var _setupRes = MutableLiveData<Resource<User>>()
     val setupRes: LiveData<Resource<User>>
         get() = _setupRes
 
     init {
-        _setupBankList.value = mutableListOf()
+        _setupHistoryList.value = mutableListOf()
     }
 
     fun setName(name: String) {
         _name.value = name
     }
 
-    fun addBankAccount(name: String, description: String, amount: Double) {
-        val mutableList = _setupBankList.value
-        mutableList?.add(0, BankInstitutionEntity(name, description, amount))
-        _setupBankList.value = mutableList
+    fun addSetupAmountToHistory(amount: String) {
+        amount.toDoubleOrNull()?.let {
+            val mutableList = _setupHistoryList.value
+            mutableList?.add(0, SetupAmountEntity(it))
+            _setupHistoryList.value = mutableList!!
+        }
     }
 
-    fun removeBankEntityItemAt(position: Int) {
-        val mutableList = _setupBankList.value
-        mutableList?.removeAt(position)
-        _setupBankList.value = mutableList
+    fun removeSetupAmountFromHistory(item: SetupAmountEntity) {
+        val mutableList = _setupHistoryList.value
+        mutableList?.remove(item)
+        _setupHistoryList.value = mutableList!!
+    }
+
+    fun calculateSetupHistorySum() {
+        var sum = 0.0
+        setupHistoryList.value?.forEach {
+            sum += it.amount
+        }
+        _setupHistorySum.value = sum
     }
 
     fun doAccountSetup() {
-        setupBankList.value?.let {
+        setupHistoryList.value?.let {
             viewModelScope.launch {
                 try {
+                    if (_setupHistorySum.value == null) {
+                        throw IllegalStateException(
+                            "setupHistorySum livedata's value was " +
+                                    "null when sending the network request"
+                        )
+                    }
+                    val setupAmountEntity = NetworkSetupAmountEntity(_setupHistorySum.value!!)
                     _setupRes.postValue(Resource.loading(null))
-                    appRepository.setupAccount(it.toList()).let {
+                    appRepository.setupAccount(setupAmountEntity).let {
                         _setupRes.postValue(it)
                     }
                 } catch (e: Exception) {
                     _setupRes.postValue(
                         Resource.error(
-                            "We couldn't connect to the Coin server.", null
+                            "Something went wrong. Please try again later.", null
                         )
                     )
                     Log.e(TAG, "account setup failed: ${e.message}")

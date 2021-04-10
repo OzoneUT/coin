@@ -71,7 +71,7 @@ fun TextInputEditText.isMonetaryAmountValid(layoutView: TextInputLayout): Boolea
         layoutView.error = "Max amount: $MAX_MONETARY_AMOUNT_DISPLAY"
         return false
     }
-    setText(convertStringToFormattedCurrency(value))
+    setText(convertDoubleToFormattedCurrency(value))
     layoutView.error = null
     return true
 }
