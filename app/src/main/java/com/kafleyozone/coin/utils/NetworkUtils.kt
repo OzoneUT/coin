@@ -4,7 +4,7 @@ import okhttp3.Request
 import java.util.*
 
 // Base urls
-const val BASE_URL = "http://www.shinkansen.freeddns.org:8080/"
+const val BASE_URL = "http://10.0.2.2:8080/" //10.0.2.2 to access host machine's loopback address
 const val MOCK_BASE_URL = "https://f4ceca4f-5f0f-4f72-bcb7-533e484397af.mock.pstmn.io"
 
 // Retrofit endpoints

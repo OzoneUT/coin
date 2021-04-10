@@ -5,6 +5,7 @@ import androidx.lifecycle.*
 import com.kafleyozone.coin.data.AppRepository
 import com.kafleyozone.coin.data.domain.SetupAmountEntity
 import com.kafleyozone.coin.data.domain.User
+import com.kafleyozone.coin.data.network.models.NetworkSetupAmountEntity
 import com.kafleyozone.coin.data.network.models.Resource
 import com.kafleyozone.coin.utils.convertDoubleToFormattedCurrency
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -71,14 +72,21 @@ class AccountSetupFragmentViewModel @Inject constructor(
         setupHistoryList.value?.let {
             viewModelScope.launch {
                 try {
+                    if (_setupHistorySum.value == null) {
+                        throw IllegalStateException(
+                            "setupHistorySum livedata's value was " +
+                                    "null when sending the network request"
+                        )
+                    }
+                    val setupAmountEntity = NetworkSetupAmountEntity(_setupHistorySum.value!!)
                     _setupRes.postValue(Resource.loading(null))
-                    appRepository.setupAccount(it.toList()).let {
+                    appRepository.setupAccount(setupAmountEntity).let {
                         _setupRes.postValue(it)
                     }
                 } catch (e: Exception) {
                     _setupRes.postValue(
                         Resource.error(
-                            "We couldn't connect to the Coin server.", null
+                            "Something went wrong. Please try again later.", null
                         )
                     )
                     Log.e(TAG, "account setup failed: ${e.message}")

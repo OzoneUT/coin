@@ -1,13 +1,13 @@
 package com.kafleyozone.coin.fragments
 
 import android.os.Bundle
+import android.transition.TransitionInflater
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.activity.addCallback
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.observe
 import androidx.navigation.Navigation
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.setupWithNavController
@@ -21,6 +21,7 @@ class HomeContainerFragment : Fragment(R.layout.fragment_home_container) {
     companion object {
         const val TAG = "HomeContainerFragment"
         const val ID_ARG_KEY = "user_id"
+        const val NAVIGATED_FROM_KEY = "navigated_from"
     }
 
     private val containerViewModel: HomeContainerViewModel by viewModels()
@@ -35,31 +36,27 @@ class HomeContainerFragment : Fragment(R.layout.fragment_home_container) {
         _binding = FragmentHomeContainerBinding.inflate(inflater, container, false)
         val view = binding.root
 
+        setupEnterTransition()
         onBackPressedSetup()
 
-        containerViewModel.userData.observe(viewLifecycleOwner) {
+        containerViewModel.userData.observe(viewLifecycleOwner, {
             if (!it.accountSetupComplete) {
                 findNavController()
                     .navigate(
                         HomeContainerFragmentDirections
                             .actionHomeContainerFragmentToAccountSetupFragment(it.name)
                     )
-                return@observe
             }
-        }
+        })
 
-        containerViewModel.authorized.observe(viewLifecycleOwner) { authorized ->
+        containerViewModel.authorized.observe(viewLifecycleOwner, { authorized ->
             if (!authorized) {
                 requireActivity().finish()
             }
-        }
+        })
 
         binding.toolbar.title = containerViewModel.getCurrentDate()
         containerViewModel.getUserFromDB(arguments?.getString(ID_ARG_KEY))
-
-//        binding.logoutButton.setOnClickListener {
-//            containerViewModel.logoutUser()
-//        }
 
         return view
     }
@@ -69,6 +66,12 @@ class HomeContainerFragment : Fragment(R.layout.fragment_home_container) {
         val navController =
             Navigation.findNavController(requireActivity(), R.id.main_nav_graph_view)
         binding.bottomNavigationView.setupWithNavController(navController)
+    }
+
+    private fun setupEnterTransition() {
+        if (arguments?.getInt(NAVIGATED_FROM_KEY) == R.layout.fragment_login)
+            enterTransition = TransitionInflater.from(requireContext())
+                .inflateTransition(R.transition.slide_medium_rtl)
     }
 
     private fun onBackPressedSetup() {

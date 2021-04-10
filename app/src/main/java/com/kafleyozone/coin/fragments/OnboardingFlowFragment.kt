@@ -11,6 +11,7 @@ import androidx.fragment.app.FragmentActivity
 import androidx.navigation.fragment.findNavController
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.google.android.material.tabs.TabLayoutMediator
+import com.google.android.material.transition.MaterialFadeThrough
 import com.kafleyozone.coin.R
 import com.kafleyozone.coin.databinding.FragmentOnboardingFlowBinding
 
@@ -20,6 +21,7 @@ class OnboardingFlowFragment : Fragment() {
         fun onOnboardingStart()
         fun onRegisterComplete(name: String)
         fun onAccountSetupComplete(id: String)
+        fun onLoginPageEntry()
     }
 
     companion object {
@@ -34,6 +36,7 @@ class OnboardingFlowFragment : Fragment() {
     override fun onCreateView(inflater: LayoutInflater,
                               container: ViewGroup?,
                               savedInstanceState: Bundle?): View {
+        enterTransition = MaterialFadeThrough()
         _binding = FragmentOnboardingFlowBinding.inflate(inflater, container, false)
         val view = binding.root
 
@@ -54,6 +57,12 @@ class OnboardingFlowFragment : Fragment() {
                 Bundle().let { b ->
                     b.putString(HomeContainerFragment.ID_ARG_KEY, id)
                     findNavController().navigate(R.id.action_global_homeContainerFragment, b)
+                }
+            }
+
+            override fun onLoginPageEntry() {
+                exitTransition = MaterialFadeThrough().apply {
+                    secondaryAnimatorProvider = null
                 }
             }
 
