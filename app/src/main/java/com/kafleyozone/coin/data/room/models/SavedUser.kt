@@ -5,12 +5,12 @@ import com.kafleyozone.coin.data.domain.User
 import com.kafleyozone.coin.data.domain.toDBUser
 
 data class SavedUser(
-    @Embedded val dbUser: DBUser,
+    @Embedded val dbUser: DBUser
 ) {
     companion object {
         fun fromUser(user: User): SavedUser {
             return SavedUser(
-                user.toDBUser(),
+                user.toDBUser()
             )
         }
     }

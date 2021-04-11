@@ -10,7 +10,7 @@ data class NetworkUser(
     val email: String,
     val created: String,
     val accountSetupComplete: Boolean,
-    val setupAmount: Double,
+    val setupAmount: Double
 )
 
 fun NetworkUser.toDomainUser(): User {
