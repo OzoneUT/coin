@@ -49,7 +49,7 @@ fun getDateFormatPattern(): String {
 * */
 fun View.setMargins(
         context: Context, left: Int = 0, top: Int = 0, right: Int = 0,
-        bottom: Int = 0,
+        bottom: Int = 0
 ) {
     val l = context.dpToPx(left)
     val t = context.dpToPx(top)

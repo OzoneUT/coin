@@ -10,6 +10,7 @@ import android.view.ViewGroup
 import androidx.activity.addCallback
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.observe
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -74,23 +75,23 @@ class AccountSetupFragment : Fragment() {
             toggleAddMoneyVisibilityWithFade(false)
         }
 
-        viewModel.sumAmountFormatted.observe(viewLifecycleOwner, {
+        viewModel.sumAmountFormatted.observe(viewLifecycleOwner) {
             binding.totalTicker.text = it
-        })
+        }
 
-        viewModel.setupHistoryList.observe(viewLifecycleOwner, {
+        viewModel.setupHistoryList.observe(viewLifecycleOwner) {
             viewModel.calculateSetupHistorySum()
             binding.numItems.text =
                 resources.getQuantityString(R.plurals.number_of_items_in_history, it.size, it.size)
             binding.setupFinishButton.isEnabled = !it.isNullOrEmpty()
             (mListAdapter as SetupHistoryAdapter).submitList(it.toList())
-        })
+        }
 
         binding.setupFinishButton.setOnClickListener {
             viewModel.doAccountSetup()
         }
 
-        viewModel.setupRes.observe(viewLifecycleOwner, {
+        viewModel.setupRes.observe(viewLifecycleOwner) {
             when (it.status) {
                 Status.SUCCESS -> {
                     try {
@@ -112,13 +113,13 @@ class AccountSetupFragment : Fragment() {
                     Snackbar.make(view, it.message.toString(), Snackbar.LENGTH_SHORT).show()
                 }
             }
-        })
+        }
 
-        viewModel.name.observe(viewLifecycleOwner, {
+        viewModel.name.observe(viewLifecycleOwner) {
             binding.accountSetupWelcome.text =
                 if (it.isEmpty()) getString(R.string.welcome_to_coin_no_name)
                 else getString(R.string.welcome_to_coin_with_name, it)
-        })
+        }
 
         setupUI()
 

@@ -9,7 +9,7 @@ data class User(
     val email: String,
     val created: String,
     val accountSetupComplete: Boolean,
-    val setupAmount: Double,
+    val setupAmount: Double
 ) {
     companion object {
         fun from(savedUser: SavedUser): User {
@@ -19,7 +19,7 @@ data class User(
                 email = savedUser.dbUser.email,
                 created = savedUser.dbUser.created,
                 accountSetupComplete = savedUser.dbUser.accountSetupComplete,
-                setupAmount = savedUser.dbUser.setupAmount,
+                setupAmount = savedUser.dbUser.setupAmount
             )
         }
     }
