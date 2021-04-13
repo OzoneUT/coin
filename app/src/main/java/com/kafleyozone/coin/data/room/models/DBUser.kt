@@ -11,5 +11,5 @@ data class DBUser(
     var email: String,
     var created: String,
     var accountSetupComplete: Boolean,
-    var setupAmount: Double,
+    var setupAmount: Double
 )
