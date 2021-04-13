@@ -60,8 +60,7 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
         // flow.
         binding.registerOnLoginButton.setOnClickListener {
             findNavController().navigate(
-                LoginFragmentDirections
-                    .actionLoginFragmentToOnboardingFlowFragment()
+                LoginFragmentDirections.actionLoginFragmentToWelcomeFragment()
             )
         }
 

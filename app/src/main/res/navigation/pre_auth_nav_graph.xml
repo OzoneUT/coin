@@ -7,18 +7,13 @@
     app:startDestination="@id/splashFragment">
 
     <fragment
-        android:id="@+id/onboardingFlowFragment"
-        android:name="com.kafleyozone.coin.fragments.OnboardingFlowFragment"
-        android:label="OnboardingFlowFragment"
+        android:id="@+id/welcomeFragment"
+        android:name="com.kafleyozone.coin.fragments.WelcomeFragment"
+        android:label="WelcomeFragment"
         tools:layout="@layout/fragment_welcome">
         <action
-            android:id="@+id/action_onboardingFlowFragment_to_loginFragment"
-            app:destination="@id/loginFragment"
-            app:popUpTo="@id/onboardingFlowFragment"
-            app:popUpToInclusive="false" />
-        <action
-            android:id="@+id/action_onboardingFlowFragment_to_exitOnboardingDialogFragment"
-            app:destination="@id/exitOnboardingDialogFragment" />
+            android:id="@+id/action_welcomeFragment_to_registrationFragment"
+            app:destination="@id/registrationFragment" />
     </fragment>
     <fragment
         android:id="@+id/loginFragment"
@@ -30,14 +25,13 @@
             app:argType="string"
             android:defaultValue='""' />
         <action
-            android:id="@+id/action_loginFragment_to_onboardingFlowFragment"
-            app:destination="@id/onboardingFlowFragment"
-            app:popUpTo="@id/loginFragment"
-            app:popUpToInclusive="true" />
+            android:id="@+id/action_loginFragment_to_welcomeFragment"
+            app:destination="@id/welcomeFragment"
+            app:popUpToInclusive="false" />
     </fragment>
     <dialog
         android:id="@+id/exitOnboardingDialogFragment"
-        android:name="com.kafleyozone.coin.fragments.ExitOnboardingDialogFragment"
+        android:name="com.kafleyozone.coin.fragments.ExitSetupDialogFragment"
         android:label="ExitOnboardingDialogFragment" />
     <fragment
         android:id="@+id/splashFragment"
@@ -45,13 +39,13 @@
         android:label="SplashFragment"
         tools:layout="@layout/fragment_splash">
         <action
-            android:id="@+id/action_splashFragment_to_onboardingFlowFragment"
-            app:destination="@id/onboardingFlowFragment"
+            android:id="@+id/action_splashFragment_to_loginFragment"
+            app:destination="@id/loginFragment"
             app:popUpTo="@id/splashFragment"
             app:popUpToInclusive="true" />
         <action
-            android:id="@+id/action_splashFragment_to_loginFragment"
-            app:destination="@id/loginFragment"
+            android:id="@+id/action_splashFragment_to_welcomeFragment"
+            app:destination="@id/welcomeFragment"
             app:popUpTo="@id/splashFragment"
             app:popUpToInclusive="true" />
     </fragment>
@@ -65,6 +59,9 @@
             app:argType="string"
             android:defaultValue="@null"
             app:nullable="true" />
+        <action
+            android:id="@+id/action_accountSetupFragment_to_exitOnboardingDialogFragment"
+            app:destination="@id/exitOnboardingDialogFragment" />
     </fragment>
     <fragment
         android:id="@+id/homeContainerFragment"
@@ -80,5 +77,17 @@
         app:destination="@id/homeContainerFragment"
         app:popUpTo="@id/pre_auth_nav_graph"
         app:popUpToInclusive="true" />
+    <fragment
+        android:id="@+id/registrationFragment"
+        android:name="com.kafleyozone.coin.fragments.RegistrationFragment"
+        android:label="RegistrationFragment"
+        tools:layout="@layout/fragment_registration">
+        <action
+            android:id="@+id/action_registrationFragment_to_accountSetupFragment"
+            app:destination="@id/accountSetupFragment" />
+        <action
+            android:id="@+id/action_registrationFragment_to_loginFragment"
+            app:destination="@id/loginFragment" />
+    </fragment>
 
 </navigation>

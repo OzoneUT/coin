@@ -22,9 +22,7 @@ import com.kafleyozone.coin.viewmodels.RegistrationFragmentViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class RegistrationFragment(
-        private val pagerListener: OnboardingFlowFragment.PagerListenerInterface
-) : Fragment() {
+class RegistrationFragment : Fragment() {
 
     companion object {
         private const val TAG = "RegistrationFragment"
@@ -58,9 +56,7 @@ class RegistrationFragment(
         }
 
         binding.loginOnRegisterButton.setOnClickListener {
-            pagerListener.onLoginPageEntry()
-            val action = OnboardingFlowFragmentDirections
-                .actionOnboardingFlowFragmentToLoginFragment()
+            val action = RegistrationFragmentDirections.actionRegistrationFragmentToLoginFragment()
             findNavController().navigate(action)
         }
 
@@ -73,12 +69,16 @@ class RegistrationFragment(
             }
         }
 
-        // auto-login
+        // Observe auto-login success after registration
         loginViewModel.loginRes.observe(viewLifecycleOwner) {
             when (it.status) {
                 Status.SUCCESS -> {
                     try {
-                        pagerListener.onRegisterComplete(it.data?.user?.name ?: "")
+                        val name = it.data?.user?.name ?: ""
+                        findNavController().navigate(
+                            RegistrationFragmentDirections
+                                .actionRegistrationFragmentToAccountSetupFragment(name)
+                        )
                     } catch (e: Exception) {
                         Log.e(TAG, "couldn't advance page; we may not be on onboarding flow")
                     }
@@ -88,7 +88,7 @@ class RegistrationFragment(
                 }
                 Status.ERROR -> {
                     try {
-                        OnboardingFlowFragmentDirections.actionOnboardingFlowFragmentToLoginFragment(
+                        RegistrationFragmentDirections.actionRegistrationFragmentToLoginFragment(
                             viewModel.registrationRequestObject.email
                         )
                     } catch (e: Exception) {
@@ -101,7 +101,7 @@ class RegistrationFragment(
         viewModel.registrationRes.observe(viewLifecycleOwner) { resource ->
             when (resource.status) {
                 Status.SUCCESS -> {
-                    // auto-login
+                    // auto-login after registration success
                     loginViewModel.doLogin(viewModel.registrationRequestObject.email,
                             viewModel.registrationRequestObject.password)
                 }

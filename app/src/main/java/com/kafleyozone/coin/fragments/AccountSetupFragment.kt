@@ -30,7 +30,6 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class AccountSetupFragment : Fragment() {
 
-    private lateinit var mPagerListener: OnboardingFlowFragment.PagerListenerInterface
     private val viewModel: AccountSetupFragmentViewModel by viewModels()
     private var _binding: FragmentAccountSetupBinding? = null
     private val binding get() = _binding!!
@@ -39,11 +38,6 @@ class AccountSetupFragment : Fragment() {
 
     companion object {
         private const val TAG = "AccountSetupFragment"
-    }
-
-    fun setPagerListener(pagerListener: OnboardingFlowFragment.PagerListenerInterface): AccountSetupFragment {
-        mPagerListener = pagerListener
-        return this
     }
 
     override fun onCreateView(
@@ -94,15 +88,11 @@ class AccountSetupFragment : Fragment() {
         viewModel.setupRes.observe(viewLifecycleOwner) {
             when (it.status) {
                 Status.SUCCESS -> {
-                    try {
-                        Bundle().let { bundle ->
-                            bundle.putString(HomeContainerFragment.ID_ARG_KEY, it.data?.id)
-                            findNavController().navigate(
-                                R.id.action_global_homeContainerFragment, bundle
-                            )
-                        }
-                    } catch (e: Exception) {
-                        mPagerListener.onAccountSetupComplete(it.data?.id ?: "")
+                    Bundle().let { bundle ->
+                        bundle.putString(HomeContainerFragment.ID_ARG_KEY, it.data?.id)
+                        findNavController().navigate(
+                            R.id.action_global_homeContainerFragment, bundle
+                        )
                     }
                 }
                 Status.LOADING -> {

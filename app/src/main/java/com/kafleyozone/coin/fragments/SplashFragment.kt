@@ -28,9 +28,9 @@ class SplashFragment: Fragment(R.layout.fragment_splash) {
         exitTransition = MaterialFadeThrough()
 
         viewModel.cachedEmail.observe(viewLifecycleOwner) { email ->
-            if (email.isNullOrEmpty() || email == "\"\"") {
+            if (email.isEmpty() || email == "\"\"") {
                 findNavController()
-                    .navigate(SplashFragmentDirections.actionSplashFragmentToOnboardingFlowFragment())
+                    .navigate(SplashFragmentDirections.actionSplashFragmentToWelcomeFragment())
             } else {
                 findNavController()
                     .navigate(SplashFragmentDirections.actionSplashFragmentToLoginFragment(email))
