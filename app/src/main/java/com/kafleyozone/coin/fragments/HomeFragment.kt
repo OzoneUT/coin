@@ -19,7 +19,6 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
-        val view = binding.root
-        return view
+        return binding.root
     }
 }

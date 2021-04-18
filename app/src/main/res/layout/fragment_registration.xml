@@ -42,7 +42,7 @@
         android:paddingBottom="8dp"
         style="@style/Theme.Coin.PageDescription"/>
 
-    <ScrollView
+    <androidx.core.widget.NestedScrollView
         android:id="@+id/registration_scrollview"
         android:layout_width="match_parent"
         android:layout_height="0dp"
@@ -153,7 +153,7 @@
                 android:text="@string/register_button_label" />
 
         </LinearLayout>
-    </ScrollView>
+    </androidx.core.widget.NestedScrollView>
 
     <View
         android:layout_width="match_parent"

@@ -8,7 +8,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import androidx.lifecycle.observe
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.google.android.material.snackbar.Snackbar
@@ -44,7 +43,7 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
 
         // The args may contain an email from a previous logged in user. Pre-fill this in the
         // correct field if it's not empty and doesn't not contain empty quotes (dataStore quirk)
-        if (args.email != "\"\"") // TODO need a better fix to reinit email from dataStore correctly
+        if (args.email != "\"\"") // TODO need a better fix to re-init email from dataStore correctly
             binding.loginEmailField.setText(args.email)
 
         // Setup the login button to do a final validation on the username/password field values

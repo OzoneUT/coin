@@ -10,7 +10,6 @@ import android.view.ViewGroup
 import androidx.activity.addCallback
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.observe
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -128,10 +127,6 @@ class AccountSetupFragment : Fragment() {
         } catch (e: Exception) {
             Log.i(TAG, "no navArgs found for AccountSetupFragment, must be on onboarding flow")
         }
-    }
-
-    fun setNameArgument(name: String) {
-        viewModel.setName(name)
     }
 
     private fun showLoadingUi(isLoading: Boolean) {
