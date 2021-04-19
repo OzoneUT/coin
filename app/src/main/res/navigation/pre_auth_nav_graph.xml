@@ -74,7 +74,10 @@
         tools:layout="@layout/fragment_home_container">
         <action
             android:id="@+id/action_homeContainerFragment_to_accountSetupFragment"
-            app:destination="@id/accountSetupFragment"></action>
+            app:destination="@id/accountSetupFragment" />
+        <action
+            android:id="@+id/action_homeContainerFragment_to_profileOverviewFragment"
+            app:destination="@id/profileOverviewFragment" />
     </fragment>
     <action
         android:id="@+id/action_global_homeContainerFragment"
@@ -93,5 +96,10 @@
             android:id="@+id/action_registrationFragment_to_loginFragment"
             app:destination="@id/loginFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/profileOverviewFragment"
+        android:name="com.kafleyozone.coin.fragments.ProfileOverviewFragment"
+        android:label="ProfileOverviewFragment"
+        tools:layout="@layout/fragment_profile_overview" />
 
 </navigation>

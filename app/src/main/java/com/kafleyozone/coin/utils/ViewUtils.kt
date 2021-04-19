@@ -4,6 +4,7 @@ import android.content.Context
 import android.icu.text.DecimalFormat
 import android.view.View
 import android.view.ViewGroup.MarginLayoutParams
+import com.google.android.material.transition.MaterialFadeThrough
 import java.util.*
 
 
@@ -67,4 +68,13 @@ fun View.setMargins(
 * */
 fun Context.dpToPx(dp: Int): Int {
     return (dp * resources.displayMetrics.density).toInt()
+}
+
+/*
+* Creates and returns a MaterialFadeThrough transition without the secondary scale effect
+* */
+fun fadeThroughTransition(): MaterialFadeThrough {
+    return MaterialFadeThrough().apply {
+        secondaryAnimatorProvider = null
+    }
 }

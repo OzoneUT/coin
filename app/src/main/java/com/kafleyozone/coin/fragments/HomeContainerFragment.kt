@@ -2,17 +2,17 @@ package com.kafleyozone.coin.fragments
 
 import android.os.Bundle
 import android.transition.TransitionInflater
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import androidx.activity.addCallback
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
+import androidx.fragment.app.activityViewModels
 import androidx.navigation.Navigation
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.setupWithNavController
 import com.kafleyozone.coin.R
 import com.kafleyozone.coin.databinding.FragmentHomeContainerBinding
+import com.kafleyozone.coin.utils.fadeThroughTransition
 import com.kafleyozone.coin.viewmodels.HomeContainerViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -24,7 +24,7 @@ class HomeContainerFragment : Fragment(R.layout.fragment_home_container) {
         const val ENABLE_SLIDE_TRANSITION = "enable_slide_transition"
     }
 
-    private val containerViewModel: HomeContainerViewModel by viewModels()
+    private val containerViewModel: HomeContainerViewModel by activityViewModels()
     private var _binding: FragmentHomeContainerBinding? = null
     private val binding get() = _binding!!
 
@@ -55,10 +55,30 @@ class HomeContainerFragment : Fragment(R.layout.fragment_home_container) {
             }
         })
 
+        (activity as AppCompatActivity).setSupportActionBar(binding.toolbar)
+        setHasOptionsMenu(true)
+
         binding.toolbar.title = containerViewModel.getCurrentDate()
         containerViewModel.getUserFromDB(arguments?.getString(ID_ARG_KEY))
 
         return view
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) =
+        inflater.inflate(R.menu.toolbar_menu, menu)
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            R.id.profile_menu_item -> {
+                exitTransition = fadeThroughTransition()
+                reenterTransition = fadeThroughTransition()
+                val action = HomeContainerFragmentDirections
+                    .actionHomeContainerFragmentToProfileOverviewFragment()
+                findNavController().navigate(action)
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
     }
 
     override fun onStart() {
