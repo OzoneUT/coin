@@ -21,7 +21,7 @@ class HomeContainerFragment : Fragment(R.layout.fragment_home_container) {
     companion object {
         const val TAG = "HomeContainerFragment"
         const val ID_ARG_KEY = "user_id"
-        const val NAVIGATED_FROM_KEY = "navigated_from"
+        const val ENABLE_SLIDE_TRANSITION = "enable_slide_transition"
     }
 
     private val containerViewModel: HomeContainerViewModel by viewModels()
@@ -44,7 +44,7 @@ class HomeContainerFragment : Fragment(R.layout.fragment_home_container) {
                 findNavController()
                     .navigate(
                         HomeContainerFragmentDirections
-                            .actionHomeContainerFragmentToAccountSetupFragment(it.name)
+                            .actionHomeContainerFragmentToAccountSetupFragment(it.name, false)
                     )
             }
         })
@@ -69,7 +69,7 @@ class HomeContainerFragment : Fragment(R.layout.fragment_home_container) {
     }
 
     private fun setupEnterTransition() {
-        if (arguments?.getInt(NAVIGATED_FROM_KEY) == R.layout.fragment_login)
+        if (arguments?.getBoolean(ENABLE_SLIDE_TRANSITION) == true)
             enterTransition = TransitionInflater.from(requireContext())
                 .inflateTransition(R.transition.slide_medium_rtl)
     }

@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.transition.MaterialFadeThrough
+import com.google.android.material.transition.MaterialSharedAxis
 import com.kafleyozone.coin.R
 import com.kafleyozone.coin.utils.Status
 import com.kafleyozone.coin.viewmodels.SplashFragmentViewModel
@@ -22,9 +23,15 @@ class SplashFragment: Fragment(R.layout.fragment_splash) {
 
     private val viewModel: SplashFragmentViewModel by viewModels()
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
 
-        exitTransition = MaterialFadeThrough()
+        enterTransition = MaterialFadeThrough()
+        exitTransition = MaterialSharedAxis(MaterialSharedAxis.X, true)
+        reenterTransition = MaterialSharedAxis(MaterialSharedAxis.X, false)
 
         viewModel.cachedEmail.observe(viewLifecycleOwner) { email ->
             if (email.isEmpty() || email == "\"\"") {

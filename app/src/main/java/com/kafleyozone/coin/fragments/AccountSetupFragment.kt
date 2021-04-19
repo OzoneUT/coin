@@ -2,8 +2,9 @@ package com.kafleyozone.coin.fragments
 
 import android.graphics.Color
 import android.os.Bundle
+import android.transition.TransitionInflater
 import android.transition.TransitionManager
-import android.util.Log
+import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -15,6 +16,9 @@ import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.ListAdapter
 import com.google.android.material.snackbar.Snackbar
+import com.google.android.material.transition.MaterialFadeThrough
+import com.google.android.material.transition.MaterialSharedAxis
+import com.google.android.material.transition.SlideDistanceProvider
 import com.google.android.material.transition.platform.MaterialContainerTransform
 import com.kafleyozone.coin.R
 import com.kafleyozone.coin.data.domain.SetupAmountEntity
@@ -29,6 +33,7 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class AccountSetupFragment : Fragment() {
 
+    private val args: AccountSetupFragmentArgs by navArgs()
     private val viewModel: AccountSetupFragmentViewModel by viewModels()
     private var _binding: FragmentAccountSetupBinding? = null
     private val binding get() = _binding!!
@@ -43,6 +48,21 @@ class AccountSetupFragment : Fragment() {
         inflater: LayoutInflater,
         container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
+
+        if (args.inOnboardingFlow) {
+            enterTransition = MaterialSharedAxis(MaterialSharedAxis.X, true)
+            exitTransition = TransitionInflater.from(requireContext())
+                .inflateTransition(R.transition.fade)
+        } else {
+            // interstitial AccountSetupFragment slide up
+            enterTransition = MaterialFadeThrough().apply {
+                secondaryAnimatorProvider = SlideDistanceProvider(Gravity.BOTTOM)
+            }
+            exitTransition = MaterialFadeThrough().apply {
+                secondaryAnimatorProvider = SlideDistanceProvider(Gravity.TOP)
+            }
+        }
+
         _binding = FragmentAccountSetupBinding.inflate(inflater, container, false)
         val view = binding.root
         mListAdapter = SetupHistoryAdapter {
@@ -89,6 +109,10 @@ class AccountSetupFragment : Fragment() {
                 Status.SUCCESS -> {
                     Bundle().let { bundle ->
                         bundle.putString(HomeContainerFragment.ID_ARG_KEY, it.data?.id)
+                        bundle.putBoolean(
+                            HomeContainerFragment.ENABLE_SLIDE_TRANSITION,
+                            args.inOnboardingFlow
+                        )
                         findNavController().navigate(
                             R.id.action_global_homeContainerFragment, bundle
                         )
@@ -116,16 +140,11 @@ class AccountSetupFragment : Fragment() {
     }
 
     private fun setupUI() {
-        try {
-            val args: AccountSetupFragmentArgs by navArgs()
-            args.name?.let {
-                viewModel.setName(it)
-                binding.setupFinishButton
-                        .setMargins(requireContext(), left = 100, right = 100, bottom = 32)
-                onBackPressedSetup()
-            }
-        } catch (e: Exception) {
-            Log.i(TAG, "no navArgs found for AccountSetupFragment, must be on onboarding flow")
+        args.name?.let {
+            viewModel.setName(it)
+            binding.setupFinishButton
+                .setMargins(requireContext(), left = 100, right = 100, bottom = 32)
+            onBackPressedSetup()
         }
     }
 

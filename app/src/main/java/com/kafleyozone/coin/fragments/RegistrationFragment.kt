@@ -11,6 +11,7 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.textfield.TextInputEditText
+import com.google.android.material.transition.MaterialSharedAxis
 import com.kafleyozone.coin.R
 import com.kafleyozone.coin.data.network.models.RegistrationRequest
 import com.kafleyozone.coin.databinding.FragmentRegistrationBinding
@@ -37,6 +38,10 @@ class RegistrationFragment : Fragment() {
             container: ViewGroup?,
             savedInstanceState: Bundle?
     ): View {
+
+        enterTransition = MaterialSharedAxis(MaterialSharedAxis.X, true)
+        returnTransition = MaterialSharedAxis(MaterialSharedAxis.X, false)
+
         _binding = FragmentRegistrationBinding.inflate(inflater, container, false)
         val view = binding.root
 
@@ -73,10 +78,11 @@ class RegistrationFragment : Fragment() {
             when (it.status) {
                 Status.SUCCESS -> {
                     try {
+                        exitTransition = MaterialSharedAxis(MaterialSharedAxis.X, true)
                         val name = it.data?.user?.name ?: ""
                         findNavController().navigate(
                             RegistrationFragmentDirections
-                                .actionRegistrationFragmentToAccountSetupFragment(name)
+                                .actionRegistrationFragmentToAccountSetupFragment(name, true)
                         )
                     } catch (e: Exception) {
                         Log.e(TAG, "couldn't advance page; we may not be on onboarding flow")

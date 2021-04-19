@@ -62,6 +62,10 @@
         <action
             android:id="@+id/action_accountSetupFragment_to_exitOnboardingDialogFragment"
             app:destination="@id/exitOnboardingDialogFragment" />
+        <argument
+            android:name="inOnboardingFlow"
+            android:defaultValue="false"
+            app:argType="boolean" />
     </fragment>
     <fragment
         android:id="@+id/homeContainerFragment"
@@ -70,7 +74,7 @@
         tools:layout="@layout/fragment_home_container">
         <action
             android:id="@+id/action_homeContainerFragment_to_accountSetupFragment"
-            app:destination="@id/accountSetupFragment" />
+            app:destination="@id/accountSetupFragment"></action>
     </fragment>
     <action
         android:id="@+id/action_global_homeContainerFragment"

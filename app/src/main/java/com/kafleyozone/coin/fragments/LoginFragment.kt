@@ -32,12 +32,16 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
     private var _binding: FragmentLoginBinding? = null
     private val binding get() = _binding!!
 
-    override fun onCreateView(inflater: LayoutInflater,
-                              container: ViewGroup?,
-                              savedInstanceState: Bundle?): View {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
+
         enterTransition = MaterialFadeThrough().apply {
             secondaryAnimatorProvider = SlideDistanceProvider(Gravity.TOP)
         }
+
         _binding = FragmentLoginBinding.inflate(inflater, container, false)
         val view = binding.root
 
@@ -58,6 +62,7 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
         // There is an action set up from the Login screen to the beginning of the onboarding
         // flow.
         binding.registerOnLoginButton.setOnClickListener {
+            exitTransition = MaterialFadeThrough()
             findNavController().navigate(
                 LoginFragmentDirections.actionLoginFragmentToWelcomeFragment()
             )
@@ -75,7 +80,7 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
                         .inflateTransition(R.transition.fade)
                     Bundle().let { b ->
                         b.putString(HomeContainerFragment.ID_ARG_KEY, it.data?.user?.id)
-                        b.putInt(HomeContainerFragment.NAVIGATED_FROM_KEY, R.layout.fragment_login)
+                        b.putBoolean(HomeContainerFragment.ENABLE_SLIDE_TRANSITION, true)
                         findNavController().navigate(R.id.action_global_homeContainerFragment, b)
                     }
                 }
