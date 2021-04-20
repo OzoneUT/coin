@@ -29,10 +29,6 @@
             app:destination="@id/welcomeFragment"
             app:popUpToInclusive="false" />
     </fragment>
-    <dialog
-        android:id="@+id/exitOnboardingDialogFragment"
-        android:name="com.kafleyozone.coin.fragments.ExitSetupDialogFragment"
-        android:label="ExitOnboardingDialogFragment" />
     <fragment
         android:id="@+id/splashFragment"
         android:name="com.kafleyozone.coin.fragments.SplashFragment"
@@ -59,9 +55,6 @@
             app:argType="string"
             android:defaultValue="@null"
             app:nullable="true" />
-        <action
-            android:id="@+id/action_accountSetupFragment_to_exitOnboardingDialogFragment"
-            app:destination="@id/exitOnboardingDialogFragment" />
         <argument
             android:name="inOnboardingFlow"
             android:defaultValue="false"

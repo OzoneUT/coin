@@ -20,6 +20,7 @@ const val BEARER = "Bearer"
 const val BASIC = "Basic"
 const val HEADER_AUTHORIZATION = "Authorization"
 const val HEADER_REFRESH = "Refresh-Token"
+const val FLAG_BAD_REQUEST = "Coin_x69Cf58pFB_Flag"
 
 // Network statuses for UI
 enum class Status {

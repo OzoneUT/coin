@@ -7,7 +7,10 @@ import com.kafleyozone.coin.utils.hasAuthHeader
 import com.kafleyozone.coin.utils.toBearerToken
 import kotlinx.coroutines.runBlocking
 import okhttp3.Interceptor
+import okhttp3.Protocol
 import okhttp3.Response
+import okhttp3.ResponseBody.Companion.toResponseBody
+import java.net.SocketTimeoutException
 import java.util.*
 import javax.inject.Inject
 
@@ -39,6 +42,18 @@ class TokenInterceptor @Inject constructor(
         val authorizedRequest = chain.request().newBuilder()
             .header(HEADER_AUTHORIZATION, accessToken)
             .build()
-        return chain.proceed(authorizedRequest)
+
+        return try {
+            chain.proceed(authorizedRequest)
+        } catch (e: SocketTimeoutException) {
+            e.printStackTrace()
+            return Response.Builder()
+                .request(chain.request())
+                .protocol(Protocol.HTTP_1_1)
+                .code(408)
+                .message("invalid connection: timeout")
+                .body("timeout".toResponseBody(null))
+                .build()
+        }
     }
 }

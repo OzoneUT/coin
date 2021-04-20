@@ -2,7 +2,6 @@ package com.kafleyozone.coin.viewmodels
 
 import android.util.Log
 import android.view.View
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -29,13 +28,14 @@ class LoginFragmentViewModel @Inject constructor(
     }
 
     // MEMBER FIELDS
-    private val _loginRes = MutableLiveData<Resource<LoginResponse>>()
-    val loginRes: LiveData<Resource<LoginResponse>>
+    private val _loginRes = MutableLiveData<Resource<LoginResponse>?>()
+    val loginRes: MutableLiveData<Resource<LoginResponse>?>
         get() = _loginRes
 
     private val _loginInputValidations: MutableMap<Int, Boolean> = mutableMapOf(
-            R.id.login_email_field to false,
-            R.id.login_password_field to false)
+        R.id.login_email_field to false,
+        R.id.login_password_field to false
+    )
 
     val loginInputValidations: Map<Int, Boolean>
         get() = _loginInputValidations
@@ -86,6 +86,10 @@ class LoginFragmentViewModel @Inject constructor(
                 e.printStackTrace()
             }
         }
+    }
+
+    fun clearLoginRes() {
+        _loginRes.postValue(null)
     }
 
 }

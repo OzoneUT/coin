@@ -72,7 +72,7 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
         // success, erase the password field, re-enable all UI elements, and pass in the User object
         // from the response to the HomeContainerFragment.
         viewModel.loginRes.observe(viewLifecycleOwner, {
-            when (it.status) {
+            when (it?.status) {
                 Status.SUCCESS -> {
                     setLoadingUI(false)
                     binding.loginPasswordField.setText("")
@@ -95,6 +95,7 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
                         Snackbar.LENGTH_SHORT
                     )
                         .show()
+                    viewModel.clearLoginRes()
                 }
             }
         })

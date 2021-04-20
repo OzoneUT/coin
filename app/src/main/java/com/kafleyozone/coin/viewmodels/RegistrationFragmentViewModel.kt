@@ -22,8 +22,8 @@ class RegistrationFragmentViewModel @Inject constructor(
     private val authRepository: AuthRepository
 ) : ViewModel() {
 
-    private val _registrationRes = MutableLiveData<Resource<String>>()
-    val registrationRes: LiveData<Resource<String>>
+    private val _registrationRes = MutableLiveData<Resource<String>?>()
+    val registrationRes: MutableLiveData<Resource<String>?>
         get() = _registrationRes
 
     private val _stateEmailTaken = MutableLiveData<Boolean>()
@@ -103,5 +103,9 @@ class RegistrationFragmentViewModel @Inject constructor(
                 Log.e(LoginFragmentViewModel.TAG, "Registration failed: $e")
             }
         }
+    }
+
+    fun clearRegistrationRes() {
+        _registrationRes.postValue(null)
     }
 }

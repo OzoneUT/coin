@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
+import com.kafleyozone.coin.MainActivity
 import com.kafleyozone.coin.R
 import com.kafleyozone.coin.databinding.FragmentProfileOverviewBinding
 import com.kafleyozone.coin.utils.fadeThroughTransition
@@ -17,6 +18,7 @@ class ProfileOverviewFragment : Fragment(R.layout.fragment_profile_overview) {
     private val viewModel: HomeContainerViewModel by activityViewModels()
     private var _binding: FragmentProfileOverviewBinding? = null
     private val binding get() = _binding!!
+    private lateinit var logoutDialog: IndeterminateProgressDialogFragment
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -34,9 +36,24 @@ class ProfileOverviewFragment : Fragment(R.layout.fragment_profile_overview) {
             findNavController().popBackStack()
         }
 
+        binding.logoutAction.setOnClickListener {
+            logoutDialog = IndeterminateProgressDialogFragment()
+            logoutDialog.show(parentFragmentManager, "logout_dialog")
+            viewModel.logoutUser()
+        }
+
         viewModel.userData.observe(viewLifecycleOwner) {
             binding.profileNameTextview.text = it.name
             binding.profileEmailTextview.text = it.email
+        }
+
+        viewModel.authorized.observe(viewLifecycleOwner) {
+            try {
+                logoutDialog.dismiss()
+            } catch (exception: Exception) {
+                exception.printStackTrace()
+            }
+            MainActivity.triggerRebirth(requireContext())
         }
 
         return binding.root

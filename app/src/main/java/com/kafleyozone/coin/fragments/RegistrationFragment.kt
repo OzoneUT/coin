@@ -75,7 +75,7 @@ class RegistrationFragment : Fragment() {
 
         // Observe auto-login success after registration
         loginViewModel.loginRes.observe(viewLifecycleOwner) {
-            when (it.status) {
+            when (it?.status) {
                 Status.SUCCESS -> {
                     try {
                         exitTransition = MaterialSharedAxis(MaterialSharedAxis.X, true)
@@ -86,6 +86,7 @@ class RegistrationFragment : Fragment() {
                         )
                     } catch (e: Exception) {
                         Log.e(TAG, "couldn't advance page; we may not be on onboarding flow")
+                        loginViewModel.clearLoginRes()
                     }
                 }
                 Status.LOADING -> {
@@ -99,16 +100,19 @@ class RegistrationFragment : Fragment() {
                     } catch (e: Exception) {
                         Log.e(TAG, "there was an error; must not be on onboarding flow")
                     }
+                    loginViewModel.clearLoginRes()
                 }
             }
         }
 
         viewModel.registrationRes.observe(viewLifecycleOwner) { resource ->
-            when (resource.status) {
+            when (resource?.status) {
                 Status.SUCCESS -> {
                     // auto-login after registration success
-                    loginViewModel.doLogin(viewModel.registrationRequestObject.email,
-                            viewModel.registrationRequestObject.password)
+                    loginViewModel.doLogin(
+                        viewModel.registrationRequestObject.email,
+                        viewModel.registrationRequestObject.password
+                    )
                 }
                 Status.LOADING -> {
                     setLoadingUI(loading = true)
@@ -116,6 +120,7 @@ class RegistrationFragment : Fragment() {
                 Status.ERROR -> {
                     setLoadingUI(loading = false)
                     Snackbar.make(view, resource.message.toString(), Snackbar.LENGTH_SHORT).show()
+                    viewModel.clearRegistrationRes()
                 }
             }
         }
