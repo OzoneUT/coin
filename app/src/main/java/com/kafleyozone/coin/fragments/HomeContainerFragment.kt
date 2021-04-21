@@ -2,15 +2,14 @@ package com.kafleyozone.coin.fragments
 
 import android.os.Bundle
 import android.transition.TransitionInflater
-import android.view.*
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import androidx.activity.addCallback
-import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import androidx.navigation.Navigation
 import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.navigation.fragment.findNavController
-import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.transition.Hold
 import com.kafleyozone.coin.R
 import com.kafleyozone.coin.databinding.FragmentHomeContainerBinding
@@ -41,13 +40,21 @@ class HomeContainerFragment : Fragment(R.layout.fragment_home_container) {
         setupEnterTransition()
         onBackPressedSetup()
 
-        binding.fab.setOnClickListener {
+        binding.fabAddTransaction.setOnClickListener {
             exitTransition = Hold()
             val extras = FragmentNavigatorExtras(it to "fab_to_add_transaction_screen")
             findNavController().navigate(
                 HomeContainerFragmentDirections
                     .actionHomeContainerFragmentToAddTransactionFragment(), extras
             )
+        }
+
+        binding.profileOverviewButton.setOnClickListener {
+            exitTransition = fadeThroughTransition()
+            reenterTransition = fadeThroughTransition()
+            val action = HomeContainerFragmentDirections
+                .actionHomeContainerFragmentToProfileOverviewFragment()
+            findNavController().navigate(action)
         }
 
         containerViewModel.userData.observe(viewLifecycleOwner, {
@@ -66,37 +73,9 @@ class HomeContainerFragment : Fragment(R.layout.fragment_home_container) {
             }
         })
 
-        (activity as AppCompatActivity).setSupportActionBar(binding.toolbar)
-        setHasOptionsMenu(true)
-
-        binding.toolbar.title = containerViewModel.getCurrentDate()
         containerViewModel.getUserFromDB(arguments?.getString(ID_ARG_KEY))
 
         return view
-    }
-
-    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) =
-        inflater.inflate(R.menu.toolbar_menu, menu)
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        return when (item.itemId) {
-            R.id.profile_menu_item -> {
-                exitTransition = fadeThroughTransition()
-                reenterTransition = fadeThroughTransition()
-                val action = HomeContainerFragmentDirections
-                    .actionHomeContainerFragmentToProfileOverviewFragment()
-                findNavController().navigate(action)
-                true
-            }
-            else -> super.onOptionsItemSelected(item)
-        }
-    }
-
-    override fun onStart() {
-        super.onStart()
-        val navController =
-            Navigation.findNavController(requireActivity(), R.id.main_nav_graph_view)
-        binding.bottomNavigationView.setupWithNavController(navController)
     }
 
     private fun setupEnterTransition() {

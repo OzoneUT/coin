@@ -9,7 +9,7 @@
         android:id="@+id/homeFragment"
         android:name="com.kafleyozone.coin.fragments.HomeFragment"
         android:label="fragment_home"
-        tools:layout="@layout/fragment_home" />
+        tools:layout="@layout/fragment_home_container" />
     <fragment
         android:id="@+id/transactionsFragment"
         android:name="com.kafleyozone.coin.fragments.TransactionsFragment"
