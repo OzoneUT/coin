@@ -1,102 +1,154 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white">
+    android:background="@color/dark_gray_text"
+    android:orientation="vertical"
+    android:transitionName="fab_to_add_transaction_screen">
 
-    <androidx.appcompat.widget.Toolbar
-        android:id="@+id/add_transaction_toolbar"
-        style="Widget.MaterialComponents.Toolbar.NewTransaction.Coin"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:minHeight="?attr/actionBarSize"
-        android:theme="?attr/actionBarTheme"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:menu="@menu/add_transaction_menu"
-        app:navigationIcon="@drawable/ic_arrow_back_24px"
-        app:title="Add a Transaction"
-        app:titleTextColor="@color/dark_gray_text" />
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/white">
 
-    <EditText
-        android:id="@+id/total_ticker"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="64dp"
-        android:backgroundTint="@android:color/transparent"
-        android:hint="@string/initial_value_hint"
-        android:importantForAutofill="no"
-        android:inputType="numberDecimal"
-        android:singleLine="true"
-        android:textAlignment="center"
-        android:textColorHighlight="@color/dark_gray_text"
-        android:textColorHint="@color/dark_gray_text"
-        android:textIsSelectable="false"
-        android:textSize="40sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/add_transaction_toolbar" />
-
-    <TextView
-        android:id="@+id/textView9"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/currency_hint_usd"
-        android:textColor="@color/light_gray_text"
-        android:textSize="12sp"
-        app:layout_constraintBaseline_toBaselineOf="@+id/total_ticker"
-        app:layout_constraintStart_toEndOf="@+id/total_ticker" />
-
-    <com.google.android.material.chip.ChipGroup
-        android:id="@+id/chipGroup"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        app:checkedChip="@id/income_chip"
-        app:chipSpacingHorizontal="16dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/total_ticker"
-        app:selectionRequired="true"
-        app:singleLine="true"
-        app:singleSelection="true">
-
-        <com.google.android.material.chip.Chip
-            android:id="@+id/income_chip"
-            style="@style/Widget.Coin.Chip.Choice"
+        <androidx.appcompat.widget.AppCompatImageButton
+            android:id="@+id/close_add_transaction_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Income" />
+            android:layout_marginStart="18dp"
+            android:background="?android:attr/selectableItemBackgroundBorderless"
+            android:src="@drawable/ic_clear_24px"
+            android:tint="@color/dark_gray_text"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-        <com.google.android.material.chip.Chip
-            android:id="@+id/expense_chip"
-            style="@style/Widget.Coin.Chip.Choice"
+        <androidx.appcompat.widget.AppCompatImageButton
+            android:id="@+id/confirm_add_transaction_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Expense" />
-    </com.google.android.material.chip.ChipGroup>
+            android:layout_marginEnd="16dp"
+            android:background="?android:attr/selectableItemBackgroundBorderless"
+            android:src="@drawable/ic_check_24px"
+            android:tint="@color/dark_gray_text"
+            app:layout_constraintBottom_toBottomOf="@+id/close_add_transaction_button"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/close_add_transaction_button"
+            app:layout_constraintVertical_bias="0.666" />
 
-    <ScrollView
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginTop="16dp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        <androidx.appcompat.widget.AppCompatImageButton
+            android:id="@+id/delete_transaction_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:background="?android:attr/selectableItemBackgroundBorderless"
+            android:src="@drawable/ic_delete_24px"
+            android:tint="@color/pale_red"
+            android:visibility="invisible"
+            app:layout_constraintBottom_toBottomOf="@+id/close_add_transaction_button"
+            app:layout_constraintEnd_toStartOf="@+id/confirm_add_transaction_button"
+            app:layout_constraintTop_toTopOf="@+id/close_add_transaction_button"
+            app:layout_constraintVertical_bias="0.0" />
+
+        <TextView
+            android:id="@+id/textView12"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:fontFamily="sans-serif-medium"
+            android:text="Add a Transaction"
+            android:textColor="@color/dark_gray_text"
+            android:textSize="18sp"
+            app:layout_constraintBottom_toBottomOf="@+id/close_add_transaction_button"
+            app:layout_constraintStart_toEndOf="@+id/close_add_transaction_button"
+            app:layout_constraintTop_toTopOf="@+id/close_add_transaction_button" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:background="@color/light_gray_text"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/chipGroup">
+        app:layout_constraintStart_toStartOf="parent" />
 
-        <LinearLayout
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@android:color/white">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:layout_height="match_parent">
+
+            <EditText
+                android:id="@+id/total_ticker"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="32dp"
+                android:backgroundTint="@android:color/transparent"
+                android:hint="@string/initial_value_hint"
+                android:importantForAutofill="no"
+                android:inputType="numberDecimal"
+                android:singleLine="true"
+                android:textAlignment="center"
+                android:textColorHighlight="@color/dark_gray_text"
+                android:textColorHint="@color/dark_gray_text"
+                android:textIsSelectable="false"
+                android:textSize="40sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/textView9"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/currency_hint_usd"
+                android:textColor="@color/light_gray_text"
+                android:textSize="12sp"
+                app:layout_constraintBaseline_toBaselineOf="@+id/total_ticker"
+                app:layout_constraintStart_toEndOf="@+id/total_ticker" />
+
+            <com.google.android.material.chip.ChipGroup
+                android:id="@+id/chipGroup"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                app:checkedChip="@id/income_chip"
+                app:chipSpacingHorizontal="16dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/total_ticker"
+                app:selectionRequired="true"
+                app:singleLine="true"
+                app:singleSelection="true">
+
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/income_chip"
+                    style="@style/Widget.Coin.Chip.Choice"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Income" />
+
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/expense_chip"
+                    style="@style/Widget.Coin.Chip.Choice"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Expense" />
+            </com.google.android.material.chip.ChipGroup>
 
             <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/textInputLayout3"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="0dp"
                 android:layout_marginHorizontal="18dp"
-                android:layout_marginVertical="6dp"
+                android:layout_marginTop="16dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/chipGroup"
                 app:startIconDrawable="@drawable/ic_tag_text">
 
                 <com.google.android.material.textfield.TextInputEditText
@@ -106,11 +158,15 @@
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/textInputLayout"
                 style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.ExposedDropdownMenu"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginHorizontal="18dp"
                 android:layout_marginVertical="6dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textInputLayout3"
                 app:startIconDrawable="@drawable/ic_category_24px">
 
                 <com.google.android.material.textfield.MaterialAutoCompleteTextView
@@ -122,11 +178,16 @@
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/textInputLayout2"
                 style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.ExposedDropdownMenu"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginHorizontal="18dp"
                 android:layout_marginVertical="6dp"
+                android:layout_marginTop="8dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textInputLayout"
                 app:startIconDrawable="@drawable/ic_access_time_24px">
 
                 <com.google.android.material.textfield.MaterialAutoCompleteTextView
@@ -138,10 +199,14 @@
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/textInputLayout5"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginHorizontal="18dp"
-                android:layout_marginVertical="6dp"
+                android:layout_marginTop="8dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textInputLayout2"
                 app:startIconDrawable="@drawable/ic_notes_24px_1_">
 
                 <com.google.android.material.textfield.TextInputEditText
@@ -150,6 +215,7 @@
                     android:hint="Add a note or description"
                     android:minLines="3" />
             </com.google.android.material.textfield.TextInputLayout>
-        </LinearLayout>
-    </ScrollView>
-</androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.core.widget.NestedScrollView>
+
+</androidx.appcompat.widget.LinearLayoutCompat>

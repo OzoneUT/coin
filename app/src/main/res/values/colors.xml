@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="blue_primary_pale">#1E2FDD</color>
+    <color name="blue_primary_pale">#3C4DFF</color>
     <color name="blue_primary">#131E8E</color>
     <color name="blue_primary_darker">#0C1630</color>
     <color name="blue_primary_darkest">#080F20</color>
@@ -12,5 +12,5 @@
     <color name="light_gray_text">#B3B3B3</color>
     <color name="dark_gray_text">#7A7A7A</color>
     <color name="darker_gray_text">#474747</color>
-    <color name="pale_red">#E53935</color>
+    <color name="pale_red">#F48785</color>
 </resources>

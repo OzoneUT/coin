@@ -55,6 +55,7 @@
             android:clickable="true"
             android:contentDescription="TODO"
             app:fabSize="mini"
+            android:transitionName="fab_to_add_transaction_screen"
             app:srcCompat="@drawable/ic_baseline_add_24" />
 
     </FrameLayout>

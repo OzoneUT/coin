@@ -8,8 +8,10 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.Navigation
+import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.setupWithNavController
+import com.google.android.material.transition.Hold
 import com.kafleyozone.coin.R
 import com.kafleyozone.coin.databinding.FragmentHomeContainerBinding
 import com.kafleyozone.coin.utils.fadeThroughTransition
@@ -38,6 +40,15 @@ class HomeContainerFragment : Fragment(R.layout.fragment_home_container) {
 
         setupEnterTransition()
         onBackPressedSetup()
+
+        binding.fab.setOnClickListener {
+            exitTransition = Hold()
+            val extras = FragmentNavigatorExtras(it to "fab_to_add_transaction_screen")
+            findNavController().navigate(
+                HomeContainerFragmentDirections
+                    .actionHomeContainerFragmentToAddTransactionFragment(), extras
+            )
+        }
 
         containerViewModel.userData.observe(viewLifecycleOwner, {
             if (!it.accountSetupComplete) {

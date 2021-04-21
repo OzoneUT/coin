@@ -71,6 +71,9 @@
         <action
             android:id="@+id/action_homeContainerFragment_to_profileOverviewFragment"
             app:destination="@id/profileOverviewFragment" />
+        <action
+            android:id="@+id/action_homeContainerFragment_to_addTransactionFragment"
+            app:destination="@id/addTransactionFragment" />
     </fragment>
     <action
         android:id="@+id/action_global_homeContainerFragment"
@@ -94,5 +97,10 @@
         android:name="com.kafleyozone.coin.fragments.ProfileOverviewFragment"
         android:label="ProfileOverviewFragment"
         tools:layout="@layout/fragment_profile_overview" />
+    <fragment
+        android:id="@+id/addTransactionFragment"
+        android:name="com.kafleyozone.coin.fragments.AddTransactionFragment"
+        android:label="AddTransactionFragment"
+        tools:layout="@layout/fragment_add_transaction" />
 
 </navigation>

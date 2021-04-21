@@ -62,6 +62,8 @@
     </style>
 
     <style name="Widget.Coin.Chip.Choice" parent="Widget.MaterialComponents.Chip.Choice">
+        <item name="chipBackgroundColor">@color/chip_background</item>
+        <item name="android:textColor">@color/chip_text</item>
         <item name="materialThemeOverlay">@style/ThemeOverlay.Coin.Chip.Choice</item>
     </style>
 
