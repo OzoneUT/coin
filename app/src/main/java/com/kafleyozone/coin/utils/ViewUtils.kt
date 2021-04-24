@@ -5,6 +5,7 @@ import android.icu.text.DecimalFormat
 import android.view.View
 import android.view.ViewGroup.MarginLayoutParams
 import com.google.android.material.transition.MaterialFadeThrough
+import java.text.SimpleDateFormat
 import java.util.*
 
 
@@ -24,25 +25,6 @@ fun convertDoubleToFormattedCurrency(value: Double, symbol: Boolean = false): St
     }
     val formatted = format.format(value)
     return if (symbol) '$'.plus(formatted) else formatted
-}
-
-/*
-* Gets the current date's formatter string with the correct day-of-month suffix (b/c English is
-* hella annoying and inconsistent).
-* */
-fun getDateFormatPattern(): String {
-    val now = Calendar.getInstance()
-    val daySuffix = when (now.get(Calendar.DAY_OF_MONTH)) {
-        1 -> "st"
-        21 -> "st"
-        31 -> "st"
-        2 -> "nd"
-        22 -> "nd"
-        3 -> "rd"
-        23 -> "rd"
-        else -> "th"
-    }
-    return "EEEE, MMM. d'$daySuffix', yyyy"
 }
 
 /*
@@ -76,5 +58,16 @@ fun Context.dpToPx(dp: Int): Int {
 fun fadeThroughTransition(): MaterialFadeThrough {
     return MaterialFadeThrough().apply {
         secondaryAnimatorProvider = null
+    }
+}
+
+/*
+* Transforms a date in milliseconds to a formatted date String
+* */
+fun formatDate(millis: Long): String {
+    return (SimpleDateFormat.getDateInstance() as SimpleDateFormat).let {
+        it.applyPattern("EEEE, MMM. d, yyyy")
+        it.timeZone = TimeZone.getTimeZone("UTC")
+        it.format(millis)
     }
 }

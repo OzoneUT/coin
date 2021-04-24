@@ -7,11 +7,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.kafleyozone.coin.data.AppRepository
 import com.kafleyozone.coin.data.domain.User
-import com.kafleyozone.coin.utils.getDateFormatPattern
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
-import java.text.SimpleDateFormat
-import java.util.*
 import javax.inject.Inject
 
 @HiltViewModel
@@ -52,13 +49,6 @@ class HomeContainerViewModel @Inject constructor(
         viewModelScope.launch {
             appRepository.logout()
             _authorized.postValue(false)
-        }
-    }
-
-    fun getCurrentDate(): String {
-        return (SimpleDateFormat.getDateInstance() as SimpleDateFormat).let {
-            it.applyPattern(getDateFormatPattern())
-            it.format(Date())
         }
     }
 }

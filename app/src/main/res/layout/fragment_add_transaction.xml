@@ -66,13 +66,6 @@
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1px"
-        android:background="@color/light_gray_text"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
-
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -154,12 +147,26 @@
                 <com.google.android.material.textfield.TextInputEditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Name of Income" />
+                    android:hint="Title" />
             </com.google.android.material.textfield.TextInputLayout>
+
+            <View
+                android:id="@+id/choose_category_button"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:background="?attr/selectableItemBackground"
+                android:clickable="true"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
+                android:translationZ="1dp"
+                app:layout_constraintBottom_toBottomOf="@+id/textInputLayout"
+                app:layout_constraintEnd_toEndOf="@+id/textInputLayout"
+                app:layout_constraintStart_toStartOf="@+id/textInputLayout"
+                app:layout_constraintTop_toTopOf="@+id/textInputLayout" />
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/textInputLayout"
-                style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.ExposedDropdownMenu"
+                style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginHorizontal="18dp"
@@ -167,34 +174,51 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textInputLayout3"
+                app:endIconDrawable="@drawable/ic_chevron_right_black_24dp"
+                app:endIconMode="custom"
                 app:startIconDrawable="@drawable/ic_category_24px">
 
-                <com.google.android.material.textfield.MaterialAutoCompleteTextView
+                <com.google.android.material.textfield.TextInputEditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Choose a category..."
+                    android:hint="Category*"
                     android:inputType="none" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
+            <View
+                android:id="@+id/choose_date_button"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:background="?attr/selectableItemBackground"
+                android:clickable="true"
+                android:focusable="true"
+                android:translationZ="1dp"
+                app:layout_constraintBottom_toBottomOf="@+id/date_field_layout"
+                app:layout_constraintEnd_toEndOf="@+id/date_field_layout"
+                app:layout_constraintStart_toStartOf="@+id/date_field_layout"
+                app:layout_constraintTop_toTopOf="@+id/date_field_layout" />
+
             <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/textInputLayout2"
-                style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.ExposedDropdownMenu"
+                android:id="@+id/date_field_layout"
+                style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginHorizontal="18dp"
                 android:layout_marginVertical="6dp"
-                android:layout_marginTop="8dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textInputLayout"
-                app:startIconDrawable="@drawable/ic_access_time_24px">
+                app:endIconDrawable="@drawable/ic_chevron_right_black_24dp"
+                app:endIconMode="custom"
+                app:startIconDrawable="@drawable/ic_calendar_today_black_24dp">
 
-                <com.google.android.material.textfield.MaterialAutoCompleteTextView
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/date_field"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Date of Transaction"
-                    android:inputType="none" />
+                    android:hint="Date*"
+                    android:inputType="date" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -203,10 +227,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginHorizontal="18dp"
-                android:layout_marginTop="8dp"
+                android:layout_marginTop="6dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textInputLayout2"
+                app:layout_constraintTop_toBottomOf="@+id/date_field_layout"
                 app:startIconDrawable="@drawable/ic_notes_24px_1_">
 
                 <com.google.android.material.textfield.TextInputEditText
