@@ -101,6 +101,15 @@
         android:id="@+id/addTransactionFragment"
         android:name="com.kafleyozone.coin.fragments.AddTransactionFragment"
         android:label="AddTransactionFragment"
-        tools:layout="@layout/fragment_add_transaction" />
+        tools:layout="@layout/fragment_add_transaction" >
+        <action
+            android:id="@+id/action_addTransactionFragment_to_categoryChooserFragment"
+            app:destination="@id/categoryChooserFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/categoryChooserFragment"
+        android:name="com.kafleyozone.coin.fragments.CategoryChooserFragment"
+        android:label="CategoryChooserFragment"
+        tools:layout="@layout/fragment_category_chooser"/>
 
 </navigation>

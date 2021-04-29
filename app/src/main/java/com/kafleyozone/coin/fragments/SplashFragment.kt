@@ -64,7 +64,7 @@ class SplashFragment: Fragment(R.layout.fragment_splash) {
             }
         }
 
-        viewModel.initialize()
+        viewModel.initialize(requireContext())
         return super.onCreateView(inflater, container, savedInstanceState)
     }
 }

@@ -1,5 +1,6 @@
 package com.kafleyozone.coin.viewmodels
 
+import android.content.Context
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -7,6 +8,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.kafleyozone.coin.data.AppRepository
 import com.kafleyozone.coin.data.AuthRepository
+import com.kafleyozone.coin.data.CategoryRepository
 import com.kafleyozone.coin.data.domain.User
 import com.kafleyozone.coin.data.network.models.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -16,7 +18,8 @@ import javax.inject.Inject
 @HiltViewModel
 class SplashFragmentViewModel @Inject constructor(
     private val authRepository: AuthRepository,
-    private val appRepository: AppRepository
+    private val appRepository: AppRepository,
+    private val categoryRepository: CategoryRepository
 ) : ViewModel() {
 
     companion object {
@@ -31,8 +34,9 @@ class SplashFragmentViewModel @Inject constructor(
     val cachedEmail: LiveData<String>
         get() = _cachedEmail
 
-    fun initialize() {
+    fun initialize(context: Context) {
         viewModelScope.launch {
+            categoryRepository.loadDefaultCategoriesFromFile(context)
             try {
                 if (authRepository.checkAuth()) {
                     _userRes.postValue(Resource.loading(null))

@@ -1,0 +1,436 @@
+{
+  "incomeCategories": [
+    {
+      "id": "bce28771-09f7-4f7f-9eb7-37bebf6df9a5",
+      "categoryName": "Paycheck",
+      "fileName": "1f4b5"
+    },
+    {
+      "id": "486f08d1-407f-4e2d-b369-14af46b6cb81",
+      "categoryName": "Side Job",
+      "fileName": "1f939-1f3fb-200d-2640-fe0f"
+    },
+    {
+      "id": "4b8dee7f-33b4-4817-9eae-f8418f974c03",
+      "categoryName": "Job Bonus",
+      "fileName": "1f44d"
+    },
+    {
+      "id": "51156357-b13a-427e-a230-163060daed4b",
+      "categoryName": "Gift/Reward",
+      "fileName": "1f381"
+    },
+    {
+      "id": "ec57a55e-ec59-4484-870c-09a5d075f996",
+      "categoryName": "Tips & Commission",
+      "fileName": "1f481-1f3fd-200d-2640-fe0f"
+    },
+    {
+      "id": "95c6cd37-0559-4660-91b4-a0d987d49086",
+      "categoryName": "Earned Interest",
+      "fileName": "1fa99"
+    },
+    {
+      "id": "bed40c21-1cb4-49b7-be2d-f4df82749b62",
+      "categoryName": "Dividend/Realized Gains",
+      "fileName": "1f4c8"
+    },
+    {
+      "id": "20914810-266a-411c-a81e-93ada38224e3",
+      "categoryName": "Other Investment Gains",
+      "fileName": "2197"
+    },
+    {
+      "id": "678121d3-fe66-41fa-a9dd-af5d3d20cfd6",
+      "categoryName": "Tax Refund",
+      "fileName": "2709"
+    },
+    {
+      "id": "497aa98f-5929-493f-927e-c5f06f694abf",
+      "categoryName": "Lottery Winnings",
+      "fileName": "1f91e-1f3fd"
+    },
+    {
+      "id": "af06a216-f808-4c64-a79d-9c2c5ce101f9",
+      "categoryName": "Grant/Scholarship",
+      "fileName": "1f393"
+    },
+    {
+      "id": "f9a8f673-ba72-421a-9064-a7883b1e7bbe",
+      "categoryName": "Wager Winnings",
+      "fileName": "1f60f"
+    },
+    {
+      "id": "fa0f1fa7-f78c-4e6f-b385-9e43c5efb51d",
+      "categoryName": "Cashback",
+      "fileName": "1f4b3"
+    },
+    {
+      "id": "b95795c7-ad4e-432f-940d-209811707e97",
+      "categoryName": "Adjustment",
+      "fileName": "270f"
+    },
+    {
+      "id": "cb27f835-e993-499e-bb5a-6e6f38e966df",
+      "categoryName": "Government Aid",
+      "fileName": "1f985"
+    },
+    {
+      "id": "4799c7de-6b49-44ac-874e-1c3178f1bd58",
+      "categoryName": "Loan",
+      "fileName": "1f932-1f3ff"
+    }
+  ],
+  "expenseCategories": [
+    {
+      "id": "1a9d3d91-b5f1-4405-9334-9b4d804de33c",
+      "categoryName": "Alimony & Child Support",
+      "fileName": "1f469-200d-1f466-200d-1f466"
+    },
+    {
+      "id": "6e3911a6-cae1-484f-a81a-f1b4553e64b9",
+      "categoryName": "Penalty/Fine",
+      "fileName": "1f46e-1f3fb"
+    },
+    {
+      "id": "d87d546c-32c5-451a-a5a3-ac9587438b6e",
+      "categoryName": "Taxes",
+      "fileName": "1f985"
+    },
+    {
+      "id": "31dbf6d3-f796-4d60-a713-9c655350d12d",
+      "categoryName": "Rent",
+      "fileName": "1f3e2"
+    },
+    {
+      "id": "4af8adce-a4b7-42b1-8d47-fc027e5fda52",
+      "categoryName": "Mortgage Payment",
+      "fileName": "1f3e0"
+    },
+    {
+      "id": "c726b4a7-50c3-42a5-9603-36691573d7b2",
+      "categoryName": "Home Maintenance",
+      "fileName": "1f3da"
+    },
+    {
+      "id": "037e2af0-24ff-49fa-a4ff-5aab09902d9e",
+      "categoryName": "Other Housing",
+      "fileName": "1fa9b"
+    },
+    {
+      "id": "cd2a4ca5-bded-48c4-99db-8ede0764afd1",
+      "categoryName": "Electricity",
+      "fileName": "1f4a1"
+    },
+    {
+      "id": "77adb54c-179a-4c49-a03f-367905a5675e",
+      "categoryName": "Water",
+      "fileName": "1f4a7"
+    },
+    {
+      "id": "0fd6b482-bd8a-40a2-8db4-50561b4f4fc2",
+      "categoryName": "Waste",
+      "fileName": "267b"
+    },
+    {
+      "id": "168dc97b-cbf6-4647-83f4-0f867316911c",
+      "categoryName": "Sewer",
+      "fileName": "1f6bd"
+    },
+    {
+      "id": "8b6f2fad-7202-4fe5-a567-c8ea29f323b6",
+      "categoryName": "Internet",
+      "fileName": "1f30e"
+    },
+    {
+      "id": "fb37854a-ce7a-4efd-84a9-0b19a89bb8b2",
+      "categoryName": "Cable",
+      "fileName": "1f4fa"
+    },
+    {
+      "id": "ceb9de2f-6808-42b2-93f7-6038d021017c",
+      "categoryName": "Streaming Service",
+      "fileName": "1f3a7"
+    },
+    {
+      "id": "8f87f006-93e4-47ac-8edf-3523869fa6be",
+      "categoryName": "Subscription",
+      "fileName": "1f4c6"
+    },
+    {
+      "id": "4210a324-6bdd-4524-be0e-dc039f5693be",
+      "categoryName": "Phone Bill",
+      "fileName": "1f4f1"
+    },
+    {
+      "id": "a66f5f94-ad11-43a6-8540-c3789f4d4bdb",
+      "categoryName": "Gas Bill",
+      "fileName": "1f525"
+    },
+    {
+      "id": "82569684-c99d-4897-903d-b0384a017f0e",
+      "categoryName": "General Utilities",
+      "fileName": "1f5d3"
+    },
+    {
+      "id": "b2b073ff-7e23-4a49-b191-4da5298db034",
+      "categoryName": "Misc. Services",
+      "fileName": "1f977-1f3fd"
+    },
+    {
+      "id": "7d94f4c2-b689-4f23-8104-271a577bdf1b",
+      "categoryName": "Groceries",
+      "fileName": "1f966"
+    },
+    {
+      "id": "b52bc963-6407-4bc0-8acf-0da41dddf13c",
+      "categoryName": "Clothing/Shoes",
+      "fileName": "1f455"
+    },
+    {
+      "id": "1ed19285-c279-4e91-8c1b-ae962b968d13",
+      "categoryName": "Misc. Fashion",
+      "fileName": "1f576"
+    },
+    {
+      "id": "e824060e-5116-4645-994b-904e36826b00",
+      "categoryName": "Laundry Service",
+      "fileName": "1f457"
+    },
+    {
+      "id": "a13fdc47-f7f8-4a80-9153-a114d05d6e8f",
+      "categoryName": "General Retail",
+      "fileName": "1f6d2"
+    },
+    {
+      "id": "75916c46-2186-4970-90bf-773cf6a25ee8",
+      "categoryName": "Restaurant/Fast Food",
+      "fileName": "1f355"
+    },
+    {
+      "id": "92e422e2-641a-4f8a-93ba-7c0b769f200b",
+      "categoryName": "Transportation",
+      "fileName": "1f690"
+    },
+    {
+      "id": "dd2440e6-1713-4556-90a4-7dbabc4e6b7f",
+      "categoryName": "Gasoline",
+      "fileName": "26fd"
+    },
+    {
+      "id": "ac5ac08f-89b7-463d-b11f-852ed19b1ada",
+      "categoryName": "Car Maintenance",
+      "fileName": "1f527"
+    },
+    {
+      "id": "53a8b6d3-ba46-4595-b3a6-5952b6c8bc87",
+      "categoryName": "Car Loan Payment",
+      "fileName": "1f698"
+    },
+    {
+      "id": "459e913d-3e2e-4136-bf06-fbf676dc917d",
+      "categoryName": "Plane Ticket",
+      "fileName": "2708"
+    },
+    {
+      "id": "21f6ab76-25ab-47b9-8263-3a087dacda98",
+      "categoryName": "Train Ticket",
+      "fileName": "1f684"
+    },
+    {
+      "id": "730a9b5e-cbf3-4664-a0d3-92dd58d3e4d3",
+      "categoryName": "Hotel",
+      "fileName": "1f3e8"
+    },
+    {
+      "id": "e4313c8c-a92d-498c-ac24-b916cbd84dbe",
+      "categoryName": "Toll",
+      "fileName": "1f6e3"
+    },
+    {
+      "id": "765f0a8f-80eb-450a-a8c2-91d391513b38",
+      "categoryName": "Rideshare/Taxi",
+      "fileName": "1f695"
+    },
+    {
+      "id": "5ea7788f-5d4e-4e86-9e54-f0d5702000a4",
+      "categoryName": "Parking",
+      "fileName": "1f697"
+    },
+    {
+      "id": "8be2da4c-38be-4f0c-936a-5f01a8ee35c7",
+      "categoryName": "Student Loan Payment",
+      "fileName": "1f9d1-1f3fc-200d-1f393"
+    },
+    {
+      "id": "a2d60fb0-bac2-40b3-89f0-5f96d9873028",
+      "categoryName": "Other Loan Payment",
+      "fileName": "1f9fe"
+    },
+    {
+      "id": "afb8c8fc-3161-4445-b335-cd87d7df7c41",
+      "categoryName": "Credit Card Payment/Fee",
+      "fileName": "1f4b3"
+    },
+    {
+      "id": "7c2ba985-0aa6-4dae-937d-178efb4c82be",
+      "categoryName": "Pet Care",
+      "fileName": "1f436"
+    },
+    {
+      "id": "55016b59-83f1-4edc-acad-f284dba8aa72",
+      "categoryName": "Child Care",
+      "fileName": "1f476"
+    },
+    {
+      "id": "18618b78-1507-43ed-8247-17408aeac998",
+      "categoryName": "Elder Care",
+      "fileName": "1f469-1f3fb-200d-1f384"
+    },
+    {
+      "id": "1998b403-00a3-464e-a815-f4f7630cb125",
+      "categoryName": "Gift/Donation",
+      "fileName": "1f47c-1f3ff"
+    },
+    {
+      "id": "0572a8a9-22e8-458b-bc7a-abf57c74ff6f",
+      "categoryName": "Loss",
+      "fileName": "1f937"
+    },
+    {
+      "id": "d8347edc-0345-40ed-9051-59fc8c45ad1f",
+      "categoryName": "Recreation",
+      "fileName": "1f3d5"
+    },
+    {
+      "id": "f409befb-dc09-476d-a605-5b2b377ee283",
+      "categoryName": "Gym Membership",
+      "fileName": "1f4aa-1f3fd"
+    },
+    {
+      "id": "1215514f-b373-4fdf-8002-2c44f066ac5b",
+      "categoryName": "Membership Fee",
+      "fileName": "1f938-1f3fb-200d-2642-fe0f"
+    },
+    {
+      "id": "d69218eb-4204-4a99-92a5-8584a0a42f8e",
+      "categoryName": "Tuition",
+      "fileName": "1f9fe"
+    },
+    {
+      "id": "ed952485-b403-44c7-a0fc-01dc7dde9677",
+      "categoryName": "Medical Expense",
+      "fileName": "1f489"
+    },
+    {
+      "id": "93ee67ea-5100-415f-bb0c-25801f5724b1",
+      "categoryName": "Medicine",
+      "fileName": "1f48a"
+    },
+    {
+      "id": "81c00831-010f-4d5e-9a54-7df2876f0460",
+      "categoryName": "Coffee Shop",
+      "fileName": "2615"
+    },
+    {
+      "id": "7303790f-1acd-4eef-9764-d107a5411546",
+      "categoryName": "Car Insurance",
+      "fileName": "1f4c3"
+    },
+    {
+      "id": "3ff3670a-a23f-4be2-bcf0-9bb1812f7155",
+      "categoryName": "Renter's Insurance",
+      "fileName": "1f4c3"
+    },
+    {
+      "id": "ca749ae6-764d-4a6d-9e72-9195a696de60",
+      "categoryName": "Other Insurance",
+      "fileName": "1f9fe"
+    },
+    {
+      "id": "f0e99340-087a-4504-aa86-96dc903870ad",
+      "categoryName": "Medical Insurance",
+      "fileName": "2695"
+    },
+    {
+      "id": "f9ad8bf1-90b6-45f7-8bb8-f5bf3c7d5201",
+      "categoryName": "Vision Insurance",
+      "fileName": "1f441"
+    },
+    {
+      "id": "9c14172b-3de8-493d-838d-38c46090536b",
+      "categoryName": "Dental Insurance",
+      "fileName": "1f9b7"
+    },
+    {
+      "id": "37431541-39dd-49d3-aa14-60017a18382e",
+      "categoryName": "Personal Care",
+      "fileName": "1f487-1f3fd-200d-2642-fe0f"
+    },
+    {
+      "id": "06835e65-f92c-40eb-a6bd-c092bb8a1054",
+      "categoryName": "Realized Investment Loss",
+      "fileName": "1f4c9"
+    },
+    {
+      "id": "a22eb92d-2b27-4e9b-a66a-c0814360deb0",
+      "categoryName": "Currency Conversion",
+      "fileName": "1f4b1"
+    },
+    {
+      "id": "4def93fb-83cd-4235-b728-671f25fbb6b8",
+      "categoryName": "Entertainment/Outing",
+      "fileName": "1f39f"
+    },
+    {
+      "id": "6abed31c-1381-4c4b-b1e3-d4b06802f103",
+      "categoryName": "Technology Purchase",
+      "fileName": "1f4bb"
+    },
+    {
+      "id": "8137b44b-12cc-4b07-8201-c91b52cd13f3",
+      "categoryName": "Wedding Expenses",
+      "fileName": "1f495"
+    },
+    {
+      "id": "e262f59e-ddd3-4ca1-9c1e-3fdf0d80f354",
+      "categoryName": "Hobbies/Crafts",
+      "fileName": "1f3a8"
+    },
+    {
+      "id": "5e7f3dfc-54fa-46b6-8dee-ae90a0ceaeb3",
+      "categoryName": "Good Times",
+      "fileName": "1f44c-1f3fd"
+    },
+    {
+      "id": "63334961-991b-4f17-9204-37743d284f9d",
+      "categoryName": "Money Lent",
+      "fileName": "1f449-1f3fd"
+    },
+    {
+      "id": "6c81b23f-34e8-404d-8c53-51c31c7d2f73",
+      "categoryName": "Funeral Expense",
+      "fileName": "2620"
+    },
+    {
+      "id": "0536cae6-3b24-49d3-b40e-fb20b24247ff",
+      "categoryName": "Furniture",
+      "fileName": "1fa91"
+    },
+    {
+      "id": "8aca5e4e-ba71-4591-b038-8afdbac3f7e7",
+      "categoryName": "Video Games",
+      "fileName": "1f3ae"
+    },
+    {
+      "id": "a95f39b7-4441-4d2d-af74-b207eda734c1",
+      "categoryName": "Adjustment",
+      "fileName": "270f"
+    },
+    {
+      "id": "fc288097-a6c2-4149-9d67-0d8e18569cc4",
+      "categoryName": "Wager Losses",
+      "fileName": "1f3b2"
+    }
+  ]
+}

@@ -3,6 +3,8 @@ package com.kafleyozone.coin.di
 import android.content.Context
 import androidx.datastore.preferences.createDataStore
 import androidx.room.Room
+import com.google.gson.Gson
+import com.google.gson.GsonBuilder
 import com.kafleyozone.coin.data.network.AccountService
 import com.kafleyozone.coin.data.network.AuthenticationService
 import com.kafleyozone.coin.data.network.CoinAuthenticator
@@ -82,4 +84,12 @@ object AppModule {
     @Provides
     fun provideDataStore(@ApplicationContext context: Context) =
         context.createDataStore(name = "auth_store")
+
+    @Singleton
+    @Provides
+    fun provideGson(): Gson =
+        GsonBuilder()
+            .disableHtmlEscaping()
+            .setPrettyPrinting()
+            .create()
 }
