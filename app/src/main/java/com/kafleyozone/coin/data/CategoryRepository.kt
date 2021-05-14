@@ -34,6 +34,3 @@ class CategoryRepository @Inject constructor(
         Log.i(TAG, "category init: $appCategories")
     }
 }
-//https://github.com/coil-kt/coil/issues/393
-// You can reference Android assets using a uri in the following format: file:///android_asset/image.jpg.
-// Once you have a uri you can call imageView.load(uri). For SVG support check out: https://coil-kt.github.io/coil/svgs/

@@ -1,10 +1,10 @@
 package com.kafleyozone.coin.fragments
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
@@ -27,21 +27,28 @@ class CategoryChooserFragment: Fragment() {
         enterTransition = MaterialSharedAxis(MaterialSharedAxis.X, true)
         returnTransition = MaterialSharedAxis(MaterialSharedAxis.X, false)
         _binding = FragmentCategoryChooserBinding.inflate(inflater, container, false)
-        binding.categoriesRecylerview.adapter = CategoryListAdapter()
+        val categoryAdapter = CategoryListAdapter()
+        binding.categoriesRecylerview.adapter = categoryAdapter
 
         binding.closeCategoryChooserButton.setOnClickListener {
             findNavController().popBackStack()
         }
 
-        viewModel.transactionType.observe(viewLifecycleOwner) {
-            val list = when(it) {
-                AddTransactionViewModel.TransactionType.EXPENSE -> {
-                    viewModel.appCategories.expenseCategories
+        binding.searchField.doOnTextChanged { text, _, _, _ ->
+            text?.let {
+                if (it.isEmpty()) {
+                    binding.searchField.hint = "Search all categories"
                 }
-                else -> viewModel.appCategories.incomeCategories
+                viewModel.doSearch(text)
             }
-            Log.i(javaClass.name, list.toString())
-            (binding.categoriesRecylerview.adapter as CategoryListAdapter).submitList(list)
+        }
+
+        viewModel.transactionType.observe(viewLifecycleOwner) {
+            viewModel.initializeLists(it)
+        }
+
+        viewModel.filteredCategories.observe(viewLifecycleOwner) {
+            (binding.categoriesRecylerview.adapter as CategoryListAdapter).submitList(it)
         }
 
         return binding.root

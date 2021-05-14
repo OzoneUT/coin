@@ -24,7 +24,7 @@ fun convertDoubleToFormattedCurrency(value: Double, symbol: Boolean = false): St
         minimumFractionDigits = fractionDigits
     }
     val formatted = format.format(value)
-    return if (symbol) '$'.plus(formatted) else formatted
+    return if (symbol) "$".plus(formatted) else formatted
 }
 
 /*
@@ -71,3 +71,9 @@ fun formatDate(millis: Long): String {
         it.format(millis)
     }
 }
+
+/*
+* Converts a file name to a proper URI string to a file in the asset directory
+* */
+fun getAssetUri(fileName: String): String =
+    "file:///android_asset/$fileName.svg"

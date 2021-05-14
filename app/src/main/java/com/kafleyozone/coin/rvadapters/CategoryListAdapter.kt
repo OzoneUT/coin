@@ -5,8 +5,10 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import coil.load
 import com.kafleyozone.coin.data.domain.Category
 import com.kafleyozone.coin.databinding.ListItemCategoryBinding
+import com.kafleyozone.coin.utils.getAssetUri
 
 class CategoryListAdapter :
     ListAdapter<Category, CategoryListAdapter.CategoryItemViewHolder>(ItemDiffCallback()) {
@@ -25,13 +27,15 @@ class CategoryListAdapter :
 
     class CategoryItemViewHolder(private val itemBinding: ListItemCategoryBinding) :
         RecyclerView.ViewHolder(itemBinding.root) {
+
         fun bind(category: Category) {
             itemBinding.categoryNameTextview.text = category.categoryName
+            itemBinding.categoryImageView.load(getAssetUri(category.fileName))
         }
-
     }
 
     class ItemDiffCallback : DiffUtil.ItemCallback<Category>() {
+
         override fun areItemsTheSame(oldItem: Category, newItem: Category): Boolean {
             return oldItem.id == newItem.id
         }
