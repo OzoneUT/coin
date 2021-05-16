@@ -65,6 +65,7 @@ dependencies {
     implementation "androidx.navigation:navigation-fragment-ktx:2.3.5"
     implementation "androidx.navigation:navigation-ui-ktx:2.3.5"
     implementation "androidx.datastore:datastore-preferences:1.0.0-alpha06"
+    implementation 'androidx.recyclerview:recyclerview-selection:1.1.0'
     // Hilt
     implementation 'androidx.hilt:hilt-lifecycle-viewmodel:1.0.0-alpha03'
     implementation 'com.google.dagger:hilt-android:2.33-beta'
